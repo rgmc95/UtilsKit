@@ -2,8 +2,8 @@
 //  UtilsKit.h
 //  UtilsKit
 //
-//  Created by Michael Coqueret on 23/12/2019.
-//  Copyright © 2019 iD.apps. All rights reserved.
+//  Created by RGMC on 23/12/2019.
+//  Copyright © 2019 RGMC. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
