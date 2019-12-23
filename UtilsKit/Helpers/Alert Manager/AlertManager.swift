@@ -84,7 +84,13 @@ public struct AlertManager {
         - parameter error: error to be printed.
      */
     public func show(_ error: Error) {
-        self.show(title: error.localizedDescription, actions: [AlertAction(title: "OK", style: .cancel)])
+        var _infos: String? = error.localizedDescription
+        
+        if let error = error as? LocalizedError {
+            _infos = error.errorDescription
+        }
+        
+        self.show(title: _infos, actions: [AlertAction(title: "OK", style: .cancel)])
     }
 }
 
