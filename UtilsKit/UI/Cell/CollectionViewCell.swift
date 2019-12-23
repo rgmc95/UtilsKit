@@ -2,7 +2,7 @@
 //  CollectionViewCell.swift
 //  UtilsKit
 //
-//  Created by Kévin Mondésir on 28/03/2018.
+//  Created by RGMC on 28/03/2018.
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
@@ -15,29 +15,30 @@ import UIKit
     Default empty collection view cell
  */
 public final class UIEmptyCollectionViewCell: UICollectionViewCell, ViewReusable {
-    public static var nibName: String = ""
+    public static var nibName: String? = ""
     public static var identifier: String = "UIEmptyCollectionViewCell"
 }
 
 extension ViewReusable where Self: UICollectionViewCell {
     
     //MARK: Register
-    fileprivate static func registerCell<T: UICollectionViewCell & ViewReusable>(ofType type: T.Type, withCollectionView collectionView: UICollectionView) {
-        if !self.nibName.isEmpty {
-            collectionView.register(UINib(nibName: self.nibName, bundle: nil), forCellWithReuseIdentifier: self.identifier)
-        } else {
+    fileprivate static func registerCell<T: UICollectionViewCell & ViewReusable>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, withIdentifier identifier: String? = nil) {
+        guard let nibName = self.nibName else { return }
+        if nibName.isEmpty {
             collectionView.register(type, forCellWithReuseIdentifier: self.identifier)
+        } else {
+            collectionView.register(UINib(nibName: nibName, bundle: nil), forCellWithReuseIdentifier: identifier ?? self.identifier)
         }
     }
     
     //MARK: Dequeue
-    fileprivate static func dequeueCell<T: UICollectionViewCell & ViewReusable>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath) -> Self {
-        self.registerCell(ofType: type, withCollectionView: collectionView)
-        return _dequeueCell(withCollectionView: collectionView, forIndexPath: indexPath)!
+    fileprivate static func dequeueCell<T: UICollectionViewCell & ViewReusable>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> Self {
+        self.registerCell(ofType: type, withCollectionView: collectionView, withIdentifier: identifier)
+        return _dequeueCell(withCollectionView: collectionView, forIndexPath: indexPath, withIdentifier: identifier)!
     }
     
-    fileprivate static func _dequeueCell(withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath) -> Self? {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.identifier, for: indexPath) as? Self else {
+    fileprivate static func _dequeueCell(withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> Self? {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier ?? self.identifier, for: indexPath) as? Self else {
             return nil
         }
         
@@ -80,26 +81,28 @@ public enum CollectionViewReusableViewKind {
 extension CollectionViewHeaderFooterViewReusable where Self: UICollectionReusableView {
     
     //MARK: Register
-    internal static func registerView<T: CollectionViewHeaderFooterViewReusable & NSObject>(ofType type: T.Type, withCollectionView collectionView: UICollectionView) {
-        if !self.nibName.isEmpty {
-            collectionView.register(UINib(nibName: self.nibName, bundle: nil), forSupplementaryViewOfKind: self.kind.rawValue, withReuseIdentifier: self.identifier)
+    internal static func registerView<T: CollectionViewHeaderFooterViewReusable & NSObject>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, withIdentifier identifier: String? = nil) {
+        guard let nibName = Self.nibName else { return }
+
+        if nibName.isEmpty {
+            collectionView.register(type, forSupplementaryViewOfKind: self.kind.rawValue, withReuseIdentifier: identifier ?? self.identifier)
         } else {
-            collectionView.register(type, forSupplementaryViewOfKind: self.kind.rawValue, withReuseIdentifier: self.identifier)
+            collectionView.register(UINib(nibName: nibName, bundle: nil), forSupplementaryViewOfKind: self.kind.rawValue, withReuseIdentifier: identifier ?? self.identifier)
         }
     }
     
     //MARK: Dequeue
-    internal static func _dequeueView(withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath) -> Self? {
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: self.kind.rawValue, withReuseIdentifier: self.identifier, for: indexPath) as? Self else {
+    internal static func _dequeueView(withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> Self? {
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: self.kind.rawValue, withReuseIdentifier: identifier ?? self.identifier, for: indexPath) as? Self else {
             return nil
         }
         
         return view
     }
     
-    internal static func dequeueView<T: CollectionViewHeaderFooterViewReusable & NSObject>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath) -> Self {
-        self.registerView(ofType: type, withCollectionView: collectionView)
-        return _dequeueView(withCollectionView: collectionView, forIndexPath: indexPath)!
+    internal static func dequeueView<T: CollectionViewHeaderFooterViewReusable & NSObject>(ofType type: T.Type, withCollectionView collectionView: UICollectionView, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> Self {
+        self.registerView(ofType: type, withCollectionView: collectionView, withIdentifier: identifier)
+        return _dequeueView(withCollectionView: collectionView, forIndexPath: indexPath, withIdentifier: identifier)!
     }
 }
 
@@ -119,8 +122,8 @@ extension UICollectionView {
      - returns: Dequeued cell for given type
      
      */
-    public func dequeueCell<T: UICollectionViewCell & ViewReusable>(_ type: T.Type, forIndexPath indexPath: IndexPath) -> T {
-        return T.dequeueCell(ofType: type, withCollectionView: self, forIndexPath: indexPath)
+    public func dequeueCell<T: UICollectionViewCell & ViewReusable>(_ type: T.Type, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> T {
+        return T.dequeueCell(ofType: type, withCollectionView: self, forIndexPath: indexPath, withIdentifier: identifier)
     }
     
     /**
@@ -150,8 +153,8 @@ extension UICollectionView {
      - returns: Dequeued view for given type
      
      */
-    public func dequeueView<T: CollectionViewHeaderFooterViewReusable & UICollectionReusableView>(_ type: T.Type, forIndexPath indexPath: IndexPath) -> T {
-        return T.dequeueView(ofType: type, withCollectionView: self, forIndexPath: indexPath)
+    public func dequeueView<T: CollectionViewHeaderFooterViewReusable & UICollectionReusableView>(_ type: T.Type, forIndexPath indexPath: IndexPath, withIdentifier identifier: String? = nil) -> T {
+        return T.dequeueView(ofType: type, withCollectionView: self, forIndexPath: indexPath, withIdentifier: identifier)
     }
 }
 

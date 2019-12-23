@@ -18,11 +18,11 @@ import UIKit
  
 */
 public protocol NibProtocol: class {
-    static var nibName: String {get}
+    static var nibName: String? {get}
 }
 
 extension NibProtocol {
-    public static var nibName: String { return String(describing: Self.self) }
+    public static var nibName: String? { return String(describing: Self.self) }
 }
 
 extension NibProtocol {
@@ -35,7 +35,10 @@ extension NibProtocol {
      
     */
     public static func fromNib() -> Self {
-        let nibs = Bundle.main.loadNibNamed(Self.nibName, owner: nil, options: nil) ?? []
+        guard let nibName = Self.nibName else {
+            fatalError()
+        }
+        let nibs = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil) ?? []
         for nib in nibs {
             if let view = nib as? Self { return view }
          }
