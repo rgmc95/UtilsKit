@@ -2,7 +2,7 @@
 //  Double+Size.swift
 //  UtilsKit
 //
-//  Created by Mondésir Kévin on 06/11/2018.
+//  Created by RGMC on 06/11/2018.
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
