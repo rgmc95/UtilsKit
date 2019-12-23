@@ -8,6 +8,8 @@
 
 import Foundation
 
+private let kUserDefaultsName = "UtilsKit.CacheManager"
+
 /**
     Provide methods to cache and retrieve from cache codable objects.
  */
@@ -15,8 +17,7 @@ public class CacheManager: NSObject {
     
     /** The shared instance of the manager. */
     public static var shared: CacheManager = CacheManager()
-    private var cache = UserDefaults.standard
-    
+    private let cache = UserDefaults(suiteName: kUserDefaultsName)!
     
     /**
      Cache data with key.
@@ -62,6 +63,10 @@ public class CacheManager: NSObject {
      */
     public func delete(_ key: String) {
         cache.set(nil, forKey: key)
+    }
+    
+    public func resetCache() {
+        cache.removePersistentDomain(forName: kUserDefaultsName)
     }
 }
 
