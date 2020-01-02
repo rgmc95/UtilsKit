@@ -6,6 +6,8 @@
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
+import Foundation
+
 extension String {
     
     /**
