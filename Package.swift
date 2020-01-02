@@ -5,12 +5,18 @@ import PackageDescription
 
 let package = Package(
     name: "UtilsKit",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v10)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "UtilsKit",
             targets: ["UtilsKit"]),
+        .library(
+            name: "CoreDataKit",
+            targets: ["CoreData"]),
+        .library(
+            name: "NetworkKit",
+            targets: ["Network"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,5 +30,15 @@ let package = Package(
             dependencies: [],
             path: ".",
             sources: ["UtilsKit/Helpers", "UtilsKit/UI"]),
+        .target(
+            name: "CoreData",
+            dependencies: ["UtilsKit"],
+            path: ".",
+            sources: ["UtilsKit/CoreData"]),
+        .target(
+            name: "Network",
+            dependencies: ["UtilsKit"],
+            path: ".",
+            sources: ["UtilsKit/Network"]),
     ]
 )
