@@ -62,15 +62,17 @@ public struct AlertManager {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = alignment
             
-            let messageText = NSMutableAttributedString(
-                string: message ?? "",
-                attributes: [
-                    NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
-                ]
-            )
-            
-            alertController.setValue(messageText, forKey: "attributedMessage")
+            if let message = message {
+                let messageText = NSMutableAttributedString(
+                    string: message,
+                    attributes: [
+                        NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
+                    ]
+                )
+                
+                alertController.setValue(messageText, forKey: "attributedMessage")
+            }
             
             currenViewController.present(alertController, animated: true)
             
