@@ -11,8 +11,12 @@ import UIKit
 
 extension UIView {
     
+    /// Gradient direction case
     public enum GradientDirection {
+        /// Horizontal gradient
         case horizontal
+        
+        /// Vertical gradient
         case vertical
     }
     
@@ -26,14 +30,15 @@ extension UIView {
     @discardableResult public func addGradient(_ colors: [UIColor], direction: GradientDirection) -> CAGradientLayer {
         let gradient = CAGradientLayer()
         var frame = self.bounds
-        if self is UINavigationBar { frame.size.height += UIApplication._shared?.statusBarFrame.height ?? 0 }
+        if self is UINavigationBar { frame.size.height += UIApplication.sharedAux?.statusBarFrame.height ?? 0 }
         gradient.frame = frame
-        gradient.colors = colors.map({$0.cgColor})
+        gradient.colors = colors.map { $0.cgColor }
         
         switch direction {
         case .horizontal:
             gradient.startPoint = CGPoint(x: 0, y: 0)
             gradient.endPoint = CGPoint(x: 1, y: 0)
+            
         case .vertical:
             gradient.startPoint = CGPoint(x: 0, y: 0)
             gradient.endPoint = CGPoint(x: 0, y: 1)

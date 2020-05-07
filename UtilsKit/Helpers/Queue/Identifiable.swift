@@ -12,7 +12,11 @@ import Foundation
  Make an object identifiable
  */
 public protocol Identifiable {
-    var identifier: ObjectIdentifier {get}
+    
+    /// Unique identifier
+    var identifier: ObjectIdentifier { get }
+    
+    /// Compare this Identifiable with an other one
     func isEqualTo(_ identifiable: Identifiable) -> Bool
 }
 
@@ -21,6 +25,6 @@ extension Identifiable {
      Check the equality of two identifiables
      */
     public func isEqualTo(_ identifiable: Identifiable) -> Bool {
-        return self.identifier == identifiable.identifier
+        self.identifier == identifiable.identifier
     }
 }

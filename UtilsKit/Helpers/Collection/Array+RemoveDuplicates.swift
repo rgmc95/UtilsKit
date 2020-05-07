@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array where Element:Equatable {
+extension Array where Element: Equatable {
 
     func removeDuplicates() -> [Element] {
         var result = [Element]()

@@ -13,20 +13,23 @@ import UIKit
  */
 @IBDesignable open class PaddingLabel: UILabel {
     
+    // MARK: - Inspectables
     @IBInspectable public var topInset: CGFloat = 0.0
     @IBInspectable public var bottomInset: CGFloat = 0.0
     @IBInspectable public var leftInset: CGFloat = 0.0
     @IBInspectable public var rightInset: CGFloat = 0.0
     
-    override open func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets.init(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        super.drawText(in: rect.inset(by: insets))
-    }
-    
+    // MARK: - Variables
     override open var intrinsicContentSize: CGSize {
-        var intrinsicSuperViewContentSize = super.intrinsicContentSize
+        var intrinsicSuperViewContentSize: CGSize = super.intrinsicContentSize
         intrinsicSuperViewContentSize.height += topInset + bottomInset
         intrinsicSuperViewContentSize.width += leftInset + rightInset
         return intrinsicSuperViewContentSize
+    }
+    
+    // MARK: - Draw
+    override open func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
     }
 }

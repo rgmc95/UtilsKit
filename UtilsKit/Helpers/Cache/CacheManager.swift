@@ -15,9 +15,10 @@ private let kUserDefaultsName = "UtilsKit.CacheManager"
  */
 public class CacheManager: NSObject {
     
-    /** The shared instance of the manager. */
-    public static var shared: CacheManager = CacheManager()
-    private let cache = UserDefaults(suiteName: kUserDefaultsName)!
+    /// The shared singleton AlertManager object
+    public static var shared = CacheManager()
+    
+    private let cache = UserDefaults(suiteName: kUserDefaultsName)
     
     /**
      Cache data with key.
@@ -31,11 +32,12 @@ public class CacheManager: NSObject {
     public func set<T: Codable>(_ object: T, key: String) {
         let jsonEncoder = JSONEncoder()
         do {
-            let jsonData = try jsonEncoder.encode(object)
-            cache.set(jsonData, forKey: key)
-            cache.synchronize()
+            let jsonData: Encodable = try jsonEncoder.encode(object)
+            cache?.set(jsonData, forKey: key)
+            cache?.synchronize()
+        } catch {
+            log(.biometry, "Set \(object)", error: error)
         }
-        catch { }
     }
     
     /**
@@ -51,8 +53,8 @@ public class CacheManager: NSObject {
      */
     public func get<T: Codable>(forKey key: String?) -> T? {
         guard let key = key else { return nil }
-        let json = cache.data(forKey: key)
-        let object = T.decode(from: json)
+        let data: Data? = cache?.data(forKey: key)
+        let object = T.decode(from: data)
         return object
     }
     
@@ -62,39 +64,10 @@ public class CacheManager: NSObject {
         - parameter key: the key of the data to delete.
      */
     public func delete(_ key: String) {
-        cache.set(nil, forKey: key)
+        cache?.set(nil, forKey: key)
     }
     
     public func resetCache() {
-        cache.removePersistentDomain(forName: kUserDefaultsName)
-    }
-}
-
-/**  Protocol to make data cachable */
-public protocol CacheObjectProtocol: Codable {
-    /**  The key of the cached data */
-    var cacheKey: String {get}
-}
-
-extension CacheObjectProtocol {
-    
-    /**
-     Retrieve object from cache corresponding to key.
-     
-     `nil` means no data or an error during decoding.
-     
-     - parameter key: the key of the data to retrieve.
-     
-     - returns: the retrieved data or nil.
-     */
-    public static func get(forKey key: String) -> Self? {
-        return CacheManager.shared.get(forKey: key)
-    }
-    
-    /**
-     Cache object.
-     */
-    public func save() {
-        CacheManager.shared.set(self, key: self.cacheKey)
+        cache?.removePersistentDomain(forName: kUserDefaultsName)
     }
 }

@@ -18,16 +18,16 @@ extension URL {
      - parameter inApp: indicate if it is an in-app URL (such as deeplink). Default is true.
      - parameter safariControllerClass: indicate custom safariController class.
      */
-    public func open<T: SFSafariViewController>(inApp: Bool = true, safariControllerClass: T.Type) {
+    public func open<T: SFSafariViewController>(safariControllerClass: T.Type, inApp: Bool = true) {
         if !self.absoluteString.hasPrefix("http") || !inApp {
             self._open()
             return
         } else {
-            guard let currentViewController = UIApplication._shared?.topViewController else {
+            guard let currentViewController = UIApplication.sharedAux?.topViewController else {
                 self._open()
                 return
             }
-            let safariController = safariControllerClass.init(url: self)
+            let safariController: T = safariControllerClass.init(url: self)
             currentViewController.present(safariController, animated: true, completion: nil)
         }
     }
@@ -38,14 +38,14 @@ extension URL {
      - parameter inApp: indicate if it is an in-app URL (such as deeplink). Default is true.
      */
     public func open(inApp: Bool = true) {
-        self.open(inApp: inApp, safariControllerClass: SFSafariViewController.self)
+        self.open(safariControllerClass: SFSafariViewController.self, inApp: inApp)
     }
     
     private func _open() {
         if #available(iOS 10.0, *) {
-            UIApplication._shared?.open(self, options: [:], completionHandler: nil)
+            UIApplication.sharedAux?.open(self, options: [:], completionHandler: nil)
         } else {
-            _ = UIApplication._shared?.openURL(self)
+            _ = UIApplication.sharedAux?.openURL(self)
         }
     }
 }

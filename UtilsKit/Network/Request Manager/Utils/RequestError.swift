@@ -8,11 +8,12 @@
 
 import Foundation
 
-//MARK: - Network error Enum
+// MARK: - Network error Enum
 public enum RequestError: Error, LocalizedError {
     case url, json
     
-    var statusCode: Int? {
+    /// Request status code
+    internal var statusCode: Int? {
         switch self {
         case .url, .json: return 400
         }

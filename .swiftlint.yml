@@ -105,7 +105,6 @@ whitelist_rules:
 - redundant_optional_initialization
 - redundant_set_access_control
 - redundant_string_enum_value
-- redundant_type_annotation
 - redundant_void_return
 - return_arrow_whitespace
 - shorthand_operator
@@ -148,6 +147,7 @@ whitelist_rules:
 
 excluded:
 - Pods/
+- Package.swift
 
 anyobject_protocol:
     severity: error
@@ -162,6 +162,7 @@ attributes:
     always_on_same_line: 
         - "@IBDesignable"
         - "@objc"
+        - "@discardableResult"
 
 class_delegate_protocol:
     severity: error
@@ -170,7 +171,7 @@ closing_brace:
     severity: warning
 
 closure_body_length:
-    warning: 30
+    warning: 50
     error: 100
 
 closure_end_indentation:
@@ -285,6 +286,11 @@ file_name_no_space:
 
 file_types_order:
     severity: warning
+    order:
+        - supporting_type
+        - main_type
+        - extension
+        - preview_provider
 
 first_where:
     severity: error
@@ -502,9 +508,6 @@ redundant_set_access_control:
     severity: warning
 
 redundant_string_enum_value:
-    severity: warning
-
-redundant_type_annotation:
     severity: warning
 
 redundant_void_return:

@@ -8,7 +8,7 @@
 
 import Foundation
 
-//MARK: - Request
+// MARK: - Request
 extension RequestManager {
     
     private func request(
@@ -22,57 +22,56 @@ extension RequestManager {
         authentification: AuthentificationProtocol? = nil,
         queue: DispatchQueue = DispatchQueue.main,
         identifier: String? = nil,
-        completion: ((Result<NetworkResponse, Error>) -> Void)? = nil)
-    {
+        completion: ((Result<NetworkResponse, Error>) -> Void)? = nil) {
+        
         queue.async {
-            var request: URLRequest
-            
             do {
-                request = try self.buildRequest(scheme: scheme,
-                                                host: host,
-                                                path: path,
-                                                method: method,
-                                                parameters: parameters,
-                                                encoding: encoding,
-                                                headers: headers,
-                                                authentification: authentification)
-            } catch let error {
+                var request: URLRequest = try self.buildRequest(scheme: scheme,
+                                                                host: host,
+                                                                path: path,
+                                                                method: method,
+                                                                parameters: parameters,
+                                                                encoding: encoding,
+                                                                headers: headers,
+                                                                authentification: authentification)
+                
+                let requestId: String = identifier ?? request.url?.absoluteString ?? ""
+                request.timeoutInterval = self.requestTimeoutInterval ?? request.timeoutInterval
+                
+                log(NetworkLogType.sending(method.rawValue), requestId)
+                
+                URLSession(configuration: self.requestConfiguration).dataTask(with: request) { data, response, _ in
+                    queue.async {
+                        guard let response = response as? HTTPURLResponse else {
+                            completion?(.failure(ResponseError.unknow))
+                            return
+                        }
+                        
+                        if response.statusCode >= 200 && response.statusCode < 300 {
+                            log(NetworkLogType.success(method.rawValue), requestId)
+                            completion?(.success((response.statusCode, data)))
+                            return
+                        } else {
+                            let error = ResponseError.network(response: response)
+                            log(NetworkLogType.error(method.rawValue), requestId, error: error)
+                            completion?(.failure(error))
+                            return
+                        }
+                    }
+                }
+                .resume()
+            } catch {
                 completion?(.failure(error))
                 return
             }
-            
-            let _identifier = identifier ?? request.url?.absoluteString ?? ""
-            
-            let session = URLSession(configuration: self.requestConfiguration)
-            
-            if let timeoutInterval = self.requestTimeoutInterval {
-                request.timeoutInterval = timeoutInterval
-            }
-            
-            log(.network(method: method.rawValue, type: .sending), _identifier)
-            
-            session.dataTask(with: request, completionHandler: { (data, response, error) in
-                queue.async {
-                    guard let response = response as? HTTPURLResponse else {
-                        completion?(.failure(ResponseError.unknow))
-                        return
-                    }
-                    
-                    if response.statusCode >= 200 && response.statusCode < 300 {
-                        log(.network(method: method.rawValue, type: .success), _identifier)
-                        completion?(.success((response.statusCode, data)))
-                        return
-                    } else {
-                        let error = ResponseError.network(response: response)
-                        log(.network(method: method.rawValue, type: .error), _identifier, error: error)
-                        completion?(.failure(error))
-                        return
-                    }
-                }
-            }).resume()
         }
     }
     
+    /**
+     Send request
+     - parameter request: Request
+     - parameter result: Request Result
+     */
     public func request(_ request: RequestProtocol,
                         result: ((Result<NetworkResponse, Error>) -> Void)? = nil) {
         self.request(scheme: request.scheme,

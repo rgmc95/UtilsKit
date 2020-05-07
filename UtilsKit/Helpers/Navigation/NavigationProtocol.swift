@@ -17,17 +17,17 @@ public protocol NavigationProtocol {
     /**
      Kind of segue for the view controller animation.
      */
-    var navigationSegue: Segue {get set}
+    var navigationSegue: Segue { get set }
     
     /**
      Instance Identifier
      */
-    var instanceIdentifier: String? {get}
+    var instanceIdentifier: String? { get }
     
     /**
      Sender
      */
-    var previousViewController: UIViewController? {get set}
+    var previousViewController: UIViewController? { get set }
 }
 
 extension NavigationProtocol where Self: UIViewController {
@@ -45,7 +45,7 @@ extension NavigationProtocol where Self: UIViewController {
      */
     public func push(from controller: UIViewController? = nil,
                      animated: Bool = true,
-                     completion: (()->Void)? = nil) {
+                     completion: (() -> Void)? = nil) {
         
         Segue.push.present(self,
                            from: controller,
@@ -69,7 +69,7 @@ extension NavigationProtocol where Self: UIViewController {
     public func popover(from controller: UIViewController? = nil,
                         withNavigationController: Bool = false,
                         animated: Bool = true,
-                        completion: (()->Void)? = nil) {
+                        completion: (() -> Void)? = nil) {
         
         Segue.popover.present(self,
                               from: controller,
@@ -93,18 +93,17 @@ extension NavigationProtocol where Self: UIViewController {
      - parameter completion: completion handler called upon push. Default is nil.
      
      */
-    public func popover(from controller: UIViewController? = nil,
-                        anchor: UIView?,
+    public func popover(anchor: UIView,
+                        from controller: UIViewController? = nil,
                         withNavigationController: Bool = false,
                         animated: Bool = true,
-                        completion: (()->Void)? = nil) {
+                        completion: (() -> Void)? = nil) {
         
-        Segue.popover.present(self,
-                              from: controller,
-                              withNavigationController: withNavigationController,
-                              fromView: anchor,
-                              animated: animated,
-                              completion: completion)
+        Segue.popoverView(anchor).present(self,
+                                          from: controller,
+                                          withNavigationController: withNavigationController,
+                                          animated: animated,
+                                          completion: completion)
     }
     
     
@@ -123,18 +122,17 @@ extension NavigationProtocol where Self: UIViewController {
      - parameter completion: completion handler called upon push. Default is nil.
      
      */
-    public func popover(from controller: UIViewController? = nil,
-                        anchor: UIBarButtonItem?,
+    public func popover(anchor: UIBarButtonItem,
+                        from controller: UIViewController? = nil,
                         withNavigationController: Bool = false,
                         animated: Bool = true,
-                        completion: (()->Void)? = nil) {
+                        completion: (() -> Void)? = nil) {
         
-        Segue.popover.present(self,
-                              from: controller,
-                              withNavigationController: withNavigationController,
-                              fromBarButtonItem: anchor,
-                              animated: animated,
-                              completion: completion)
+        Segue.popoverBarButton(anchor).present(self,
+                                               from: controller,
+                                               withNavigationController: withNavigationController,
+                                               animated: animated,
+                                               completion: completion)
     }
     
     /**
@@ -153,7 +151,7 @@ extension NavigationProtocol where Self: UIViewController {
     public func modal(from controller: UIViewController? = nil,
                       withNavigationController: Bool = false,
                       animated: Bool = true,
-                      completion: (()->Void)? = nil) {
+                      completion: (() -> Void)? = nil) {
         
         Segue.modal.present(self,
                             from: controller,
@@ -175,7 +173,7 @@ extension NavigationProtocol where Self: UIViewController {
      */
     public func modalBlur(from controller: UIViewController? = nil,
                           animated: Bool = true,
-                          completion: (()->Void)? = nil) {
+                          completion: (() -> Void)? = nil) {
         
         Segue.modalBlur.present(self,
                                 from: controller,
@@ -190,138 +188,15 @@ extension NavigationProtocol where Self: UIViewController {
      - parameter completion: completion handler called upon push.
      
      */
-    public func close(_ completion: (()->Void)? = nil, animated: Bool = true) {
-        self.navigationSegue.close(self, animated: animated, completion: {
+    public func close(_ completion: (() -> Void)? = nil, animated: Bool = true) {
+        self.navigationSegue.close(self, animated: animated) {
             completion?()
-        })
-    }
-}
-
-/**
- 
- Styles of the navigation.
- 
- Navigation styles provided:
- 
- - push
- - modal
- - modalBlur
- 
- */
-public enum Segue {
-    case push
-    case modal
-    case modalBlur
-    case popover
-    
-    public func present<T: UIViewController & NavigationProtocol>(
-        _ controller: T?,
-        from currentViewController: UIViewController? = nil,
-        withNavigationController: Bool = false,
-        fromView view: UIView? = nil,
-        fromBarButtonItem barButtonItem: UIBarButtonItem? = nil,
-        animated: Bool = true,
-        completion: (() -> Void)? = nil) {
-        
-        DispatchQueue.main.async {
-            guard let currentViewController = currentViewController ?? UIApplication._shared?.topViewController else { return }
-            guard var controller = controller else { return }
-            
-            if
-                let currentViewController = currentViewController as? T,
-                let currentIdentifier = currentViewController.instanceIdentifier,
-                let controllerIdentifier = controller.instanceIdentifier,
-                controllerIdentifier == currentIdentifier
-            {
-                    return
-            }
-            controller.previousViewController = currentViewController
-            
-            // If popup close it, open controller then re-open popup
-            if let alertViewController = UIApplication._shared?.topAlertView {
-                alertViewController.dismiss(animated: false, completion: {
-                    self.present(controller, from: currentViewController, withNavigationController: withNavigationController, animated: animated, completion: {
-                        UIApplication._shared?.topViewController?.present(alertViewController, animated: false, completion: nil)
-                    })
-                })
-                return
-            }
-            
-            switch self {
-            case .push:
-                if let navigationController = (currentViewController as? UINavigationController) ?? currentViewController.navigationController {
-                    controller.navigationSegue = .push
-                    navigationController.pushViewController(controller, animated: animated)
-                    completion?()
-                } else {
-                    controller.navigationSegue = .modal
-                    currentViewController.present(UINavigationController(rootViewController: controller), animated: animated, completion: completion)
-                }
-            case .popover:
-                controller.navigationSegue = .popover
-                
-                // Navigation Controller or not
-                let controllerToPresent: UIViewController
-                if withNavigationController {
-                    controllerToPresent = UINavigationController(rootViewController: controller)
-                } else {
-                    controllerToPresent = controller
-                }
-                
-                controllerToPresent.modalPresentationStyle = .popover
-                
-                // Anchor
-                if let view = view {
-                    controllerToPresent.popoverPresentationController?.sourceView = view
-                    controllerToPresent.popoverPresentationController?.sourceRect = view.bounds
-                } else if let barButtonItem = barButtonItem {
-                    controllerToPresent.popoverPresentationController?.barButtonItem = barButtonItem
-                } else {
-                    controllerToPresent.popoverPresentationController?.sourceView = currentViewController.view
-                    controllerToPresent.popoverPresentationController?.sourceRect = CGRect(x: currentViewController.view.bounds.midX, y: currentViewController.view.bounds.midY, width: 0, height: 0)
-                    controllerToPresent.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-
-                }
-                
-                currentViewController.present(controllerToPresent, animated: animated, completion: completion)
-            case .modal:
-                controller.navigationSegue = self
-                let controllerToPresent = withNavigationController ? UINavigationController(rootViewController: controller) : controller
-                controllerToPresent.modalPresentationStyle = controller.modalPresentationStyle
-                controllerToPresent.modalTransitionStyle = controller.modalTransitionStyle
-                currentViewController.present(controllerToPresent, animated: animated, completion: completion)
-            case .modalBlur:
-                controller.navigationSegue = .modalBlur
-                controller.modalPresentationStyle = .overFullScreen
-                controller.view.backgroundColor = UIColor.clear
-                controller.view.addBlur()
-                currentViewController.present(controller, animated: animated, completion: completion)
-            }
-        }
-    }
-    
-    public func close<T: UIViewController & NavigationProtocol>(
-        _ viewController: T,
-        animated: Bool = true,
-        completion: (() -> Void)? = nil) {
-        
-        DispatchQueue.main.async {
-            switch self {
-            case .modal, .modalBlur, .popover:
-                viewController.dismiss(animated: animated, completion: completion)
-            case .push:
-                if let navigationController = viewController.navigationController {
-                    navigationController.popViewController(animated: animated)
-                    completion?()
-                } else {
-                    viewController.dismiss(animated: animated, completion: completion)
-                }
-            }
         }
     }
 }
 
 extension UIViewController {
+    
     fileprivate func getFirstNavigationController() -> UINavigationController? {
         if let navigationController = self.navigationController {
             return navigationController.getFirstNavigationController()

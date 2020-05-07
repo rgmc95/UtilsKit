@@ -8,9 +8,9 @@
 
 import Foundation
 
-func primaryKeyfrom(_ value: Any?) -> PrimaryKey? {
-    if let value = value as? String { return value }
-    if let value = value as? Int { return value }
+internal func primaryKeyfrom(_ value: Any?) -> PrimaryKey? {
+    if let value: String = value as? String { return value }
+    if let value: Int = value as? Int { return value }
     return nil
 }
 
@@ -19,23 +19,19 @@ func primaryKeyfrom(_ value: Any?) -> PrimaryKey? {
  Used in `CoreDataManager` and `CoreDataModel` as the primary key of the entity
  */
 public protocol PrimaryKey: CVarArg {
-    var type: String {get}
+    var type: String { get }
 }
 
 extension String: PrimaryKey {
     /**
      Primary key value for type `String`
      */
-    public var type: String {
-        return "%@"
-    }
+    public var type: String { "%@" }
 }
 
 extension Int: PrimaryKey {
     /**
      Primary key value for type `Int`
      */
-    public var type: String {
-        return "%d"
-    }
+    public var type: String { "%d" }
 }

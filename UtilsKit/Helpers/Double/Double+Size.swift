@@ -16,7 +16,7 @@ extension Int {
      - returns: the spage in octet, Ko, Mo, Go, To or Po..
      */
     public func toSpace() -> String {
-        return Double(self).toSpace()
+        Double(self).toSpace()
     }
 }
 
@@ -55,12 +55,13 @@ extension Double {
         numberFormatter.usesSignificantDigits = true
         numberFormatter.maximumSignificantDigits = 3
         
-        let val = Unit.allUnits.map({ ((self / $0.rawValue), $0) }).compactMap { (size, unit) -> (String, Unit)? in
-            guard let string = numberFormatter.string(from: NSNumber(value: size)) else {
-                return nil
+        let val: (String, Double.Unit)? = Unit.allUnits
+            .map { ((self / $0.rawValue), $0) }
+            .compactMap { size, unit -> (String, Unit)? in
+                guard let string = numberFormatter.string(from: NSNumber(value: size)) else { return nil }
+                return (string, unit)
             }
-            return (string, unit)
-        }.reduce(nil) { (result, testedResult) -> (String, Unit)? in
+        .reduce(nil) { result, testedResult -> (String, Unit)? in
             guard let result = result else {
                 return testedResult
             }

@@ -8,9 +8,9 @@
 
 import UIKit
 
-internal extension UIApplication {
+extension UIApplication {
     
-    static var _shared: UIApplication? {
+    internal static var sharedAux: UIApplication? {
         #if APP_EXTENSION
         return nil
         #else

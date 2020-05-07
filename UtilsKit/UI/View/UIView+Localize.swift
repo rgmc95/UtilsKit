@@ -21,11 +21,11 @@ extension UITextField {
     /**
      Localize the text field
      */
-    public override func localize() {
-        if let text = placeholder {
+    override public func localize() {
+        if let text: String = placeholder {
             self.placeholder = text.localized
         }
-        if let text = text {
+        if let text: String = text {
             self.text = text.localized
         }
         if let view = self.rightView {
@@ -41,8 +41,8 @@ extension UIButton {
     /**
      Localize the button
      */
-    public override func localize() {
-        if let text = title(for: UIControl.State()) {
+    override public func localize() {
+        if let text: String = title(for: UIControl.State()) {
             self.setTitle(text.localized, for: UIControl.State())
         }
     }
@@ -52,8 +52,8 @@ extension UITextView {
     /**
      Localize the text view
      */
-    public override func localize() {
-        if let text = text {
+    override public func localize() {
+        if let text: String = text {
             self.text = text.localized
         }
     }
@@ -63,7 +63,7 @@ extension UIStackView {
     /**
      Localize the stack view
      */
-    public override func localize() {
+    override public func localize() {
         for view in self.arrangedSubviews {
             view.localize()
         }
@@ -74,9 +74,7 @@ extension UILabel {
     /**
      Localize the label
      */
-    public override func localize() {
+    override public func localize() {
         self.text = self.text?.localized
     }
 }
-
-

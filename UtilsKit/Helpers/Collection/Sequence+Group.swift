@@ -15,10 +15,10 @@ extension Sequence {
      
         - returns: a dictionnary grouped with passed key and an array of iterated element for values.
      */
-    public func group<U: Hashable>(by key: (Iterator.Element) -> U) -> [U:[Iterator.Element]] {
+    public func group<U: Hashable>(by key: (Iterator.Element) -> U) -> [U: [Iterator.Element]] {
         var categories: [U: [Iterator.Element]] = [:]
         for element in self {
-            let key = key(element)
+            let key: U = key(element)
             if case nil = categories[key]?.append(element) {
                 categories[key] = [element]
             }

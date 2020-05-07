@@ -15,11 +15,11 @@ extension UITableView {
      
      - parameter completion: completion call before layout superview
      */
-    public func resizeHeader(completion: ((CGFloat) -> ())? = nil) {
+    public func resizeHeader(completion: ((CGFloat) -> Void)? = nil) {
         
         guard let headerView = self.tableHeaderView else { return }
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var headerFrame = headerView.frame
+        let height: CGFloat = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        var headerFrame: CGRect = headerView.frame
         
         if height != headerFrame.size.height {
             // Header size
@@ -33,4 +33,3 @@ extension UITableView {
         }
     }
 }
-

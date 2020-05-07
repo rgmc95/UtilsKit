@@ -20,6 +20,10 @@ public typealias JSON = [String: Any]
  */
 @available(iOS 10.0, *)
 public protocol CoreDataUpdatable {
+    
+    /**
+            Implement this method to update a `CoreDataModel` object
+     */
     static func update(with json: Any) -> Self?
 }
 
@@ -32,11 +36,11 @@ public protocol CoreDataModel: CoreDataUpdatable where Self: NSManagedObject {
     /**
      The name of the core data entity
      */
-    static var entityName: String {get}
+    static var entityName: String { get }
     /**
      The primary key of the entity; basically an id used on CRUD operations
      */
-    static var primaryKey: String {get}
+    static var primaryKey: String { get }
     
     /**
      Do any core data operations on the entity here
@@ -51,6 +55,6 @@ extension CoreDataModel {
      Get entity primary key
      */
     var primaryKey: PrimaryKey? {
-        return primaryKeyfrom(self.value(forKey: Self.primaryKey))
+        primaryKeyfrom(self.value(forKey: Self.primaryKey))
     }
 }

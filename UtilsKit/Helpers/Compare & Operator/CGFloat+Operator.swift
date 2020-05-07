@@ -22,25 +22,25 @@ public protocol CGFloatConvertor {
 
 extension Int: CGFloatConvertor {
     public func toCGFloat() -> CGFloat {
-        return CGFloat(self)
+        CGFloat(self)
     }
 }
 
 extension Float: CGFloatConvertor {
     public func toCGFloat() -> CGFloat {
-        return CGFloat(self)
+        CGFloat(self)
     }
 }
 
 extension Double: CGFloatConvertor {
     public func toCGFloat() -> CGFloat {
-        return CGFloat(self)
+        CGFloat(self)
     }
 }
 
 extension UInt64: CGFloatConvertor {
     public func toCGFloat() -> CGFloat {
-        return CGFloat(self)
+        CGFloat(self)
     }
 }
 
@@ -55,7 +55,7 @@ extension CGFloat {
      - returns: the result of the multiplication.
      */
     public static func * (left: CGFloatConvertor, right: CGFloat) -> CGFloat {
-        return left.toCGFloat() * right
+        left.toCGFloat() * right
     }
     
     /**
@@ -68,7 +68,7 @@ extension CGFloat {
      - returns: the result of the multiplication.
      */
     public static func * (left: CGFloat, right: CGFloatConvertor) -> CGFloat {
-        return right.toCGFloat() * left
+        right.toCGFloat() * left
     }
     
     /**
@@ -81,7 +81,7 @@ extension CGFloat {
      - returns: the result of the division.
      */
     public static func / (left: CGFloatConvertor, right: CGFloat) -> CGFloat {
-        return left.toCGFloat() / right
+        left.toCGFloat() / right
     }
     
     /**
@@ -94,7 +94,6 @@ extension CGFloat {
      - returns: the result of the division.
      */
     public static func / (left: CGFloat, right: CGFloatConvertor) -> CGFloat {
-        return  left / right.toCGFloat()
+        left / right.toCGFloat()
     }
-    
 }

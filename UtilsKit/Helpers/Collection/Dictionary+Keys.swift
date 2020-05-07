@@ -1,5 +1,5 @@
 //
-//  Dictionnary+MultipleKeys.swift
+//  Dictionary+Keys.swift
 //  UtilsKit
 //
 //  Created by RGMC on 27/07/2018.
@@ -28,9 +28,9 @@ extension Dictionary where Key == String {
      - returns: the current language.
      */
     public func getValue<T: Any>(for key: Key) throws -> T {
-        var keys = key.split(separator: ".").map({String($0)})
+        var keys: [String] = key.split(separator: ".").map { String($0) }
         
-        if let firstKey = keys.first, keys.count > 1 {
+        if let firstKey: String = keys.first, keys.count > 1 {
             if let next: [String: Any] = try? self.getValue(for: firstKey) {
                 keys.remove(at: 0)
                 return try next.getValue(for: keys.joined(separator: "."))
@@ -42,6 +42,7 @@ extension Dictionary where Key == String {
         switch value {
         case .none:
             throw ObjectError.notFound(key: key, type: String(describing: T.self))
+            
         case .some(let valueNotNil):
             return valueNotNil
         }

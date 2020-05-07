@@ -31,7 +31,7 @@ open class LoadingButton: UIButton {
         case rotateImage(duration: Double), loader(LoaderPosition), none
     }
     
-    //MARK: - Inspectables
+    // MARK: - Inspectables
     /**
      Wether or not the activity indicator starts loading immediatly after initialization
      */
@@ -82,8 +82,8 @@ open class LoadingButton: UIButton {
         didSet { self.layer.cornerRadius = cornerRadius }
     }
     
-    //MARK: - Variables
-    private var activityIndicator: UIActivityIndicatorView!
+    // MARK: - Variables
+    private var activityIndicator: UIActivityIndicatorView?
     
     // Save state of the colors or title to be able to restore them later
     private var originalBackgroundColor: UIColor?
@@ -93,7 +93,7 @@ open class LoadingButton: UIButton {
     private var originalLeftInset: CGFloat?
     private var originalInsets: UIEdgeInsets?
     
-    //MARK: - Custom conf
+    // MARK: - Custom conf
     
     /**
      Type of the loader
@@ -106,9 +106,12 @@ open class LoadingButton: UIButton {
      */
     public var isLoading: Bool = false {
         didSet {
-            if oldValue == isLoading { return }
-            if isLoading { startLoader() }
-            else { stopLoader() }
+            if oldValue == self.isLoading { return }
+            if self.isLoading {
+                self.startLoader()
+            } else {
+                self.stopLoader()
+            }
         }
     }
     
@@ -116,13 +119,13 @@ open class LoadingButton: UIButton {
         didSet { setColors() }
     }
     
-    //MARK: - Init
+    // MARK: - Init
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.setup()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
     }
@@ -139,7 +142,7 @@ open class LoadingButton: UIButton {
     }
     
     private func setBackgroundColor(_ color: UIColor?) {
-        if let backgroundColor = color {
+        if let backgroundColor: UIColor = color {
             if self.originalBackgroundColor == nil { self.originalBackgroundColor = self.backgroundColor }
             self.backgroundColor = backgroundColor
         }
@@ -147,7 +150,7 @@ open class LoadingButton: UIButton {
     
     private func setTitleColor(_ color: UIColor?) {
         if self.originalTitleColor == nil { self.originalTitleColor = self.titleLabel?.textColor }
-        if let loadingColor = color {
+        if let loadingColor: UIColor = color {
             self.setTitleColor(loadingColor, for: .normal)
         }
     }
@@ -162,6 +165,7 @@ open class LoadingButton: UIButton {
             switch self.loaderType {
             case .loader(let position):
                 titleColor = position == .center ? self.titleLabel?.textColor : self.loadingTitleColor ?? self.titleLabel?.textColor
+                
             default:
                 titleColor = self.loadingTitleColor ?? self.titleLabel?.textColor
             }
@@ -189,7 +193,7 @@ open class LoadingButton: UIButton {
         }
     }
     
-    //MARK: - Loader
+    // MARK: - Loader
     private func startLoader() {
         self.activityIndicator?.removeFromSuperview()
         self.isEnabled = false
@@ -198,38 +202,42 @@ open class LoadingButton: UIButton {
         case .loader(let position):
             self.activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             
-            self.activityIndicator.style = .white
-            self.activityIndicator.color = self.tintColor
-            self.activityIndicator.hidesWhenStopped = true
-            self.activityIndicator.startAnimating()
-            self.activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            guard let activityIndicator = self.activityIndicator else { return }
+            activityIndicator.style = .white
+            activityIndicator.color = self.tintColor
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.startAnimating()
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
             
-            self.addSubview(self.activityIndicator)
+            self.addSubview(activityIndicator)
             
-            var constraints = [self.activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)]
+            var constraints: [NSLayoutConstraint] = [activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)]
             
             self.originalInsets = self.contentEdgeInsets
-            let inset = 30+self.loaderInset
+            let inset: CGFloat = 30 + self.loaderInset
             self.contentEdgeInsets.left = inset
             self.contentEdgeInsets.right = inset
             
             switch position {
             case .right:
-                constraints.append(self.activityIndicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -self.loaderInset))
+                constraints.append(activityIndicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -self.loaderInset))
+                
             case .left:
                 self.hideImage()
+                constraints.append(activityIndicator.leftAnchor.constraint(equalTo: self.leftAnchor, constant: self.loaderInset))
                 
-                constraints.append(self.activityIndicator.leftAnchor.constraint(equalTo: self.leftAnchor, constant: self.loaderInset))
             case .center:
                 self.hideTitle()
                 self.hideImage()
                 
-                constraints.append(self.activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor))
+                constraints.append(activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor))
             }
             
             NSLayoutConstraint.activate(constraints)
+            
         case .rotateImage(let duration):
             self.imageView?.rotate(duration: duration)
+            
         case .none:
             break
         }
@@ -249,7 +257,7 @@ open class LoadingButton: UIButton {
         self.showImageIfNeeded()
     }
     
-    //MARK: UI Utils
+    // MARK: UI Utils
     private func hideTitle() {
         self.originalTitleColor = self.titleLabel?.textColor
         self.setTitleColor(.clear, for: .normal)

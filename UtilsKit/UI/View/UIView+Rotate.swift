@@ -10,7 +10,7 @@ import UIKit
 
 extension UIView {
     
-    private static let kRotationAnimationKey = "rotationanimationkey"
+    private static let kRotationAnimationKey: String = "rotationanimationkey"
     
     /**
      Start 360 degree rotation on view

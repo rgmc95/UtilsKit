@@ -8,14 +8,29 @@
 
 import Foundation
 
-public protocol AuthentificationProtocol {
-    var parameters: [String: String] {get}
-    var encoding: AuthentificationEncoding {get}
+/**
+ Authentification encoding
+ */
+public enum AuthentificationEncoding {
+    
+    /// Encode parameters in request header
+    case header
+    
+    /// Encode parameters in body
+    case body
+    
+    /// Encode parameters in URL
+    case url
 }
 
-
-public enum AuthentificationEncoding {
-    case header
-    case body
-    case url
+/**
+ This protocol is used to authenticate a request with the chosen encoding and parameters
+ */
+public protocol AuthentificationProtocol {
+    
+    /// The parameters to encode
+    var parameters: [String: String] { get }
+    
+    /// The type of the encoding
+    var encoding: AuthentificationEncoding { get }
 }

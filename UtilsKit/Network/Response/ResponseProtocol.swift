@@ -8,8 +8,8 @@
 
 import UIKit
 
-//MARK: - Error
-public enum ResponseError: Error, LocalizedError  {
+// MARK: - Error
+public enum ResponseError: Error, LocalizedError {
     case unknow
     case decodable
     case data
@@ -29,16 +29,29 @@ public enum ResponseError: Error, LocalizedError  {
     }
 }
 
-//MARK: - Decodable response
+// MARK: - Decodable response
+
+/**
+ Protocol used to get a decoded response of `RequestProtocol`
+ */
 public protocol ResponseProtocol {
+    
+    /// Response type
     associatedtype ResponseType
     
+    /**
+        Get the decoded response of type `ResponseType`
+     */
     func response(completion: ((Result<ResponseType, Error>) -> Void)?)
 }
 
 extension RequestProtocol where Self: ResponseProtocol, Self.ResponseType: Decodable {
+    
+    /**
+        Get the decoded response of `Decodable` type based
+     */
     public func response(completion: ((Result<ResponseType, Error>) -> Void)? = nil) {
-        self.responseData { (result) in
+        self.responseData { result in
             switch result {
             case .success(let response):
                 guard let data = response.data else { completion?(.failure(ResponseError.data)); return }
@@ -51,8 +64,12 @@ extension RequestProtocol where Self: ResponseProtocol, Self.ResponseType: Decod
 }
 
 extension RequestProtocol where Self: ResponseProtocol, Self.ResponseType: CoreDataUpdatable {
+    
+    /**
+        Get the decoded response of `CoreDataUpdatable` type based
+     */
     public func response(completion: ((Result<ResponseType, Error>) -> Void)? = nil) {
-        self.responseData { (result) in
+        self.responseData { result in
             switch result {
             case .success(let response):
                 guard let data = response.data else { completion?(.failure(ResponseError.data)); return }

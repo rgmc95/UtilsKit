@@ -10,28 +10,29 @@ import Foundation
 
 private let kUserDefaultsName = "UtilsKit.NetworkCache"
 
-struct NetworkCache {
+internal struct NetworkCache {
     
-    //MARK: - Singleton
-    public static let shared = NetworkCache()
+    // MARK: - Singleton
+    /// The shared singleton NetworkCache object
+    internal static let shared = NetworkCache()
     
-    //MARK: - Variables
-    private let defaults = UserDefaults(suiteName: kUserDefaultsName)!
+    // MARK: - Variables
+    internal let defaults = UserDefaults(suiteName: kUserDefaultsName)
     
-    //MARK: - Functions
-    func set(_ datas: Data?, for key: String) {
-        defaults.setValue(datas, forKey: key)
+    // MARK: - Functions
+    internal func set(_ datas: Data?, for key: String) {
+        defaults?.setValue(datas, forKey: key)
     }
     
-    func get(_ key: String) -> Data? {
-        return defaults.value(forKey: key) as? Data
+    internal func get(_ key: String) -> Data? {
+        defaults?.value(forKey: key) as? Data
     }
     
-    func delete(_ key: String) {
-        defaults.removeObject(forKey: key)
+    internal func delete(_ key: String) {
+        defaults?.removeObject(forKey: key)
     }
     
-    func resetCache() {
-        self.defaults.removePersistentDomain(forName: kUserDefaultsName)
+    internal func resetCache() {
+        self.defaults?.removePersistentDomain(forName: kUserDefaultsName)
     }
 }

@@ -22,7 +22,6 @@ extension Date {
         formatter.dateFormat = format
         return formatter.string(from: self)
     }
-    
 }
 
 extension String {
@@ -39,5 +38,4 @@ extension String {
         formatter.dateFormat = format
         return formatter.date(from: self)
     }
-    
 }

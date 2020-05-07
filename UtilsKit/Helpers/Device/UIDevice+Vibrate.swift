@@ -19,7 +19,7 @@ extension UIDevice {
      */
     @available(iOS 10.0, *)
     public static func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType? = .error) {
-        if let type = type {
+        if let type: UINotificationFeedbackGenerator.FeedbackType = type {
             if let feedbackSupportLevel = UIDevice.current.value(forKey: "_feedbackSupportLevel") as? Int {
                 if feedbackSupportLevel == 2 {
                     let generator = UINotificationFeedbackGenerator()

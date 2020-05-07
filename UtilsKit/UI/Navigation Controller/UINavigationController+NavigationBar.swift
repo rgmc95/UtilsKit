@@ -10,7 +10,7 @@ import UIKit
 
 extension UINavigationController {
     
-    /*
+    /**
         Clear the navigation bar background, navigation bar is present but transparent
      */
     public func setNavigationBarTransparent() {

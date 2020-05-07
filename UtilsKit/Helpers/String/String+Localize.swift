@@ -16,15 +16,14 @@ extension String {
      - returns: a localized string.
      */
     public var localized: String {
-        if let languagePath = Bundle.main.path(forResource:  NSLocale.currentLanguage, ofType: "lproj"){
+        if let languagePath = Bundle.main.path(forResource: NSLocale.currentLanguage, ofType: "lproj") {
             let languageBundle = Bundle(path: languagePath)
-            if let localizedString = languageBundle?.localizedString(forKey: self, value: "", table: nil){
+            if let localizedString: String = languageBundle?.localizedString(forKey: self, value: "", table: nil) {
                 return localizedString
-            }else{
+            } else {
                 return NSLocalizedString(self, comment: "")
             }
-        }
-        else{
+        } else {
             return NSLocalizedString(self, comment: "")
         }
     }
@@ -34,7 +33,5 @@ extension String {
      
      - returns: a localized string or nil.
      */
-    public var localizedOrNil: String? {
-        return (localized != self ? localized : nil)
-    }
+    public var localizedOrNil: String? { (localized != self ? localized : nil) }
 }

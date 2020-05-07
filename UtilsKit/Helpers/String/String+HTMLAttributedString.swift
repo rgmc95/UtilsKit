@@ -20,9 +20,18 @@ extension String {
             return nil
         }
         
-        guard let attributedString = try?  NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {
+        do {
+            let attributedString = try NSAttributedString(data: data,
+                                                          options:
+                [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding: String.Encoding.utf8.rawValue
+                ],
+                                                          documentAttributes: nil)
+            return attributedString
+        } catch {
+            log(.data, "String \(self) to htmlAttributedString", error: error)
             return nil
         }
-        return attributedString
     }
 }

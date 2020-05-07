@@ -8,7 +8,11 @@
 
 import Foundation
 
+/// Request encoding case
 public enum Encoding {
+    /// URL encoding
     case url
+    
+    /// JSON encoding
     case json
 }

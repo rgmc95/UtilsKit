@@ -19,10 +19,10 @@ extension UIImage {
      
      */
     public convenience init?(from path: String,
-                      documentDirectory: FileManager.SearchPathDirectory = .documentDirectory) {
-        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
-        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, nsUserDomainMask, true)
-        if let dirPath = paths.first {
+                             documentDirectory: FileManager.SearchPathDirectory = .documentDirectory) {
+        let nsUserDomainMask: FileManager.SearchPathDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths: [String] = NSSearchPathForDirectoriesInDomains(documentDirectory, nsUserDomainMask, true)
+        if let dirPath: String = paths.first {
             let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(path)
             self.init(contentsOfFile: imageURL.path)
         }
@@ -37,13 +37,15 @@ extension UIImage {
      
      */
     public func save(to path: String,
-              documentDirectory: FileManager.SearchPathDirectory = .documentDirectory) {
+                     documentDirectory: FileManager.SearchPathDirectory = .documentDirectory) throws {
         let imageData = self.pngData()
-        let imagePath = try! FileManager.default.url(for: documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(path)
-        do {
-            try imageData?.write(to: imagePath, options: .atomic)
-        } catch let error {
-            log(.photo, error: error)
-        }
+        
+        let imagePath = try FileManager.default.url(for: documentDirectory,
+                                                    in: .userDomainMask,
+                                                    appropriateFor: nil,
+                                                    create: false)
+                                                .appendingPathComponent(path)
+        
+        try imageData?.write(to: imagePath, options: .atomic)
     }
 }

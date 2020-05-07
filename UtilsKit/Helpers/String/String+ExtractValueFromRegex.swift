@@ -20,9 +20,9 @@ extension String {
         do {
             let regex = try NSRegularExpression(pattern: regex, options: [])
             let nsString = NSString(string: self)
-            let results = regex.matches(in: self, options: [], range: NSRange(location: 0, length: nsString.length))
+            let results: [NSTextCheckingResult] = regex.matches(in: self, options: [], range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range(at: 1)) }
-        } catch let error {
+        } catch {
             log(.data, "Regex \(regex) in \(self)", error: error)
             return []
         }

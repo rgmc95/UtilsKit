@@ -18,8 +18,7 @@ extension UIView: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if
             gestureRecognizer is HideKeyboardTapGesture &&
-                (touch.view is UIControl || !(touch.view?.gestureRecognizers?.filter({!($0 is HideKeyboardTapGesture)}).isEmpty ?? true))
-        {
+                (touch.view is UIControl || (touch.view?.gestureRecognizers?.contains(where: { !($0 is HideKeyboardTapGesture) }) ?? false)) {
             return false
         }
         return true

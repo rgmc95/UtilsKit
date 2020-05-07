@@ -14,7 +14,6 @@ extension String {
         - returns: a new string with the first letter capitalized.
      */
     public var capitalizeFirstLetter: String {
-        return prefix(1).uppercased() + dropFirst()
+        prefix(1).uppercased() + dropFirst()
     }
 }
-

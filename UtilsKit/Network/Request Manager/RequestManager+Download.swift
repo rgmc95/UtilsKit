@@ -8,7 +8,71 @@
 
 import Foundation
 
-//MARK: - Download
+// MARK: - Network download management
+private class NetworkDownloadManagement: NSObject, URLSessionDownloadDelegate {
+    
+    let destination: URL
+    let identifier: String?
+    let completion: ((Result<Int, Error>) -> Void)?
+    let progress: ((URLSessionDownloadTask) -> Void)?
+    
+    init(destination: URL, identifier: String?, completion: ((Result<Int, Error>) -> Void)?, progress: ((URLSessionDownloadTask) -> Void)?) {
+        self.destination = destination
+        self.identifier = identifier
+        self.completion = completion
+        self.progress = progress
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let response = downloadTask.response as? HTTPURLResponse else {
+            completion?(.failure(ResponseError.unknow))
+            return
+        }
+        
+        if response.statusCode >= 200 && response.statusCode < 300 {
+            
+            log(NetworkLogType.success(downloadTask.originalRequest?.httpMethod ?? ""), identifier)
+            
+            do {
+                try FileManager.default.moveItem(at: location, to: destination)
+                completion?(.success(response.statusCode))
+            } catch {
+                completion?(.failure(error))
+            }
+            
+            return
+        } else {
+            let error = ResponseError.network(response: response)
+            log(NetworkLogType.error(downloadTask.originalRequest?.httpMethod ?? ""), identifier, error: error)
+            completion?(.failure(error))
+            return
+        }
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if error == nil { return }
+        guard let response = task.response as? HTTPURLResponse else {
+            completion?(.failure(ResponseError.unknow))
+            return
+        }
+        
+        let requestError = ResponseError.network(response: response)
+        
+        log(NetworkLogType.error(task.originalRequest?.httpMethod ?? ""), identifier, error: requestError)
+        completion?(.failure(requestError))
+        return
+    }
+    
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didWriteData bytesWritten: Int64,
+                    totalBytesWritten: Int64,
+                    totalBytesExpectedToWrite: Int64) {
+        progress?(downloadTask)
+    }
+}
+
+// MARK: - Download
 extension RequestManager {
     
     private func downloadRequest(at URL: URL,
@@ -23,7 +87,7 @@ extension RequestManager {
                                  queue: DispatchQueue = DispatchQueue.main,
                                  identifier: String? = nil,
                                  completion: ((Result<Int, Error>) -> Void)? = nil,
-                                 progress: ((URLSessionDownloadTask)->())? = nil) {
+                                 progress: ((URLSessionDownloadTask) -> Void)? = nil) {
         queue.async {
             var request: URLRequest
             
@@ -36,31 +100,37 @@ extension RequestManager {
                                                 encoding: encoding,
                                                 headers: headers,
                                                 authentification: authentification)
-            } catch let error {
+            } catch {
                 completion?(.failure(error))
                 return
             }
             
-            let _identifier = identifier ?? request.url?.absoluteString ?? ""
+            let requestId: String = identifier ?? request.url?.absoluteString ?? ""
             
-            let delegate = NetworkDownloadManagement(destination: URL, identifier: _identifier, completion: completion, progress: progress)
+            let delegate = NetworkDownloadManagement(destination: URL, identifier: requestId, completion: completion, progress: progress)
             let session = URLSession(configuration: self.downloadConfiguration, delegate: delegate, delegateQueue: nil)
             
             if let timeoutInterval = self.downloadTimeoutInterval {
                 request.timeoutInterval = timeoutInterval
             }
             
-            log(.network(method: method.rawValue, type: .sending), _identifier)
+            log(NetworkLogType.success(method.rawValue), requestId)
             
             session.downloadTask(with: request).resume()
         }
     }
     
-    
+    /**
+     Download url with request and gives the progress
+     - parameter URL : URL
+     - parameter request: Request
+     - parameter result: Download Result
+     - parameter progress: Download progress
+     */
     public func download(at URL: URL,
                          request: RequestProtocol,
                          result: ((Result<Int, Error>) -> Void)? = nil,
-                         progress: ((URLSessionDownloadTask)->())? = nil) {
+                         progress: ((URLSessionDownloadTask) -> Void)? = nil) {
         self.downloadRequest(at: URL,
                              scheme: request.scheme,
                              host: request.host,
@@ -74,63 +144,5 @@ extension RequestManager {
                              identifier: request.identifier,
                              completion: result,
                              progress: progress)
-    }
-}
-
-//MARK: - Network download management
-private class NetworkDownloadManagement: NSObject, URLSessionDownloadDelegate {
-    
-    let destination: URL
-    let identifier: String?
-    let completion: ((Result<Int, Error>) -> Void)?
-    let progress: ((URLSessionDownloadTask)->())?
-    
-    init(destination: URL, identifier: String?, completion: ((Result<Int, Error>) -> Void)?, progress: ((URLSessionDownloadTask)->())?) {
-        self.destination = destination
-        self.identifier = identifier
-        self.completion = completion
-        self.progress = progress
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let response = downloadTask.response as? HTTPURLResponse else {
-            completion?(.failure(ResponseError.unknow))
-            return
-        }
-        
-        if response.statusCode >= 200 && response.statusCode < 300 {
-            log(.network(method: downloadTask.originalRequest?.httpMethod ?? "", type: .success), identifier)
-            
-            do {
-                try FileManager.default.moveItem(at: location, to: destination)
-                completion?(.success(response.statusCode))
-            } catch let error {
-                completion?(.failure(error))
-            }
-            
-            return
-        } else {
-            let error = ResponseError.network(response: response)
-            log(.network(method: downloadTask.originalRequest?.httpMethod ?? "", type: .error), identifier, error: error)
-            completion?(.failure(error))
-            return
-        }
-    }
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if error == nil { return }
-        guard let response = task.response as? HTTPURLResponse else {
-            completion?(.failure(ResponseError.unknow))
-            return
-        }
-        
-        let requestError = ResponseError.network(response: response)
-        log(.network(method: task.originalRequest?.httpMethod ?? "", type: .error), identifier, error: requestError)
-        completion?(.failure(requestError))
-        return
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        progress?(downloadTask)
     }
 }

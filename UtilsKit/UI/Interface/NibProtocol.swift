@@ -17,12 +17,15 @@ import UIKit
  - nibName: name of the nib. Default class name
  
 */
-public protocol NibProtocol: class {
-    static var nibName: String? {get}
+public protocol NibProtocol: AnyObject {
+    
+    static var nibName: String? { get }
 }
 
 extension NibProtocol {
-    public static var nibName: String? { return String(describing: Self.self) }
+    
+    /// Name of the nib to instantiate
+    public static var nibName: String? { String(describing: Self.self) }
 }
 
 extension NibProtocol {
@@ -36,19 +39,23 @@ extension NibProtocol {
     */
     public static func fromNib() -> Self {
         guard let nibName = Self.nibName else {
-            fatalError()
+            fatalError("Unknown nib name")
         }
         let nibs = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil) ?? []
         for nib in nibs {
-            if let view = nib as? Self { return view }
+            if let view: Self = nib as? Self { return view }
          }
-        fatalError()
+        fatalError("Cannot find class in nib named \(nibName)")
     }
 }
 
 extension UIView {
+    
+    /**
+     Setup view when declared in interface builder
+     */
     public func xibSetup() {
-        let view = loadFromNib()
+        let view: Self = loadFromNib()
         addSubview(view)
         stretch(view: view)
     }
@@ -58,19 +65,22 @@ extension UIView {
         let nibs = UINib(nibName: nibName, bundle: Bundle.main).instantiate(withOwner: self, options: nil)
         
         for nib in nibs {
-            if let view = nib as? T { return view }
+            if let view: T = nib as? T { return view }
         }
-        fatalError()
+        
+        fatalError("Cannot find class in nib named \(nibName)")
     }
     
     func stretch(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: topAnchor),
-            view.leftAnchor.constraint(equalTo: leftAnchor),
-            view.rightAnchor.constraint(equalTo: rightAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ])
+        NSLayoutConstraint.activate(
+            [
+                view.topAnchor.constraint(equalTo: topAnchor),
+                view.leftAnchor.constraint(equalTo: leftAnchor),
+                view.rightAnchor.constraint(equalTo: rightAnchor),
+                view.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ]
+        )
     }
 }

@@ -8,26 +8,26 @@
 
 import UIKit
 
-public protocol PagerViewDelegate: class, UIScrollViewDelegate {
+public protocol PagerViewDelegate: AnyObject, UIScrollViewDelegate {
     func pageDidChange(_ page: Int)
 }
 
 open class PagerView: UIView, UIScrollViewDelegate {
     
-    //MARK: - Scroll direction
+    // MARK: - Scroll direction
     public enum PagerViewScrollDirection {
         case vertical, horizontal
     }
     
-    //MARK: - Variables
-    private var oldOrientation: UIDeviceOrientation!
-    private var scrollView: UIScrollView!
+    // MARK: - Variables
+    private var oldOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    private var scrollView = UIScrollView()
     private var innerViews: [UIView] = []
     
     /**
      The current page of the pager.
      */
-    public private(set) var page = 0
+    public private(set) var page: Int = 0
     
     /**
      The scroll direction of the pager.
@@ -39,41 +39,39 @@ open class PagerView: UIView, UIScrollViewDelegate {
      */
     public weak var delegate: PagerViewDelegate?
     
-    //MARK: - Scroll view variables
+    // MARK: - Scroll view variables
     public var isPagingEnabled: Bool {
-        get { return scrollView.isPagingEnabled }
+        get { scrollView.isPagingEnabled }
         set { scrollView.isPagingEnabled = newValue }
     }
     
     public var isScrollEnabled: Bool {
-        get { return scrollView.isScrollEnabled }
+        get { scrollView.isScrollEnabled }
         set { scrollView.isScrollEnabled = newValue }
     }
     
     public var bounces: Bool {
-        get { return scrollView.bounces }
+        get { scrollView.bounces }
         set { scrollView.bounces = newValue }
     }
     
     public var showsVerticalScrollIndicator: Bool {
-        get { return scrollView.showsVerticalScrollIndicator }
+        get { scrollView.showsVerticalScrollIndicator }
         set { scrollView.showsVerticalScrollIndicator = newValue }
     }
     
     public var showsHorizontalScrollIndicator: Bool {
-        get { return scrollView.showsHorizontalScrollIndicator }
+        get { scrollView.showsHorizontalScrollIndicator }
         set { scrollView.showsHorizontalScrollIndicator = newValue }
     }
     
-    //MARK: - Scroll View overrides
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self._scrollToPage(self.page)
+    // MARK: - Init
+    public init() {
+        super.init(frame: .zero)
+        setupUI()
     }
     
-    //MARK: - Init
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
@@ -83,24 +81,20 @@ open class PagerView: UIView, UIScrollViewDelegate {
         setupUI()
     }
     
-    public init() {
-        super.init(frame: .zero)
-        setupUI()
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
-    private func setupUI() {
-        self.oldOrientation = UIDevice.current.orientation
-        NotificationCenter.default.addObserver(self, selector: #selector(didRotate), name: UIDevice.orientationDidChangeNotification, object: nil)
+    // MARK: - Scroll View overrides
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self._scrollToPage(self.page)
     }
     
-    private func initScrollView() {
+    private func configureScrollView() {
         // Scroll view
-        self.subviews.forEach{$0.removeFromSuperview()}
-        self.scrollView = UIScrollView()
+        self.subviews.forEach { $0.removeFromSuperview() }
         self.scrollView.delegate = self
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.backgroundColor = .clear
@@ -112,12 +106,12 @@ open class PagerView: UIView, UIScrollViewDelegate {
             self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             self.scrollView.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.scrollView.rightAnchor.constraint(equalTo: self.rightAnchor)
-            ])
+        ])
         
-        initInnerViews()
+        self.configureInnerViews()
     }
     
-    private func initInnerViews() {
+    private func configureInnerViews() {
         // Inner views
         var previousView: UIView = self.scrollView
         var constraints: [NSLayoutConstraint] = []
@@ -138,7 +132,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
                 constraints.append(contentsOf: [
                     view.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
                     view.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor)
-                    ])
+                ])
                 if index == 0 {
                     constraints.append(view.leftAnchor.constraint(equalTo: previousView.leftAnchor))
                 } else {
@@ -168,7 +162,13 @@ open class PagerView: UIView, UIScrollViewDelegate {
         }
     }
     
-    //MARK: - Scroll view delegate
+    // MARK: - Setup
+    private func setupUI() {
+        self.oldOrientation = UIDevice.current.orientation
+        NotificationCenter.default.addObserver(self, selector: #selector(didRotate), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
+    // MARK: - Scroll view delegate
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll?(scrollView)
     }
@@ -181,9 +181,12 @@ open class PagerView: UIView, UIScrollViewDelegate {
         self.delegate?.scrollViewWillBeginDragging?(scrollView)
     }
     
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        self.delegate?.scrollViewWillEndDragging?(scrollView
-            , withVelocity: velocity, targetContentOffset: targetContentOffset)
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                          withVelocity velocity: CGPoint,
+                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        self.delegate?.scrollViewWillEndDragging?(scrollView,
+                                                  withVelocity: velocity,
+                                                  targetContentOffset: targetContentOffset)
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -200,6 +203,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
         switch scrollDirection {
         case .horizontal:
             self.page = Int(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+            
         case .vertical:
             self.page = Int(self.scrollView.contentOffset.y / self.scrollView.frame.size.height)
         }
@@ -215,7 +219,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
     }
     
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.delegate?.viewForZooming?(in: scrollView)
+        self.delegate?.viewForZooming?(in: scrollView)
     }
     
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -227,7 +231,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
     }
     
     public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        return self.delegate?.scrollViewShouldScrollToTop?(scrollView) ?? false
+        self.delegate?.scrollViewShouldScrollToTop?(scrollView) ?? false
     }
     
     public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
@@ -239,9 +243,9 @@ open class PagerView: UIView, UIScrollViewDelegate {
         self.delegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
     }
     
-    //MARK: - Actions
+    // MARK: - Actions
     @objc private func didRotate() {
-        let orientation = UIDevice.current.orientation
+        let orientation: UIDeviceOrientation = UIDevice.current.orientation
         
         defer {
             if !orientation.isFlat {
@@ -254,7 +258,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
         }
     }
     
-    //MARK: - Utils
+    // MARK: - Utils
     
     /**
      
@@ -270,7 +274,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
             self.delegate = delegate
         }
         self.scrollDirection = scrollDirection
-        self.initScrollView()
+        self.configureScrollView()
     }
     
     private func _scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
@@ -280,6 +284,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
             case .horizontal:
                 let contentOffsetX = CGFloat(page) * self.scrollView.frame.size.width
                 self.scrollView.contentOffset.x = contentOffsetX
+                
             case .vertical:
                 let contentOffsetY = CGFloat(page) * self.scrollView.frame.size.height
                 self.scrollView.contentOffset.y = contentOffsetY

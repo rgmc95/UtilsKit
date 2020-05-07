@@ -13,12 +13,12 @@ extension Thread {
      Generate an unique identifier for the thread
      */
     public var id: String {
-        if let currentOperationQueue = OperationQueue.current?.name {
+        if let currentOperationQueue: String = OperationQueue.current?.name {
             return currentOperationQueue
-        } else if let underlyingDispatchQueue = OperationQueue.current?.underlyingQueue?.label {
+        } else if let underlyingDispatchQueue: String = OperationQueue.current?.underlyingQueue?.label {
             return underlyingDispatchQueue
         } else {
-            let name = __dispatch_queue_get_label(nil)
+            let name: UnsafePointer<Int8> = __dispatch_queue_get_label(nil)
             return String(cString: name, encoding: .utf8) ?? Thread.current.description
         }
     }

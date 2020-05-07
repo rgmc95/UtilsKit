@@ -15,8 +15,7 @@ extension UINavigationBar {
      */
     public func removeShadow() {
         self.shadowImage = UIImage()
-        if #available(iOS 11, *) { }
-        else {
+        if #available(iOS 11, *) { } else {
             self.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         }
     }
@@ -26,8 +25,7 @@ extension UINavigationBar {
      */
     public func addShadow() {
         self.shadowImage = nil
-        if #available(iOS 11, *) { }
-        else {
+        if #available(iOS 11, *) { } else {
             self.setBackgroundImage(nil, for: UIBarMetrics.default)
         }
     }

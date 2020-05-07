@@ -8,38 +8,51 @@
 
 import Foundation
 
+/// Request headers
 public typealias Headers = [String: String]
+
+/// Request parameters
 public typealias Parameters = [String: Any]
+
+/// Network reponse: staus code and data
 public typealias NetworkResponse = (statusCode: Int?, data: Data?)
 
+/// Manage all requests
 public class RequestManager {
     
-    //MARK: - Singleton
-    public static let shared: RequestManager = RequestManager()
+    // MARK: - Singleton
+    /// The shared singleton RequestManager object
+    public static let shared = RequestManager()
     
-    //MARK: - Variables
+    // MARK: - Variables
+    /// Request configuration
     public var requestConfiguration: URLSessionConfiguration
+    
+    /// Interval before request time out
     public var requestTimeoutInterval: TimeInterval?
     
+    /// Downlaod request configuration
     public var downloadConfiguration: URLSessionConfiguration
+    
+    /// Interval before request time out
     public var downloadTimeoutInterval: TimeInterval?
     
-    //MARK: - Init
+    // MARK: - Init
     private init() {
         self.requestConfiguration = URLSessionConfiguration.default
         self.downloadConfiguration = URLSessionConfiguration.default
     }
 }
 
-//MARK: - Utils
+// MARK: - Utils
 extension RequestManager {
     
     private func getUrlComponents(scheme: String,
                                   host: String,
                                   path: String,
-                                  parameters: Parameters?,
-                                  encoding: Encoding,
-                                  authentification: AuthentificationProtocol?) -> URLComponents {
+                                  parameters: Parameters? = nil,
+                                  encoding: Encoding = .url,
+                                  authentification: AuthentificationProtocol? = nil) -> URLComponents {
         var components = URLComponents()
         var finalUrlParameters: [URLQueryItem] = []
         
@@ -48,14 +61,15 @@ extension RequestManager {
         components.path = path
         
         // Authentification
-        authentification?.parameters.forEach({
-            switch authentification!.encoding {
+        authentification?.parameters.forEach {
+            switch authentification?.encoding {
             case .url:
                 finalUrlParameters.append(URLQueryItem(name: $0.key, value: $0.value))
             case .body: break
             case .header: break
+            case .none: break
             }
-        })
+        }
         
         // Parameters
         switch encoding {
@@ -79,14 +93,15 @@ extension RequestManager {
         var finalBodyParameters: Parameters = [:]
         
         // Authentification
-        authentification?.parameters.forEach({
-            switch authentification!.encoding {
+        authentification?.parameters.forEach {
+            switch authentification?.encoding {
             case .body:
                 finalBodyParameters[$0.key] = $0.value
             case .header: break
             case .url: break
+            case .none: break
             }
-        })
+        }
         
         // Parameters
         switch encoding {
@@ -105,28 +120,28 @@ extension RequestManager {
         var finalHeaders: Headers = headers ?? [:]
         
         // Authentification
-        if let authentification = authentification {
-            authentification.parameters.forEach({
+        if let authentification: AuthentificationProtocol = authentification {
+            authentification.parameters.forEach {
                 switch authentification.encoding {
                 case .header:
                     finalHeaders[$0.key] = $0.value
                 case .body: break
                 case .url: break
                 }
-            })
+            }
         }
         
         return finalHeaders
     }
     
     internal func buildRequest(scheme: String,
-                              host: String,
-                              path: String,
-                              method: RequestMethod,
-                              parameters: Parameters?,
-                              encoding: Encoding,
-                              headers: Headers?,
-                              authentification: AuthentificationProtocol?) throws -> URLRequest {
+                               host: String,
+                               path: String,
+                               method: RequestMethod,
+                               parameters: Parameters? = nil,
+                               encoding: Encoding = .url,
+                               headers: Headers? = nil,
+                               authentification: AuthentificationProtocol? = nil) throws -> URLRequest {
         // URL components
         let components = self.getUrlComponents(scheme: scheme,
                                                host: host,
@@ -143,7 +158,7 @@ extension RequestManager {
         // Final headers
         let finalHeaders = self.getHeaders(headers: headers,
                                            authentification: authentification)
-        finalHeaders.forEach({ request.setValue($0.value, forHTTPHeaderField: $0.key) })
+        finalHeaders.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         if encoding == .json {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }

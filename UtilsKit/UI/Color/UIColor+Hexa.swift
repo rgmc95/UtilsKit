@@ -27,14 +27,15 @@ extension UIColor {
             
             scanner.scanHexInt64(&rgbValue)
             
-            let r = (rgbValue & 0xff0000) >> 16
-            let g = (rgbValue & 0xff00) >> 8
-            let b = rgbValue & 0xff
+            let red: UInt64 = (rgbValue & 0xff0000) >> 16
+            let green: UInt64 = (rgbValue & 0xff00) >> 8
+            let blue: UInt64 = rgbValue & 0xff
             
             self.init(
-                red: r / 255,
-                green: g / 255,
-                blue: b / 255, alpha: 1
+                red: red / 255,
+                green: green / 255,
+                blue: blue / 255,
+                alpha: 1
             )
         } else {
             return nil

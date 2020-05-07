@@ -16,10 +16,10 @@ extension UITableView {
      
      - parameter completion: completion call when reload complete
      */
-    public func reloadData(completion: @escaping ((Bool)->())) {
+    public func reloadData(completion: @escaping ((Bool) -> Void)) {
         self.performBatchUpdates({ [weak self] in
             self?.reloadData()
-        }, completion: completion)
+            }, completion: completion)
     }
     
     
@@ -30,10 +30,10 @@ extension UITableView {
      - parameter animation: A constant that indicates how the reloading is to be animated, for example, fade out or slide out from the bottom. See UITableView.RowAnimation for descriptions of these constants. The animation constant affects the direction in which both the old and the new section rows slide. For example, if the animation constant is UITableView.RowAnimation.right, the old rows slide out to the right and the new cells slide in from the right.
      - parameter completion: completion call when reload complete
      */
-    public func reloadSections(_ sections: IndexSet, with animation: UITableView.RowAnimation, completion: @escaping ((Bool)->())) {
+    public func reloadSections(_ sections: IndexSet, with animation: UITableView.RowAnimation, completion: @escaping ((Bool) -> Void)) {
         self.performBatchUpdates({ [weak self] in
             self?.reloadSections(sections, with: animation)
-        }, completion: completion)
+            }, completion: completion)
     }
     
     
@@ -44,9 +44,9 @@ extension UITableView {
      - parameter animation: A constant that indicates how the reloading is to be animated, for example, fade out or slide out from the bottom. See UITableView.RowAnimation for descriptions of these constants. The animation constant affects the direction in which both the old and the new section rows slide. For example, if the animation constant is UITableView.RowAnimation.right, the old rows slide out to the right and the new cells slide in from the right.
      - parameter completion: completion call when reload complete
      */
-    public func reloadRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation, completion: @escaping ((Bool)->())) {
+    public func reloadRows(at indexPaths: [IndexPath], with animation: UITableView.RowAnimation, completion: @escaping ((Bool) -> Void)) {
         self.performBatchUpdates({ [weak self] in
             self?.reloadRows(at: indexPaths, with: animation)
-        }, completion: completion)
+            }, completion: completion)
     }
 }

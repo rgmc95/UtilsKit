@@ -8,44 +8,45 @@
 
 import Foundation
 
-extension NSNumber: Comparable { }
-
-//MARK: Double Value
-/**
-    Compare two `NSNumber`
- 
-    - parameter lhs: left member number
- 
-    - parameter rhs: right member number
- 
-    - returns: a `boolean` value indicating if the left member is less than the right member.
- */
-public func < (lhs: NSNumber, rhs: NSNumber) -> Bool {
-    return lhs.doubleValue < rhs.doubleValue
-}
-
-/**
- Compare two `NSNumber`
- 
- - parameter lhs: left member number
- 
- - parameter rhs: right member number
- 
- - returns: a `boolean` value indicating if the left member is bigger than the right member.
- */
-public func > (lhs: NSNumber, rhs: NSNumber) -> Bool {
-    return lhs.doubleValue > rhs.doubleValue
-}
-
-/**
- Compare two `NSNumber`
- 
- - parameter lhs: left member number
- 
- - parameter rhs: right member number
- 
- - returns: a `boolean` value indicating if the numbers are equals.
- */
-public func == (lhs: NSNumber, rhs: NSNumber) -> Bool {
-    return lhs.doubleValue == rhs.doubleValue
+extension NSNumber: Comparable {
+    
+    // MARK: Double Value
+    /**
+     Compare two `NSNumber`
+     
+     - parameter lhs: left member number
+     
+     - parameter rhs: right member number
+     
+     - returns: a `boolean` value indicating if the left member is less than the right member.
+     */
+    public static func < (lhs: NSNumber, rhs: NSNumber) -> Bool {
+        lhs.doubleValue < rhs.doubleValue
+    }
+    
+    /**
+     Compare two `NSNumber`
+     
+     - parameter lhs: left member number
+     
+     - parameter rhs: right member number
+     
+     - returns: a `boolean` value indicating if the left member is bigger than the right member.
+     */
+    public static func > (lhs: NSNumber, rhs: NSNumber) -> Bool {
+        lhs.doubleValue > rhs.doubleValue
+    }
+    
+    /**
+     Compare two `NSNumber`
+     
+     - parameter lhs: left member number
+     
+     - parameter rhs: right member number
+     
+     - returns: a `boolean` value indicating if the numbers are equals.
+     */
+    public static func == (lhs: NSNumber, rhs: NSNumber) -> Bool {
+        lhs.doubleValue == rhs.doubleValue
+    }
 }

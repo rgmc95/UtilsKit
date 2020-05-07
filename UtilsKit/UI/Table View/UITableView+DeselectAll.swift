@@ -14,6 +14,6 @@ extension UITableView {
      Deselect all visible cells
      */
     public func deselectAll(animated: Bool = true) {
-        self.indexPathsForVisibleRows?.forEach({self.deselectRow(at: $0, animated: animated)})
+        self.indexPathsForVisibleRows?.forEach { self.deselectRow(at: $0, animated: animated) }
     }
 }

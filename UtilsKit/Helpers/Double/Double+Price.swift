@@ -17,14 +17,19 @@ extension Double {
      */
     public func toPrice(currency: String? = nil) -> String {
         let numberFormatter = NumberFormatter()
-        if let currency = currency {
+        
+        if let currency: String = currency {
             numberFormatter.numberStyle = NumberFormatter.Style.decimal
-            let price = numberFormatter.string(from: NSNumber(value:self))!
-            return "\(price) \(currency)"
+            if let price: String = numberFormatter.string(from: NSNumber(value: self)) {
+                return "\(price) \(currency)"
+            }
         } else {
             numberFormatter.numberStyle = NumberFormatter.Style.currency
-            let price = numberFormatter.string(from: NSNumber(value:self))!
-            return price
+            if let price: String = numberFormatter.string(from: NSNumber(value: self)) {
+                return price
+            }
         }
+        
+        return ""
     }
 }

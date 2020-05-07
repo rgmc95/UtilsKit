@@ -23,7 +23,7 @@ public class QueueManager {
      */
     public static let shared = QueueManager()
     
-    lazy private var queue: OperationQueue = {
+    private lazy var queue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         return queue
@@ -34,7 +34,7 @@ public class QueueManager {
      - parameter operation : the operation to link
      */
     public func add(operation: IdentifiableOperation) {
-        if let lastOperation = queue.operations.last, queue.operations.count > 0 {
+        if let lastOperation: Foundation.Operation = queue.operations.last, !queue.operations.isEmpty {
             operation.addDependency(lastOperation)
         }
         
@@ -45,12 +45,12 @@ public class QueueManager {
      Add the given completion as an operation at the end of the queue
      - parameter completion : the completion to link
      */
-    public func add(_ completion: @escaping ()->()) {
-        let blockOperation = BlockOperation {
+    public func add(_ completion: @escaping () -> Void) {
+        let blockOperation: Foundation.Operation = BlockOperation {
             completion()
         }
         
-        if let lastOperation = queue.operations.last, queue.operations.count > 0 {
+        if let lastOperation: Foundation.Operation = queue.operations.last, !queue.operations.isEmpty {
             blockOperation.addDependency(lastOperation)
         }
         
@@ -63,10 +63,10 @@ public class QueueManager {
      - parameter identifier : the identifiable to cancel or nil
      */
     public func stopAllOperations(withIdentifier identifier: Identifiable? = nil) {
-        if let identifier = identifier {
+        if let identifier: Identifiable = identifier {
             queue.operations.forEach { operation in
-                guard let operation = operation as? IdentifiableOperation else {return}
-                operation.identifiables = operation.identifiables.filter({!$0.isEqualTo(identifier)})
+                guard let operation = operation as? IdentifiableOperation else { return }
+                operation.identifiables = operation.identifiables.filter { !$0.isEqualTo(identifier) }
                 if operation.identifiables.isEmpty {
                     operation.cancel()
                 }
@@ -81,12 +81,12 @@ public class QueueManager {
      Wait for all operations in queue
      - parameter completion: completion at the end of the queue
      */
-    public func waitAllOperationsEnded(completion: @escaping ()->()) {
-        let blockOperation = BlockOperation {
+    public func waitAllOperationsEnded(completion: @escaping () -> Void) {
+        let blockOperation: Foundation.Operation = BlockOperation {
             completion()
         }
         
-        if let lastOperation = self.getAllOperations().last, queue.operations.count > 0 {
+        if let lastOperation = self.getAllOperations().last, !queue.operations.isEmpty {
             blockOperation.addDependency(lastOperation)
         }
         
@@ -98,7 +98,7 @@ public class QueueManager {
      - returns: all operations
      */
     public func getAllOperations() -> [Foundation.Operation] {
-        return self.queue.operations
+        self.queue.operations
     }
     
     /**
@@ -106,18 +106,15 @@ public class QueueManager {
      - parameter identifier : the identifiable to search for in the operations
      - returns: all operations that contain the given identifier
      */
-    func getOperations<T: IdentifiableOperation>(identifier: Identifiable) -> [T] {
+    internal func getOperations<T: IdentifiableOperation>(identifier: Identifiable) -> [T] {
         var operations: [T] = []
         for operation in queue.operations {
             if
-                let operation = operation as? T,
-                operation.identifiables.contains(where: {$0.isEqualTo(identifier)}) && !operation.isCancelled && !operation.isFinished {
+                let operation: T = operation as? T,
+                operation.identifiables.contains(where: { $0.isEqualTo(identifier) }) && !operation.isCancelled && !operation.isFinished {
                 operations.append(operation)
             }
         }
         return operations
     }
 }
-
-
-

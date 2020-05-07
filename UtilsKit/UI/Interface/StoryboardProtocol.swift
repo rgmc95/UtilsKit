@@ -20,13 +20,16 @@ import UIKit
  If the identifier is not set, it assumes that the view controller is the initial view controller.
  
  */
-public protocol StoryboardProtocol: class {
-    static var storyboardName: String {get}
-    static var identifier: String? {get}
+public protocol StoryboardProtocol: AnyObject {
+    
+    static var storyboardName: String { get }
+    static var identifier: String? { get }
 }
 
 extension StoryboardProtocol {
-    public static var identifier: String? { return nil }
+    
+    /// View Controller identifier in storyboard
+    public static var identifier: String? { nil }
     
     /**
     
@@ -38,15 +41,21 @@ extension StoryboardProtocol {
      
     */
     public static func fromStoryboard(_ infos: ((Self) -> Void)? = nil) -> Self {
-        let controller: Self
-        if let identifier = Self.identifier {
-            controller = UIStoryboard(name: Self.storyboardName, bundle: nil).instantiateViewController(withIdentifier: identifier) as! Self
+        
+        if let identifier: String = Self.identifier {
+            if let controller = UIStoryboard(name: Self.storyboardName, bundle: nil).instantiateViewController(withIdentifier: identifier) as? Self {
+                infos?(controller)
+                return controller
+            } else {
+                fatalError("Cannot instantiate view controller \(String(describing: Self.self)) with indentifier \(identifier) from storyboard \(Self.storyboardName)")
+            }
         } else {
-            controller = UIStoryboard(name: Self.storyboardName, bundle: nil).instantiateInitialViewController() as! Self
+            if let controller = UIStoryboard(name: Self.storyboardName, bundle: nil).instantiateInitialViewController() as? Self {
+                infos?(controller)
+                return controller
+            } else {
+                fatalError("Cannot instantiate initial view controller \(String(describing: Self.self)) from storyboard \(Self.storyboardName)")
+            }
         }
-        
-        infos?(controller)
-        
-        return controller
     }
 }

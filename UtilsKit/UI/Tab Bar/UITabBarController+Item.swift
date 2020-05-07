@@ -16,14 +16,12 @@ extension UITabBarController {
      - returns: the item if exist else nil.
      */
     public func getItem(at index: Int) -> UIView? {
-        var currentIndex = 0
-        for view in self.tabBar.subviews {
-            if view is UIControl {
-                if currentIndex == index { return view }
-                currentIndex += 1
-            }
+        var currentIndex: Int = 0
+        
+        for view in self.tabBar.subviews where view is UIControl {
+            if currentIndex == index { return view }
+            currentIndex += 1
         }
         return nil
     }
 }
-

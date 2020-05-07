@@ -22,5 +22,4 @@ extension Decodable {
         
         return object
     }
-    
 }
