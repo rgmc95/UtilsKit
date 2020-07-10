@@ -100,7 +100,7 @@
 		2735528323B0F9240069B263 /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735527923B0F9240069B263 /* NetworkCache.swift */; };
 		27E4A3C5246455F00008BA97 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C4246455F00008BA97 /* Listener.swift */; };
 		27E4A3C72464567F0008BA97 /* CacheObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */; };
-		27E4A3C92464649B0008BA97 /* CollectionViewReusableViewKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* CollectionViewReusableViewKind.swift */; };
+		27E4A3C92464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift */; };
 		27E9BEE0246A862600ECAD2E /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEDF246A862600ECAD2E /* CoreDataError.swift */; };
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
 /* End PBXBuildFile section */
@@ -201,7 +201,7 @@
 		2735527923B0F9240069B263 /* NetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCache.swift; sourceTree = "<group>"; };
 		27E4A3C4246455F00008BA97 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheObjectProtocol.swift; sourceTree = "<group>"; };
-		27E4A3C82464649B0008BA97 /* CollectionViewReusableViewKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewReusableViewKind.swift; sourceTree = "<group>"; };
+		27E4A3C82464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewReusable+CollectionViewHeaderFooter.swift"; sourceTree = "<group>"; };
 		27E9BEDF246A862600ECAD2E /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -477,7 +477,7 @@
 				273551FF23B0F7BE0069B263 /* ViewReusable.swift */,
 				2735520023B0F7BE0069B263 /* ViewReusable+TableViewCell.swift */,
 				2735520123B0F7BE0069B263 /* ViewReusable+CollectionViewCell.swift */,
-				27E4A3C82464649B0008BA97 /* CollectionViewReusableViewKind.swift */,
+				27E4A3C82464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -712,6 +712,7 @@
 		2735509B23B0EBA80069B263 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = iD.apps;
 				TargetAttributes = {
@@ -823,7 +824,7 @@
 				2735527A23B0F9240069B263 /* RequestManager.swift in Sources */,
 				2735525F23B0F7BF0069B263 /* PagerView.swift in Sources */,
 				271FE46224979B6A00DC2472 /* DefaultLogType.swift in Sources */,
-				27E4A3C92464649B0008BA97 /* CollectionViewReusableViewKind.swift in Sources */,
+				27E4A3C92464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift in Sources */,
 				2735522123B0F7BF0069B263 /* UIInterfaceOrientation+Mask.swift in Sources */,
 				2735523223B0F7BF0069B263 /* NSLocale+Localize.swift in Sources */,
 				2735526123B0F7BF0069B263 /* CoreDataManager.swift in Sources */,

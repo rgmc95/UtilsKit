@@ -27,5 +27,5 @@ public protocol ViewReusable: NibProtocol {
 extension ViewReusable {
     
     /// Identifier of the view. Default "{className}Identifier"
-    public static var identifier: String { "\(String(describing: Self.self))Identifier" }
+    public static var identifier: String { "\(String(describing: Self.self))" }
 }

@@ -16,50 +16,24 @@
     internal static func registerCell(withTableview tableview: UITableView,
                                       forCellReuseIdentifier identifier: String? = nil) {
         
-        guard let nibName = self.nibName else { return }
+        guard let nibName = self.nibName else {
+            tableview.register(Self.self, forCellReuseIdentifier: identifier ?? self.identifier)
+            return
+        }
         tableview.register(UINib(nibName: nibName, bundle: nil), forCellReuseIdentifier: identifier ?? self.identifier)
     }
     
     // MARK: Dequeue cell with indexpath
-    private static func dequeueCellAux(withTableView tableView: UITableView,
-                                       forIndexPath indexPath: IndexPath,
-                                       withIdentifier identifier: String? = nil) -> Self? {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier ?? self.identifier, for: indexPath) as? Self else {
-            return nil
-        }
-        
-        return cell
-    }
-    
     internal static func dequeueCell(withTableView tableView: UITableView,
                                      forIndexPath indexPath: IndexPath,
                                      withIdentifier identifier: String? = nil) -> Self? {
-        
-        self.registerCell(withTableview: tableView, forCellReuseIdentifier: identifier)
-        return dequeueCellAux(withTableView: tableView, forIndexPath: indexPath, withIdentifier: identifier)
+        tableView.dequeueReusableCell(withIdentifier: identifier ?? self.identifier, for: indexPath) as? Self
     }
     
     // MARK: Dequeue cell without indexpath
-    internal static func dequeueCellAux(withTableView tableView: UITableView,
-                                        withIdentifier identifier: String? = nil) -> Self? {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier ?? self.identifier) as? Self else {
-            return nil
-        }
-        
-        return cell
-    }
-    
     internal static func dequeueCell(withTableView tableView: UITableView,
                                      withIdentifier identifier: String? = nil) -> Self? {
-        
-        guard let cell = dequeueCellAux(withTableView: tableView, withIdentifier: identifier) else {
-            self.registerCell(withTableview: tableView, forCellReuseIdentifier: identifier)
-            return dequeueCellAux(withTableView: tableView, withIdentifier: identifier)
-        }
-        
-        return cell
+        tableView.dequeueReusableCell(withIdentifier: identifier ?? self.identifier) as? Self
     }
  }
  
@@ -75,25 +49,10 @@
     }
     
     // MARK: Dequeue header or footer view
-    internal static func dequeueHeaderFooterViewAux(withTableView tableView: UITableView,
-                                                    withIdentifier identifier: String? = nil) -> Self? {
-        
-        guard let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier ?? self.identifier) as? Self else {
-            return nil
-        }
-        
-        return cell
-    }
-    
     internal static func dequeueHeaderFooterView(withTableView tableView: UITableView,
                                                  withIdentifier identifier: String? = nil) -> Self? {
         
-        guard let cell = dequeueHeaderFooterViewAux(withTableView: tableView, withIdentifier: identifier) else {
-            self.registerHeaderFooterView(withTableview: tableView, withIdentifier: identifier)
-            return dequeueHeaderFooterViewAux(withTableView: tableView, withIdentifier: identifier)
-        }
-        
-        return cell
+        tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier ?? self.identifier) as? Self
     }
  }
  
@@ -101,14 +60,27 @@
     
     /**
      
+     Register a cell in table view
+     
+     The cell needs to conform to `ViewReusable` and be of type `UITableViewCell`.
+          
+     - parameter type: Type of the view to register
+     
+     - parameter identifier: Register the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
+     
+     */
+    public func register<T: ViewReusable & UITableViewCell>(_ type: T.Type, withIdentifier identifier: String? = nil) {
+        T.registerCell(withTableview: self, forCellReuseIdentifier: identifier)
+    }
+    
+    /**
+     
      Dequeue a cell from table view with given cell type.
      
-     The cell needs to conform to `TableViewElementReusable` and be of type `UITableViewCell`.
-     
-     This methods initializes and registers the cell if needed and performs.
-     
-     - parameter type: Type of the cell to dequeue
-     
+     The cell needs to conform to `ViewReusable` and be of type `UITableViewCell`.
+               
+     - parameter identifier: Dequeue the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
+
      - returns: Dequeued cell for given type
      
      */
@@ -123,12 +95,12 @@
      
      Dequeue a cell from table view with given cell type at given index path.
      
-     The cell needs to conform to `TableViewElementReusable` and be of type `UITableViewCell`.
-     
-     This methods initializes and registers the cell if needed.
-     
+     The cell needs to conform to `ViewReusable` and be of type `UITableViewCell`.
+          
      - parameter indexPath: Index path of the cell to dequeue
      
+     - parameter identifier: Dequeue the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
+
      - returns: Dequeued cell for given type
      
      */
@@ -142,12 +114,27 @@
     
     /**
      
+     Register a header or footer view in table view
+     
+     The view needs to conform to `ViewReusable` and be of type `UITableHeaderFooterView`.
+          
+     - parameter type: Type of the view to register
+     
+     - parameter identifier: Register the view with the given identifier. Otherwise use identifier of `ViewReusable` instead
+     
+     */
+    public func register<T: ViewReusable & UITableViewHeaderFooterView>(_ type: T.Type, withIdentifier identifier: String? = nil) {
+        T.registerHeaderFooterView(withTableview: self, withIdentifier: identifier)
+    }
+    
+    /**
+     
      Dequeue header or footer view from table view
      
-     The view needs to conform to `TableViewElementReusable` and be of type `UITableViewHeaderFooterView`.
-     
-     This methods initializes and registers the view if needed.
-     
+     The view needs to conform to `ViewReusable` and be of type `UITableViewHeaderFooterView`.
+          
+     - parameter identifier: Dequeue the view with the given identifier. Otherwise use identifier of `ViewReusable` instead
+
      - returns: Dequeued view for given type
      
      */

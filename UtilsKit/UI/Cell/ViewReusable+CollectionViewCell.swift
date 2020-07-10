@@ -9,28 +9,17 @@
 import Foundation
 import UIKit
 
-
-// MARK: - Cell
-/**
-    Default empty collection view cell
- */
-public final class UIEmptyCollectionViewCell: UICollectionViewCell, ViewReusable {
-    public static var nibName: String? = ""
-    public static var identifier: String = "UIEmptyCollectionViewCell"
-}
-
 extension ViewReusable where Self: UICollectionViewCell & ViewReusable {
     
     // MARK: Register
-    private static func registerCell(withCollectionView collectionView: UICollectionView,
-                                     withIdentifier identifier: String? = nil) {
+    internal static func registerCell(withCollectionView collectionView: UICollectionView,
+                                      withIdentifier identifier: String? = nil) {
         
-        guard let nibName = self.nibName else { return }
-        if nibName.isEmpty {
-            collectionView.register(Self.self, forCellWithReuseIdentifier: self.identifier)
-        } else {
-            collectionView.register(UINib(nibName: nibName, bundle: nil), forCellWithReuseIdentifier: identifier ?? self.identifier)
+        guard let nibName = self.nibName, !nibName.isEmpty else {
+            collectionView.register(Self.self, forCellWithReuseIdentifier: identifier ?? self.identifier)
+            return
         }
+        collectionView.register(UINib(nibName: nibName, bundle: nil), forCellWithReuseIdentifier: identifier ?? self.identifier)
     }
     
     // MARK: Dequeue
@@ -38,19 +27,7 @@ extension ViewReusable where Self: UICollectionViewCell & ViewReusable {
                                      forIndexPath indexPath: IndexPath,
                                      withIdentifier identifier: String? = nil) -> Self? {
         
-        self.registerCell(withCollectionView: collectionView, withIdentifier: identifier)
-        return dequeueCellAux(withCollectionView: collectionView, forIndexPath: indexPath, withIdentifier: identifier)
-    }
-    
-    internal static func dequeueCellAux(withCollectionView collectionView: UICollectionView,
-                                        forIndexPath indexPath: IndexPath,
-                                        withIdentifier identifier: String? = nil) -> Self? {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier ?? self.identifier, for: indexPath) as? Self else {
-            return nil
-        }
-        
-        return cell
+        collectionView.dequeueReusableCell(withReuseIdentifier: identifier ?? self.identifier, for: indexPath) as? Self
     }
 }
 
@@ -58,11 +35,24 @@ extension UICollectionView {
     
     /**
      
+     Register a cell in collection view
+     
+     The cell needs to conform to `ViewReusable` and be of type `UICollectionViewCell`.
+     
+     - parameter type: Type of the view to register
+     
+     - parameter identifier: Register the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
+     
+     */
+    public func register<T: ViewReusable & UICollectionViewCell>(_ type: T.Type, withIdentifier identifier: String? = nil) {
+        T.registerCell(withCollectionView: self, withIdentifier: identifier)
+    }
+    
+    /**
+     
      Dequeue a cell from collection view with given cell type at given index path.
      
      The cell needs to conform to `ViewReusable`.
-     
-     This methods initializes and registers the cell if needed.
      
      - parameter indexPath: Index path of the cell to dequeue
      
@@ -90,4 +80,12 @@ extension UICollectionView {
         let cell: UIEmptyCollectionViewCell = self.dequeueCell(forIndexPath: indexPath)
         return cell
     }
+}
+
+/**
+ Default empty collection view cell
+ */
+public final class UIEmptyCollectionViewCell: UICollectionViewCell, ViewReusable {
+    public static var nibName: String? = ""
+    public static var identifier: String = "UIEmptyCollectionViewCell"
 }

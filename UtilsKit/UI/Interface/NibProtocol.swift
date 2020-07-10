@@ -55,17 +55,17 @@ extension UIView {
      Setup view when declared in interface builder
      */
     public func xibSetup() {
-        let view: Self = loadFromNib()
+        let view: UIView = loadFromNib()
         addSubview(view)
         stretch(view: view)
     }
     
-    private func loadFromNib<T: UIView>() -> T {
+    private func loadFromNib() -> UIView {
         let nibName = String(describing: type(of: self))
         let nibs = UINib(nibName: nibName, bundle: Bundle.main).instantiate(withOwner: self, options: nil)
         
         for nib in nibs {
-            if let view: T = nib as? T { return view }
+            if let view: UIView = nib as? UIView { return view }
         }
         
         fatalError("Cannot find class in nib named \(nibName)")
