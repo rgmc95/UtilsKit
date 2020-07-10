@@ -20,4 +20,14 @@ extension UIImageView {
         self.image = image.withRenderingMode(.alwaysTemplate)
         self.tintColor = color
     }
+    
+    /**
+     Set the image colorated with given color.
+     
+     - parameter color: color of the image
+     */
+    public func setImageColor(_ color: UIColor) {
+        self.image = self.image?.withRenderingMode(.alwaysTemplate)
+        self.tintColor = color
+    }
 }

@@ -24,4 +24,19 @@ extension UIButton {
         default: self.tintColor = color
         }
     }
+    
+    /**
+        Set the image colorated with given color.
+     
+        - parameter color: color of the image
+     */
+    public func setImageColor(_ color: UIColor, for state: UIControl.State) {
+        guard let image = self.image(for: state) else { return }
+        self.setImage(image.withRenderingMode(.alwaysTemplate), for: state)
+        
+        switch buttonType {
+        case .custom: self.imageView?.tintColor = color
+        default: self.tintColor = color
+        }
+    }
 }
