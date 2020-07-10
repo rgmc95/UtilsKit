@@ -11,8 +11,9 @@ import Foundation
 extension Double {
     
     /**
-     self in price with currency and formatter.
+     Self in price with currency and formatter.
      
+     - parameter currency : Custom currency if needed
      - returns: self in price with currency.
      */
     public func toPrice(currency: String? = nil) -> String {

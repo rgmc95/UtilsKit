@@ -15,12 +15,15 @@ extension Int {
      
      - returns: the spage in octet, Ko, Mo, Go, To or Po..
      */
+    @available(swift, obsoleted: 13.0, renamed: "toStorage")
     public func toSpace() -> String {
         Double(self).toSpace()
     }
 }
 
 extension Double {
+    
+    @available(swift, obsoleted: 13.0)
     private enum Unit: Double {
         case octet = 1
         case kiloOctet = 1e3
@@ -47,6 +50,7 @@ extension Double {
      
      - returns: the space in octet, Ko, Mo, Go, To or Po..
      */
+    @available(swift, obsoleted: 13.0, renamed: "toStorage")
     public func toSpace() -> String {
         let numberFormatter = NumberFormatter()
         guard self > 0 else {
@@ -60,7 +64,7 @@ extension Double {
             .compactMap { size, unit -> (String, Unit)? in
                 guard let string = numberFormatter.string(from: NSNumber(value: size)) else { return nil }
                 return (string, unit)
-            }
+        }
         .reduce(nil) { result, testedResult -> (String, Unit)? in
             guard let result = result else {
                 return testedResult

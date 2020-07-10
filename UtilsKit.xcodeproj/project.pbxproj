@@ -98,6 +98,8 @@
 		2735528123B0F9240069B263 /* AuthentificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735527523B0F9240069B263 /* AuthentificationProtocol.swift */; };
 		2735528223B0F9240069B263 /* RequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735527723B0F9240069B263 /* RequestProtocol.swift */; };
 		2735528323B0F9240069B263 /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735527923B0F9240069B263 /* NetworkCache.swift */; };
+		279F92C224B8966600349413 /* Double+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F92C124B8966600349413 /* Double+Distance.swift */; };
+		279F92C424B8AB7C00349413 /* Double+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F92C324B8AB7C00349413 /* Double+Storage.swift */; };
 		27E4A3C5246455F00008BA97 /* Listener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C4246455F00008BA97 /* Listener.swift */; };
 		27E4A3C72464567F0008BA97 /* CacheObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */; };
 		27E4A3C92464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift */; };
@@ -199,6 +201,8 @@
 		2735527523B0F9240069B263 /* AuthentificationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthentificationProtocol.swift; sourceTree = "<group>"; };
 		2735527723B0F9240069B263 /* RequestProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocol.swift; sourceTree = "<group>"; };
 		2735527923B0F9240069B263 /* NetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCache.swift; sourceTree = "<group>"; };
+		279F92C124B8966600349413 /* Double+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Distance.swift"; sourceTree = "<group>"; };
+		279F92C324B8AB7C00349413 /* Double+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Storage.swift"; sourceTree = "<group>"; };
 		27E4A3C4246455F00008BA97 /* Listener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listener.swift; sourceTree = "<group>"; };
 		27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheObjectProtocol.swift; sourceTree = "<group>"; };
 		27E4A3C82464649B0008BA97 /* ViewReusable+CollectionViewHeaderFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewReusable+CollectionViewHeaderFooter.swift"; sourceTree = "<group>"; };
@@ -373,6 +377,8 @@
 			children = (
 				273551D623B0F7BE0069B263 /* Double+Price.swift */,
 				273551F323B0F7BE0069B263 /* Double+Size.swift */,
+				279F92C124B8966600349413 /* Double+Distance.swift */,
+				279F92C324B8AB7C00349413 /* Double+Storage.swift */,
 			);
 			path = Double;
 			sourceTree = "<group>";
@@ -809,6 +815,7 @@
 				2735524A23B0F7BF0069B263 /* Double+Size.swift in Sources */,
 				27E4A3C5246455F00008BA97 /* Listener.swift in Sources */,
 				2735522523B0F7BF0069B263 /* UIColor+Hexa.swift in Sources */,
+				279F92C224B8966600349413 /* Double+Distance.swift in Sources */,
 				2735522E23B0F7BF0069B263 /* UIImageView+TintColorable.swift in Sources */,
 				2735525723B0F7BF0069B263 /* DocumentManager.swift in Sources */,
 				2735525A23B0F7BF0069B263 /* NSNumber+Compare.swift in Sources */,
@@ -846,6 +853,7 @@
 				2735522023B0F7BF0069B263 /* UIDeviceOrientation+InterfaceOrientation.swift in Sources */,
 				2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */,
 				271FE45E249799CF00DC2472 /* LogType.swift in Sources */,
+				279F92C424B8AB7C00349413 /* Double+Storage.swift in Sources */,
 				2735523923B0F7BF0069B263 /* UIView+Blur.swift in Sources */,
 				2735523C23B0F7BF0069B263 /* UIView+Rotate.swift in Sources */,
 				2735524C23B0F7BF0069B263 /* UITextField+Placeholder.swift in Sources */,
