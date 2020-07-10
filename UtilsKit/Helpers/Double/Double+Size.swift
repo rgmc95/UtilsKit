@@ -60,10 +60,10 @@ extension Double {
         numberFormatter.maximumSignificantDigits = 3
         
         let val: (String, Double.Unit)? = Unit.allUnits
-            .map { ((self / $0.rawValue), $0) }
-            .compactMap { size, unit -> (String, Unit)? in
-                guard let string = numberFormatter.string(from: NSNumber(value: size)) else { return nil }
-                return (string, unit)
+        .map { ((self / $0.rawValue), $0) }
+        .compactMap { size, unit -> (String, Unit)? in
+            guard let string = numberFormatter.string(from: NSNumber(value: size)) else { return nil }
+            return (string, unit)
         }
         .reduce(nil) { result, testedResult -> (String, Unit)? in
             guard let result = result else {

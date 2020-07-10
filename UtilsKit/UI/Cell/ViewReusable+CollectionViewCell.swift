@@ -81,11 +81,3 @@ extension UICollectionView {
         return cell
     }
 }
-
-/**
- Default empty collection view cell
- */
-public final class UIEmptyCollectionViewCell: UICollectionViewCell, ViewReusable {
-    public static var nibName: String? = ""
-    public static var identifier: String = "UIEmptyCollectionViewCell"
-}

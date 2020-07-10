@@ -10,22 +10,6 @@ import Foundation
 import UIKit
 
 /**
- 
- This protocol lightens collection view reusable view dequeuement.
- It provides methods to register, initialize and dequeue view with a single call.
- 
- To make reusable view compliants with this protocol, implement:
- 
- - nibName: name of the xib
- - identifier: identifier of the view
- - kind: kind of view. Either `header` or `footer`
- 
- */
-public protocol CollectionViewHeaderFooterViewReusable: ViewReusable {
-    static var kind: CollectionViewReusableViewKind { get }
-}
-
-/**
  Wrapper of reusable view kind
  */
 public enum CollectionViewReusableViewKind {
@@ -42,6 +26,22 @@ public enum CollectionViewReusableViewKind {
         case .footer: return UICollectionView.elementKindSectionFooter
         }
     }
+}
+
+/**
+ 
+ This protocol lightens collection view reusable view dequeuement.
+ It provides methods to register, initialize and dequeue view with a single call.
+ 
+ To make reusable view compliants with this protocol, implement:
+ 
+ - nibName: name of the xib
+ - identifier: identifier of the view
+ - kind: kind of view. Either `header` or `footer`
+ 
+ */
+public protocol CollectionViewHeaderFooterViewReusable: ViewReusable {
+    static var kind: CollectionViewReusableViewKind { get }
 }
 
 extension CollectionViewHeaderFooterViewReusable where Self: UICollectionReusableView {
