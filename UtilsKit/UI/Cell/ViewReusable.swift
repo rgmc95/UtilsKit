@@ -16,16 +16,9 @@ import UIKit
  
  To make view compliants with this protocol, implement:
  
- - nibName: name of the xib. Default class name
- - identifier: identifier of the view. Default "{className}Identifier"
+ - identifier: identifier of the view.
  
  */
 public protocol ViewReusable: NibProtocol {
     static var identifier: String { get }
-}
-
-extension ViewReusable {
-    
-    /// Identifier of the view. Default "{className}Identifier"
-    public static var identifier: String { "\(String(describing: Self.self))" }
 }
