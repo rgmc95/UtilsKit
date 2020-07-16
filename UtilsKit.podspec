@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author = "Romain Gjura & Michael Coqueret"
   s.summary = "Swift Utilities"
   s.swift_version = '5.1'
-  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.0" }
+  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.0.0" }
   s.default_subspec = 'Core'
 
   s.ios.deployment_target = '10.0'
