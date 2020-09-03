@@ -8,22 +8,9 @@
 
 import Foundation
 
-extension Int {
-    
-    /**
-     Return the formated space.
-     
-     - returns: the spage in octet, Ko, Mo, Go, To or Po..
-     */
-    @available(swift, obsoleted: 13.0, renamed: "toStorage")
-    public func toSpace() -> String {
-        Double(self).toSpace()
-    }
-}
-
 extension Double {
     
-    @available(swift, obsoleted: 13.0)
+    @available(iOS, deprecated: 13.0)
     private enum Unit: Double {
         case octet = 1
         case kiloOctet = 1e3
@@ -50,7 +37,7 @@ extension Double {
      
      - returns: the space in octet, Ko, Mo, Go, To or Po..
      */
-    @available(swift, obsoleted: 13.0, renamed: "toStorage")
+    @available(iOS, obsoleted: 13.0, renamed: "toStorage")
     public func toSpace() -> String {
         let numberFormatter = NumberFormatter()
         guard self > 0 else {

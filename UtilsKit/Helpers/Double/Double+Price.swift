@@ -34,3 +34,16 @@ extension Double {
         return ""
     }
 }
+
+extension Int {
+    
+    /**
+     Self in price with currency and formatter.
+     
+     - parameter currency : Custom currency if needed
+     - returns: self in price with currency.
+     */
+    public func toPrice(currency: String? = nil) -> String {
+        Double(self).toPrice(currency: currency)
+    }
+}

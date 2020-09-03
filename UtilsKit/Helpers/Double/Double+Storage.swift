@@ -8,25 +8,6 @@
 
 import Foundation
 
-extension Int {
-    
-    /**
-     Considering the value is in bytes, format it in the most appropriate unit depening on the locale
-     
-     - parameter maximumFractionDigits : Maximum fraction digits. Default 2
-     - returns: The formated result
-     
-     ~~~
-     let value = 1000
-     print(value.toStorage()) // prints `1 kB`
-     ~~~
-     */
-    @available(iOS 13.0, *)
-    public func toStorage(maximumFractionDigits: Int = 2) -> String {
-        Double(self).toStorage(maximumFractionDigits: maximumFractionDigits)
-    }
-}
-
 extension Double {
     
     /**
@@ -64,5 +45,24 @@ extension Double {
         } else {
             return formatter.string(from: measure.converted(to: .bytes))
         }
+    }
+}
+
+extension Int {
+    
+    /**
+     Considering the value is in bytes, format it in the most appropriate unit depening on the locale
+     
+     - parameter maximumFractionDigits : Maximum fraction digits. Default 2
+     - returns: The formated result
+     
+     ~~~
+     let value = 1000
+     print(value.toStorage()) // prints `1 kB`
+     ~~~
+     */
+    @available(iOS 13.0, *)
+    public func toStorage(maximumFractionDigits: Int = 2) -> String {
+        Double(self).toStorage(maximumFractionDigits: maximumFractionDigits)
     }
 }
