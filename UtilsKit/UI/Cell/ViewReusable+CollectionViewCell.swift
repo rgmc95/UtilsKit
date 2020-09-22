@@ -77,6 +77,7 @@ extension UICollectionView {
      
      */
     public func dequeueEmptyCell(forIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+        self.register(UIEmptyCollectionViewCell.self)
         let cell: UIEmptyCollectionViewCell = self.dequeueCell(forIndexPath: indexPath)
         return cell
     }
