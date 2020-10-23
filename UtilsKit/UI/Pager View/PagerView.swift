@@ -108,6 +108,8 @@ open class PagerView: UIView, UIScrollViewDelegate {
             self.scrollView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
         
+        self.layoutSubviews()
+        self.layoutIfNeeded()
         self.configureInnerViews()
     }
     
@@ -199,13 +201,15 @@ open class PagerView: UIView, UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let oldPage = self.page
-        
-        switch scrollDirection {
-        case .horizontal:
-            self.page = Int(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
+        if self.scrollView.frame != CGRect.zero
+        {
+            switch scrollDirection {
+            case .horizontal:
+                self.page = Int(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
             
-        case .vertical:
-            self.page = Int(self.scrollView.contentOffset.y / self.scrollView.frame.size.height)
+            case .vertical:
+                self.page = Int(self.scrollView.contentOffset.y / self.scrollView.frame.size.height)
+            }
         }
         
         if oldPage != self.page {
