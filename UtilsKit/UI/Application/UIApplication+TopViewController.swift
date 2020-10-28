@@ -26,8 +26,19 @@ extension UIApplication {
     
     private func topViewController(_ baseViewController: UIViewController? = nil) -> UIViewController? {
         
-        let currentBaseViewController: UIViewController? = baseViewController ?? UIApplication.sharedAux?.delegate?.window??.rootViewController
-        
+        let currentBaseViewController: UIViewController?
+            
+        if let baseVC: UIViewController = baseViewController {
+            currentBaseViewController = baseVC
+        } else if #available(iOS 13.0, *),
+                  let sceneDelegate: UIWindowSceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? UIWindowSceneDelegate,
+                  let rootVC: UIViewController = sceneDelegate.window??.rootViewController {
+            currentBaseViewController = rootVC
+        } else {
+            currentBaseViewController = UIApplication.sharedAux?.delegate?.window??.rootViewController
+        }
+
+            
         if let nav: UINavigationController = currentBaseViewController as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
