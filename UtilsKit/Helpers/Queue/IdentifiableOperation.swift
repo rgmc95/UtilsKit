@@ -16,13 +16,13 @@ open class IdentifiableOperation: Operation {
     /**
      Linked `Identifiable` to the operation
      */
-    public var identifiables: [Identifiable] = []
+    public var identifiables: [IdentifiableObject] = []
     
     /**
      Init the operation with a single identifiable
      */
-    public init(identifiable: Identifiable? = nil) {
-        if let identifiable: Identifiable = identifiable { self.identifiables.append(identifiable) }
+    public init(identifiable: IdentifiableObject? = nil) {
+        if let identifiable: IdentifiableObject = identifiable { self.identifiables.append(identifiable) }
         super.init()
     }
     

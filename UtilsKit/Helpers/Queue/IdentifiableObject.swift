@@ -1,5 +1,5 @@
 //
-//  Identifiable.swift
+//  IdentifiableObject.swift
 //  UtilsKit
 //
 //  Created by RGMC on 18/10/2018.
@@ -11,20 +11,20 @@ import Foundation
 /**
  Make an object identifiable
  */
-public protocol Identifiable {
+public protocol IdentifiableObject {
     
     /// Unique identifier
     var identifier: ObjectIdentifier { get }
     
     /// Compare this Identifiable with an other one
-    func isEqualTo(_ identifiable: Identifiable) -> Bool
+    func isEqualTo(_ identifiable: IdentifiableObject) -> Bool
 }
 
-extension Identifiable {
+extension IdentifiableObject {
     /**
      Check the equality of two identifiables
      */
-    public func isEqualTo(_ identifiable: Identifiable) -> Bool {
+    public func isEqualTo(_ identifiable: IdentifiableObject) -> Bool {
         self.identifier == identifiable.identifier
     }
 }

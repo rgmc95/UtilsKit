@@ -62,8 +62,8 @@ public class QueueManager {
      Pass nil or no parameters to stop all operations
      - parameter identifier : the identifiable to cancel or nil
      */
-    public func stopAllOperations(withIdentifier identifier: Identifiable? = nil) {
-        if let identifier: Identifiable = identifier {
+    public func stopAllOperations(withIdentifier identifier: IdentifiableObject? = nil) {
+        if let identifier: IdentifiableObject = identifier {
             queue.operations.forEach { operation in
                 guard let operation = operation as? IdentifiableOperation else { return }
                 operation.identifiables = operation.identifiables.filter { !$0.isEqualTo(identifier) }
@@ -106,7 +106,7 @@ public class QueueManager {
      - parameter identifier : the identifiable to search for in the operations
      - returns: all operations that contain the given identifier
      */
-    internal func getOperations<T: IdentifiableOperation>(identifier: Identifiable) -> [T] {
+    internal func getOperations<T: IdentifiableOperation>(identifier: IdentifiableObject) -> [T] {
         var operations: [T] = []
         for operation in queue.operations {
             if
