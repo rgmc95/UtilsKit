@@ -16,14 +16,32 @@ import UIKit
     // MARK: - Inspectables
     @IBInspectable public var topInset: CGFloat = 0.0
     @IBInspectable public var bottomInset: CGFloat = 0.0
-    @IBInspectable public var leftInset: CGFloat = 0.0
-    @IBInspectable public var rightInset: CGFloat = 0.0
+    @IBInspectable public var startInset: CGFloat = 0.0
+    @IBInspectable public var endInset: CGFloat = 0.0
+    
+    private var leftInset : CGFloat {
+        get {
+            if isRightToLeft() {
+                return endInset
+            }
+            return startInset
+        }
+    }
+    
+    private var rightInset : CGFloat {
+        get {
+            if isRightToLeft() {
+                return startInset
+            }
+            return endInset
+        }
+    }
     
     // MARK: - Variables
     override open var intrinsicContentSize: CGSize {
         var intrinsicSuperViewContentSize: CGSize = super.intrinsicContentSize
         intrinsicSuperViewContentSize.height += topInset + bottomInset
-        intrinsicSuperViewContentSize.width += leftInset + rightInset
+        intrinsicSuperViewContentSize.width += startInset + endInset
         return intrinsicSuperViewContentSize
     }
     
@@ -31,5 +49,9 @@ import UIKit
     override open func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
         super.drawText(in: rect.inset(by: insets))
+    }
+    
+    private func isRightToLeft() -> Bool {
+        return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
     }
 }
