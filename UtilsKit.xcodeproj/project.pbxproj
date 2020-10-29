@@ -71,7 +71,6 @@
 		2735525323B0F7BF0069B263 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520323B0F7BE0069B263 /* Log.swift */; };
 		2735525423B0F7BF0069B263 /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520523B0F7BE0069B263 /* QueueManager.swift */; };
 		2735525523B0F7BF0069B263 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520623B0F7BE0069B263 /* Operation.swift */; };
-		2735525623B0F7BF0069B263 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520723B0F7BE0069B263 /* Identifiable.swift */; };
 		2735525723B0F7BF0069B263 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520923B0F7BE0069B263 /* DocumentManager.swift */; };
 		2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520B23B0F7BE0069B263 /* Dictionary+Operator.swift */; };
 		2735525923B0F7BF0069B263 /* NSDate+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520C23B0F7BE0069B263 /* NSDate+Compare.swift */; };
@@ -90,6 +89,7 @@
 		27E4A3C72464567F0008BA97 /* CacheObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */; };
 		27E4A3C92464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */; };
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
+		EE3622AE254B036800805C81 /* IdentifiableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3622AD254B036800805C81 /* IdentifiableObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,7 +159,6 @@
 		2735520323B0F7BE0069B263 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		2735520523B0F7BE0069B263 /* QueueManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueManager.swift; sourceTree = "<group>"; };
 		2735520623B0F7BE0069B263 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
-		2735520723B0F7BE0069B263 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		2735520923B0F7BE0069B263 /* DocumentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 		2735520B23B0F7BE0069B263 /* Dictionary+Operator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Operator.swift"; sourceTree = "<group>"; };
 		2735520C23B0F7BE0069B263 /* NSDate+Compare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Compare.swift"; sourceTree = "<group>"; };
@@ -178,6 +177,7 @@
 		27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheObjectProtocol.swift; sourceTree = "<group>"; };
 		27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderFooterViewReusable.swift; sourceTree = "<group>"; };
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
+		EE3622AD254B036800805C81 /* IdentifiableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifiableObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,9 +472,9 @@
 		2735520423B0F7BE0069B263 /* Queue */ = {
 			isa = PBXGroup;
 			children = (
+				EE3622AD254B036800805C81 /* IdentifiableObject.swift */,
 				2735520523B0F7BE0069B263 /* QueueManager.swift */,
 				2735520623B0F7BE0069B263 /* Operation.swift */,
-				2735520723B0F7BE0069B263 /* Identifiable.swift */,
 				271FE45B249796BA00DC2472 /* IdentifiableOperation.swift */,
 			);
 			path = Queue;
@@ -727,7 +727,6 @@
 				2735524023B0F7BF0069B263 /* UIDevice+Flash.swift in Sources */,
 				2735523423B0F7BF0069B263 /* Double+Price.swift in Sources */,
 				2735524423B0F7BF0069B263 /* String+Localize.swift in Sources */,
-				2735525623B0F7BF0069B263 /* Identifiable.swift in Sources */,
 				2735525023B0F7BF0069B263 /* ViewReusable.swift in Sources */,
 				2735522023B0F7BF0069B263 /* UIDeviceOrientation+InterfaceOrientation.swift in Sources */,
 				2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */,
@@ -752,6 +751,7 @@
 				2735522223B0F7BF0069B263 /* Collection+Safe.swift in Sources */,
 				271FE4642497A90F00DC2472 /* NavigationError.swift in Sources */,
 				2735524223B0F7BF0069B263 /* String+ExtractValueFromRegex.swift in Sources */,
+				EE3622AE254B036800805C81 /* IdentifiableObject.swift in Sources */,
 				2735526623B0F7BF0069B263 /* CacheManager.swift in Sources */,
 				2735524E23B0F7BF0069B263 /* StoryboardProtocol.swift in Sources */,
 				2735524F23B0F7BF0069B263 /* NavigationProtocol.swift in Sources */,

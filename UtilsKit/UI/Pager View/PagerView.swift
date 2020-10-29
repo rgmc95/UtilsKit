@@ -201,8 +201,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let oldPage = self.page
-        if self.scrollView.frame != CGRect.zero
-        {
+        if self.scrollView.frame != CGRect.zero {
             switch scrollDirection {
             case .horizontal:
                 self.page = Int(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
