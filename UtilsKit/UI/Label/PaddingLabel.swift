@@ -22,8 +22,8 @@ import UIKit
     // MARK: - Variables
     override open var intrinsicContentSize: CGSize {
         var intrinsicSuperViewContentSize: CGSize = super.intrinsicContentSize
-        intrinsicSuperViewContentSize.height += topInset + bottomInset
-        intrinsicSuperViewContentSize.width += startInset + endInset
+        intrinsicSuperViewContentSize.height += self.topInset + self.bottomInset
+        intrinsicSuperViewContentSize.width += self.startInset + self.endInset
         return intrinsicSuperViewContentSize
     }
     
@@ -31,20 +31,27 @@ import UIKit
         UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
     }
     
-    // MARK: - Draw
-    override open func drawText(in rect: CGRect) {
+    private var insets: UIEdgeInsets {
         let leftInset: CGFloat
         let rightInset: CGFloat
         
         if self.isRightToLeft {
-            leftInset = endInset
-            rightInset = startInset
+            leftInset = self.endInset
+            rightInset = self.startInset
         } else {
-            leftInset = startInset
-            rightInset = endInset
+            leftInset = self.startInset
+            rightInset = self.endInset
         }
         
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        super.drawText(in: rect.inset(by: insets))
+        return UIEdgeInsets(top: self.topInset, left: leftInset, bottom: self.bottomInset, right: rightInset)
+    }
+    
+    // MARK: - Draw
+    override open func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: self.insets))
+    }
+    
+    override open func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        super.textRect(forBounds: bounds.inset(by: self.insets), limitedToNumberOfLines: numberOfLines)
     }
 }
