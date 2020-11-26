@@ -44,8 +44,25 @@ extension UICollectionView {
      - parameter identifier: Register the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
      
      */
-    public func register<T: ViewReusable & UICollectionViewCell>(_ type: T.Type, withIdentifier identifier: String? = nil) {
+    public func register<T: ViewReusable & UICollectionViewCell>(_ type: T.Type,
+                                                                 withIdentifier identifier: String? = nil) {
         T.registerCell(withCollectionView: self, withIdentifier: identifier)
+    }
+    
+    /**
+     
+     Register a cell class in collection view
+     
+     The cell needs to conform to `ViewReusable` and be of type `UICollectionViewCell`.
+     
+     - parameter type: Type of the view to register
+     
+     - parameter identifier: Register the cell with the given identifier. Otherwise use identifier of `ViewReusable` instead
+     
+     */
+    public func registerClass<T: ViewReusable & UICollectionViewCell>(_ type: T.Type,
+                                                                 withIdentifier identifier: String? = nil) {
+        self.register(T.self, forCellWithReuseIdentifier: identifier ?? T.identifier)
     }
     
     /**
