@@ -61,7 +61,7 @@ extension UICollectionView {
      
      */
     public func registerClass<T: ViewReusable & UICollectionViewCell>(_ type: T.Type,
-                                                                 withIdentifier identifier: String? = nil) {
+                                                                      withIdentifier identifier: String? = nil) {
         self.register(T.self, forCellWithReuseIdentifier: identifier ?? T.identifier)
     }
     

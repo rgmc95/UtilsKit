@@ -71,7 +71,7 @@ extension UIView {
         fatalError("Cannot find class in nib named \(nibName)")
     }
     
-    func stretch(view: UIView) {
+    internal func stretch(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate(

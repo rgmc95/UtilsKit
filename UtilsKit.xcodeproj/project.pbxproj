@@ -86,6 +86,7 @@
 		279F92C224B8966600349413 /* Double+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F92C124B8966600349413 /* Double+Distance.swift */; };
 		279F92C424B8AB7C00349413 /* Double+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F92C324B8AB7C00349413 /* Double+Storage.swift */; };
 		279F934A24B8C07700349413 /* UIEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279F934924B8C07700349413 /* UIEmptyCollectionViewCell.swift */; };
+		27C287B02571588B00FA09C6 /* Array+RemoveDuplicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C287AF2571588B00FA09C6 /* Array+RemoveDuplicates.swift */; };
 		27E4A3C72464567F0008BA97 /* CacheObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */; };
 		27E4A3C92464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */; };
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
@@ -174,6 +175,7 @@
 		279F92C124B8966600349413 /* Double+Distance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Distance.swift"; sourceTree = "<group>"; };
 		279F92C324B8AB7C00349413 /* Double+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Storage.swift"; sourceTree = "<group>"; };
 		279F934924B8C07700349413 /* UIEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
+		27C287AF2571588B00FA09C6 /* Array+RemoveDuplicates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+RemoveDuplicates.swift"; sourceTree = "<group>"; };
 		27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheObjectProtocol.swift; sourceTree = "<group>"; };
 		27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderFooterViewReusable.swift; sourceTree = "<group>"; };
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		273551B523B0F7BE0069B263 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				27C287AF2571588B00FA09C6 /* Array+RemoveDuplicates.swift */,
 				273551B823B0F7BE0069B263 /* Array+URLQueryItem.swift */,
 				273551B923B0F7BE0069B263 /* Array+Contains.swift */,
 				273551B623B0F7BE0069B263 /* Collection+Safe.swift */,
@@ -610,7 +613,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = iD.apps;
 				TargetAttributes = {
 					273550A323B0EBA80069B263 = {
@@ -729,6 +732,7 @@
 				2735524423B0F7BF0069B263 /* String+Localize.swift in Sources */,
 				2735525023B0F7BF0069B263 /* ViewReusable.swift in Sources */,
 				2735522023B0F7BF0069B263 /* UIDeviceOrientation+InterfaceOrientation.swift in Sources */,
+				27C287B02571588B00FA09C6 /* Array+RemoveDuplicates.swift in Sources */,
 				2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */,
 				271FE45E249799CF00DC2472 /* LogType.swift in Sources */,
 				279F92C424B8AB7C00349413 /* Double+Storage.swift in Sources */,
@@ -787,6 +791,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -850,6 +855,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -892,7 +898,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = UtilsKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -918,7 +924,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = UtilsKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

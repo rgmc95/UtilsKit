@@ -21,7 +21,7 @@ extension Double {
      print(value.toDistance()) // prints `1 km` in France, `0,6 mile` in US
      ~~~
      */
-    func toDistance(maximumFractionDigits: Int = 1) -> String {
+    public func toDistance(maximumFractionDigits: Int = 1) -> String {
         let nbFormatter = NumberFormatter()
         nbFormatter.maximumFractionDigits = maximumFractionDigits
         
@@ -47,7 +47,7 @@ extension Int {
      print(value.toDistance()) // prints `1 km` in France, `0,6 mile` in US
      ~~~
      */
-    func toDistance(maximumFractionDigits: Int = 1) -> String {
+    public func toDistance(maximumFractionDigits: Int = 1) -> String {
         Double(self).toDistance(maximumFractionDigits: maximumFractionDigits)
     }
 }
