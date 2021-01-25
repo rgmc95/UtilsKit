@@ -13,13 +13,17 @@ extension Decodable {
     /**
         A convenience method to decode data into a object compliant with `Decodable` protocol
      */
-    public static func decode(from data: Any?) -> Self? {
-        guard
-            let data = data,
-            let jsonData = (data as? Data) ?? (try? JSONSerialization.data(withJSONObject: data)),
-            let object: Self = try? JSONDecoder().decode(Self.self, from: jsonData)
-        else { return nil }
-        
-        return object
+    public static func decode(from data: Any?) throws -> Self? {
+
+        if let data = data, let jsonData = (data as? Data) ?? (try? JSONSerialization.data(withJSONObject: data)) {
+            do {
+                let object: Self = try JSONDecoder().decode(Self.self, from: jsonData)
+                return object
+            } catch {
+                throw error
+            }
+        } else {
+            return nil
+        }
     }
 }

@@ -54,7 +54,7 @@ public class CacheManager: NSObject {
     public func get<T: Codable>(forKey key: String?) -> T? {
         guard let key = key else { return nil }
         let data: Data? = cache?.data(forKey: key)
-        let object = T.decode(from: data)
+        let object = try? T.decode(from: data)
         return object
     }
     
