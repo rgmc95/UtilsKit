@@ -17,8 +17,10 @@ extension Date {
     
     - returns: the date converted into a string with specified format.
     */
-    public func toString(format: String = "dd/MM/yyyy") -> String {
+    public func toString(format: String = "dd/MM/yyyy",
+                         locale: Locale = Locale.current) -> String {
         let formatter = DateFormatter()
+        formatter.locale = locale
         formatter.dateFormat = format
         return formatter.string(from: self)
     }
@@ -33,8 +35,10 @@ extension String {
      
         - returns: the string converted into a date with specified format.
      */
-    public func toDate(format: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> Date? {
+    public func toDate(format: String = "yyyy-MM-dd'T'HH:mm:ssZ",
+                       locale: Locale = Locale.current) -> Date? {
         let formatter = DateFormatter()
+        formatter.locale = locale
         formatter.dateFormat = format
         return formatter.date(from: self)
     }
