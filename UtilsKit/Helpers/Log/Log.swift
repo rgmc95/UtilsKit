@@ -21,7 +21,9 @@ import Foundation
     - parameter error: error to print localized description.
  
  */
-public func log(_ type: LogType, _ message: String? = nil, error: Error? = nil) {
+public func log(_ type: LogType,
+                _ message: String? = nil,
+                error: Error? = nil) {
     showLog(type, message, error: error)
 }
 
@@ -38,21 +40,27 @@ public func log(_ type: LogType, _ message: String? = nil, error: Error? = nil) 
     - parameter error: error to print localized description.
  
  */
-public func log(_ type: DefaultLogType = .debug, _ message: String? = nil, error: Error? = nil) {
+public func log(_ type: DefaultLogType = .debug,
+                _ message: String? = nil,
+                error: Error? = nil) {
     showLog(type, message, error: error)
 }
 
-private func showLog(_ type: LogType, _ message: String? = nil, error: Error? = nil) {
+private func showLog(_ type: LogType,
+                     _ message: String? = nil,
+                     error: Error? = nil) {
     #if DEBUG
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale.current
-    dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+    var messages: [String?] = []
     
-    var message: String = "\(dateFormatter.string(from: Date())) ~ \(type.prefix) - \(message ?? "")"
+    let date = Date().toString(format: "MM-dd-yyyy HH:mm:ss", locale: Locale(identifier: "en"))
+    messages.append("\(date) ~ \(type.prefix) -")
+    
+    messages.append(message)
     
     if let error: Error = error {
-        message += " 🛑 \(error)"
+        messages.append("🛑 \(error.localizedDescription)")
     }
-    print(message)
+    
+    print(messages.compactMap { $0 }.joined(separator: " "))
     #endif
 }
