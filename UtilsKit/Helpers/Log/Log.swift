@@ -9,6 +9,21 @@
 import Foundation
 
 /**
+
+Print a custom log, usually prefixed with an debug unicode character.
+
+Passing an error to this method results in printing its localized description.
+
+- parameter object: object to print.
+- parameter error: error to print localized description.
+
+*/
+public func debug(_ object: Any? = nil,
+				  error: Error? = nil) {
+	showLog(DefaultLogType.debug, object, error: error)
+}
+
+/**
  
     Print a custom log, usually prefixed with an unicode character.
  
@@ -17,14 +32,14 @@ import Foundation
     Passing an error to this method results in printing its localized description.
  
     - parameter type: type of the log, compliant with `LogType` protocol.
-    - parameter message: message to print.
+    - parameter object: object to print.
     - parameter error: error to print localized description.
  
  */
 public func log(_ type: LogType,
-                _ message: String? = nil,
+                _ object: String? = nil,
                 error: Error? = nil) {
-    showLog(type, message, error: error)
+    showLog(type, object, error: error)
 }
 
 /**
@@ -36,31 +51,31 @@ public func log(_ type: LogType,
     Passing an error to this method results in printing its localized description.
  
     - parameter type: Internal type of the log,
-    - parameter message: message to print.
+    - parameter object: object to print.
     - parameter error: error to print localized description.
  
  */
-public func log(_ type: DefaultLogType = .debug,
-                _ message: String? = nil,
-                error: Error? = nil) {
-    showLog(type, message, error: error)
+public func log(_ type: DefaultLogType,
+				_ object: Any? = nil,
+				error: Error? = nil) {
+	showLog(type, object, error: error)
 }
 
 private func showLog(_ type: LogType,
-                     _ message: String? = nil,
-                     error: Error? = nil) {
-    #if DEBUG
-    var messages: [String?] = []
-    
-    let date = Date().toString(format: "MM-dd-yyyy HH:mm:ss", locale: Locale(identifier: "en"))
-    messages.append("\(date) ~ \(type.prefix) -")
-    
-    messages.append(message)
-    
-    if let error: Error = error {
-        messages.append("🛑 \(error.localizedDescription)")
-    }
-    
-    print(messages.compactMap { $0 }.joined(separator: " "))
-    #endif
+					 _ object: Any? = nil,
+					 error: Error? = nil) {
+	#if DEBUG
+	var messages: [String?] = []
+	
+	let date = Date().toString(format: "MM-dd-yyyy HH:mm:ss", locale: Locale(identifier: "en"))
+	messages.append("\(date) ~ \(type.prefix) -")
+	
+	messages.append("\(String(describing: object))")
+	
+	if let error: Error = error {
+		messages.append("🛑 \(error.localizedDescription)")
+	}
+	
+	print(messages.compactMap { $0 }.joined(separator: " "))
+	#endif
 }
