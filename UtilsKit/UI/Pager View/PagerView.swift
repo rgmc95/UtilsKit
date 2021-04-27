@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol PagerViewDelegate: AnyObject, UIScrollViewDelegate {
+public protocol PagerViewDelegate: UIScrollViewDelegate {
     func pageDidChange(_ page: Int)
 }
 
@@ -247,7 +247,8 @@ open class PagerView: UIView, UIScrollViewDelegate {
     }
     
     // MARK: - Actions
-    @objc private func didRotate() {
+    @objc
+	private func didRotate() {
         let orientation: UIDeviceOrientation = UIDevice.current.orientation
         
         defer {

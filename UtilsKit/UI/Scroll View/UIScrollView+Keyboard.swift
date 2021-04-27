@@ -35,7 +35,8 @@ extension UIScrollView {
         }
     }
     
-    @objc private func keyboardAction(notification: NSNotification) {
+    @objc
+	private func keyboardAction(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
             let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             let superview = self.superview else { return }

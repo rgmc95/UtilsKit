@@ -17,7 +17,8 @@ extension UIView {
      
      - returns: the blur effet view.
      */
-    @discardableResult public func addBlur(_ style: UIBlurEffect.Style = .dark) -> UIVisualEffectView? {
+    @discardableResult
+	public func addBlur(_ style: UIBlurEffect.Style = .dark) -> UIVisualEffectView? {
         if !UIAccessibility.isReduceTransparencyEnabled {
             self.backgroundColor = UIColor.clear
             let blurEffect = UIBlurEffect(style: style)

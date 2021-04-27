@@ -12,7 +12,8 @@ extension UIView {
     /**
      Localize the view
      */
-    @objc public func localize() {
+    @objc
+	public func localize() {
         self.subviews.forEach { $0.localize() }
     }
 }
