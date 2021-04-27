@@ -75,7 +75,6 @@
 		2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520B23B0F7BE0069B263 /* Dictionary+Operator.swift */; };
 		2735525923B0F7BF0069B263 /* NSDate+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520C23B0F7BE0069B263 /* NSDate+Compare.swift */; };
 		2735525A23B0F7BF0069B263 /* NSNumber+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520D23B0F7BE0069B263 /* NSNumber+Compare.swift */; };
-		2735525B23B0F7BF0069B263 /* CGFloat+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735520E23B0F7BE0069B263 /* CGFloat+Operator.swift */; };
 		2735525C23B0F7BF0069B263 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735521023B0F7BF0069B263 /* AlertManager.swift */; };
 		2735525D23B0F7BF0069B263 /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735521223B0F7BF0069B263 /* PaddingTextField.swift */; };
 		2735525E23B0F7BF0069B263 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2735521323B0F7BF0069B263 /* PaddingLabel.swift */; };
@@ -91,6 +90,7 @@
 		27E4A3C92464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */; };
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
 		4C835BC92631B385004B2EA0 /* UIScrollView+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */; };
+		4CF301A126381B3600B604F7 /* CLLocationCoordinate2D+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF301A026381B3600B604F7 /* CLLocationCoordinate2D+Map.swift */; };
 		EE3622AE254B036800805C81 /* IdentifiableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3622AD254B036800805C81 /* IdentifiableObject.swift */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +181,7 @@
 		27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderFooterViewReusable.swift; sourceTree = "<group>"; };
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
 		4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Paging.swift"; sourceTree = "<group>"; };
+		4CF301A026381B3600B604F7 /* CLLocationCoordinate2D+Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Map.swift"; sourceTree = "<group>"; };
 		EE3622AD254B036800805C81 /* IdentifiableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifiableObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -567,6 +568,7 @@
 				2735520823B0F7BE0069B263 /* Document Manager */,
 				273551D523B0F7BE0069B263 /* Double */,
 				273551D123B0F7BE0069B263 /* Local */,
+				4CF3019F26381B3600B604F7 /* Location */,
 				2735520223B0F7BE0069B263 /* Log */,
 				273551FC23B0F7BE0069B263 /* Navigation */,
 				2735520423B0F7BE0069B263 /* Queue */,
@@ -582,6 +584,14 @@
 				4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */,
 			);
 			path = ScrollView;
+			sourceTree = "<group>";
+		};
+		4CF3019F26381B3600B604F7 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				4CF301A026381B3600B604F7 /* CLLocationCoordinate2D+Map.swift */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -759,6 +769,7 @@
 				2735522423B0F7BF0069B263 /* Array+Contains.swift in Sources */,
 				2735522A23B0F7BF0069B263 /* UITableView+Reload+Completion.swift in Sources */,
 				27557FD82500F6570097CDC9 /* Double+Duration.swift in Sources */,
+				4CF301A126381B3600B604F7 /* CLLocationCoordinate2D+Map.swift in Sources */,
 				2735522723B0F7BF0069B263 /* Date+String.swift in Sources */,
 				2735523023B0F7BF0069B263 /* UINavigationController+NavigationBar.swift in Sources */,
 				271FE4662497BD1500DC2472 /* RGMCNavigationController.swift in Sources */,
