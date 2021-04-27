@@ -90,6 +90,7 @@
 		27E4A3C72464567F0008BA97 /* CacheObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */; };
 		27E4A3C92464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */; };
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
+		4C835BC92631B385004B2EA0 /* UIScrollView+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */; };
 		EE3622AE254B036800805C81 /* IdentifiableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3622AD254B036800805C81 /* IdentifiableObject.swift */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +180,7 @@
 		27E4A3C62464567F0008BA97 /* CacheObjectProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheObjectProtocol.swift; sourceTree = "<group>"; };
 		27E4A3C82464649B0008BA97 /* CollectionViewHeaderFooterViewReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderFooterViewReusable.swift; sourceTree = "<group>"; };
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
+		4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Paging.swift"; sourceTree = "<group>"; };
 		EE3622AD254B036800805C81 /* IdentifiableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifiableObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -554,6 +556,7 @@
 		2735526823B0F7CA0069B263 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4C835BC72631B377004B2EA0 /* ScrollView */,
 				2735520F23B0F7BF0069B263 /* Alert Manager */,
 				2735521C23B0F7BF0069B263 /* Cache */,
 				273551B523B0F7BE0069B263 /* Collection */,
@@ -571,6 +574,14 @@
 				273551C623B0F7BE0069B263 /* URL */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4C835BC72631B377004B2EA0 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */,
+			);
+			path = ScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -733,6 +744,7 @@
 				2735525023B0F7BF0069B263 /* ViewReusable.swift in Sources */,
 				2735522023B0F7BF0069B263 /* UIDeviceOrientation+InterfaceOrientation.swift in Sources */,
 				27C287B02571588B00FA09C6 /* Array+RemoveDuplicates.swift in Sources */,
+				4C835BC92631B385004B2EA0 /* UIScrollView+Paging.swift in Sources */,
 				2735525823B0F7BF0069B263 /* Dictionary+Operator.swift in Sources */,
 				271FE45E249799CF00DC2472 /* LogType.swift in Sources */,
 				279F92C424B8AB7C00349413 /* Double+Storage.swift in Sources */,
