@@ -70,7 +70,9 @@ private func showLog(_ type: LogType,
 	let date = Date().toString(format: "MM-dd-yyyy HH:mm:ss", locale: Locale(identifier: "en"))
 	messages.append("\(date) ~ \(type.prefix) -")
 	
-	messages.append("\(String(describing: object))")
+	if let object = object {
+		messages.append("\(String(describing: object))")
+	}
 	
 	if let error: Error = error {
 		messages.append("🛑 \(error.localizedDescription)")
