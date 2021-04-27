@@ -91,6 +91,9 @@
 		27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */; };
 		4C835BC92631B385004B2EA0 /* UIScrollView+Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */; };
 		4CF301A126381B3600B604F7 /* CLLocationCoordinate2D+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF301A026381B3600B604F7 /* CLLocationCoordinate2D+Map.swift */; };
+		4CF301A32638325300B604F7 /* UILabel+Highlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF301A22638325300B604F7 /* UILabel+Highlight.swift */; };
+		4CF301A52638336B00B604F7 /* String+Ranges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF301A42638336B00B604F7 /* String+Ranges.swift */; };
+		4CF301A726383A6800B604F7 /* String+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF301A626383A6800B604F7 /* String+Empty.swift */; };
 		EE3622AE254B036800805C81 /* IdentifiableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3622AD254B036800805C81 /* IdentifiableObject.swift */; };
 /* End PBXBuildFile section */
 
@@ -182,6 +185,9 @@
 		27E9BEE1246ABB2400ECAD2E /* UIButton+TintColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+TintColorable.swift"; sourceTree = "<group>"; };
 		4C835BC82631B385004B2EA0 /* UIScrollView+Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Paging.swift"; sourceTree = "<group>"; };
 		4CF301A026381B3600B604F7 /* CLLocationCoordinate2D+Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Map.swift"; sourceTree = "<group>"; };
+		4CF301A22638325300B604F7 /* UILabel+Highlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Highlight.swift"; sourceTree = "<group>"; };
+		4CF301A42638336B00B604F7 /* String+Ranges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ranges.swift"; sourceTree = "<group>"; };
+		4CF301A626383A6800B604F7 /* String+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Empty.swift"; sourceTree = "<group>"; };
 		EE3622AD254B036800805C81 /* IdentifiableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifiableObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,6 +288,7 @@
 			children = (
 				2735521323B0F7BF0069B263 /* PaddingLabel.swift */,
 				273551C123B0F7BE0069B263 /* UILabel+Underline.swift */,
+				4CF301A22638325300B604F7 /* UILabel+Highlight.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -410,6 +417,8 @@
 				273551EC23B0F7BE0069B263 /* String+Validate.swift */,
 				273551ED23B0F7BE0069B263 /* String+Capitalize.swift */,
 				273551EE23B0F7BE0069B263 /* String+Dictionnary.swift */,
+				4CF301A42638336B00B604F7 /* String+Ranges.swift */,
+				4CF301A626383A6800B604F7 /* String+Empty.swift */,
 			);
 			path = String;
 			sourceTree = "<group>";
@@ -557,7 +566,6 @@
 		2735526823B0F7CA0069B263 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				4C835BC72631B377004B2EA0 /* ScrollView */,
 				2735520F23B0F7BF0069B263 /* Alert Manager */,
 				2735521C23B0F7BF0069B263 /* Cache */,
 				273551B523B0F7BE0069B263 /* Collection */,
@@ -572,6 +580,7 @@
 				2735520223B0F7BE0069B263 /* Log */,
 				273551FC23B0F7BE0069B263 /* Navigation */,
 				2735520423B0F7BE0069B263 /* Queue */,
+				4C835BC72631B377004B2EA0 /* ScrollView */,
 				273551E723B0F7BE0069B263 /* String */,
 				273551C623B0F7BE0069B263 /* URL */,
 			);
@@ -700,6 +709,7 @@
 				2735522C23B0F7BF0069B263 /* URL+Open.swift in Sources */,
 				2735522D23B0F7BF0069B263 /* URL+Parameters.swift in Sources */,
 				2735525323B0F7BF0069B263 /* Log.swift in Sources */,
+				4CF301A32638325300B604F7 /* UILabel+Highlight.swift in Sources */,
 				27E9BEE2246ABB2400ECAD2E /* UIButton+TintColorable.swift in Sources */,
 				2735523823B0F7BF0069B263 /* UIView+Keyboard.swift in Sources */,
 				2735521E23B0F7BF0069B263 /* UIScrollView+Keyboard.swift in Sources */,
@@ -721,6 +731,7 @@
 				2735522323B0F7BF0069B263 /* Array+URLQueryItem.swift in Sources */,
 				2735523F23B0F7BF0069B263 /* UIDevice+Network.swift in Sources */,
 				2735523123B0F7BF0069B263 /* UIViewController+TraitCollectionType.swift in Sources */,
+				4CF301A726383A6800B604F7 /* String+Empty.swift in Sources */,
 				2735524123B0F7BF0069B263 /* String+ASCII.swift in Sources */,
 				2735521F23B0F7BF0069B263 /* UINavigationBar+Shadow.swift in Sources */,
 				2735524A23B0F7BF0069B263 /* Double+Space.swift in Sources */,
@@ -748,6 +759,7 @@
 				271FE45C249796BA00DC2472 /* IdentifiableOperation.swift in Sources */,
 				2735522B23B0F7BF0069B263 /* UITableView+ResizeHeader.swift in Sources */,
 				2735524B23B0F7BF0069B263 /* Sequence+Group.swift in Sources */,
+				4CF301A52638336B00B604F7 /* String+Ranges.swift in Sources */,
 				2735524023B0F7BF0069B263 /* UIDevice+Flash.swift in Sources */,
 				2735523423B0F7BF0069B263 /* Double+Price.swift in Sources */,
 				2735524423B0F7BF0069B263 /* String+Localize.swift in Sources */,

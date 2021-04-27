@@ -15,6 +15,9 @@ public enum ScrollDirection: Int {
 
 extension UIScrollView {
 	
+	/**
+	Return current page depend on `orientation` parameter
+	*/
 	public func getCurrentPage(_ orientation: ScrollDirection) -> Int {
 		switch orientation {
 		case .vertical:
@@ -25,11 +28,14 @@ extension UIScrollView {
 		}
 	}
 	
+	/**
+	Scroll to `page` depends on `orientation` parameter
+	*/
 	@discardableResult
 	public func scrollToPage(_ page: Int, forOrientation orientation: ScrollDirection) -> Bool {
 		switch orientation {
 		case .vertical:
-			let yValue = self.frame.height * page
+			let yValue = self.frame.height * CGFloat(page)
 			if yValue > self.contentSize.height - self.frame.height { return false }
 			self.scrollRectToVisible(.init(x: self.contentOffset.x,
 										   y: yValue,
@@ -38,7 +44,7 @@ extension UIScrollView {
 									 animated: true)
 			
 		case .horizontal:
-			let xValue = self.frame.width * page
+			let xValue = self.frame.width * CGFloat(page)
 			if xValue > self.contentSize.width - self.frame.width { return false }
 			self.scrollRectToVisible(.init(x: xValue,
 										   y: self.contentOffset.y,
@@ -50,11 +56,17 @@ extension UIScrollView {
 		return true
 	}
 	
+	/**
+	Scroll to next page if exist depends on `orientation` parameter
+	*/
 	@discardableResult
 	public func scrollToNextPage(_ orientation: ScrollDirection) -> Bool {
 		self.scrollToPage(self.getCurrentPage(orientation) + 1, forOrientation: orientation)
 	}
 	
+	/**
+	Scroll to previous page if exist depends on `orientation` parameter
+	*/
 	@discardableResult
 	public func scrollToPreviousPage(_ orientation: ScrollDirection) -> Bool {
 		self.scrollToPage(self.getCurrentPage(orientation) - 1, forOrientation: orientation)
