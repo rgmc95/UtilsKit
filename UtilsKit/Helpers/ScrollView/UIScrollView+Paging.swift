@@ -32,7 +32,7 @@ extension UIScrollView {
 	Scroll to `page` depends on `orientation` parameter
 	*/
 	@discardableResult
-	public func scrollToPage(_ page: Int, forOrientation orientation: ScrollDirection) -> Bool {
+	public func scroll(to page: Int, forOrientation orientation: ScrollDirection) -> Bool {
 		switch orientation {
 		case .vertical:
 			let yValue = self.frame.height * CGFloat(page)
@@ -61,7 +61,7 @@ extension UIScrollView {
 	*/
 	@discardableResult
 	public func scrollToNextPage(_ orientation: ScrollDirection) -> Bool {
-		self.scrollToPage(self.getCurrentPage(orientation) + 1, forOrientation: orientation)
+		self.scroll(to: self.getCurrentPage(orientation) + 1, forOrientation: orientation)
 	}
 	
 	/**
@@ -69,6 +69,6 @@ extension UIScrollView {
 	*/
 	@discardableResult
 	public func scrollToPreviousPage(_ orientation: ScrollDirection) -> Bool {
-		self.scrollToPage(self.getCurrentPage(orientation) - 1, forOrientation: orientation)
+		self.scroll(to: self.getCurrentPage(orientation) - 1, forOrientation: orientation)
 	}
 }
