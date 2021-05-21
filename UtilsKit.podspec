@@ -1,17 +1,17 @@
 Pod::Spec.new do |s|
   s.name = 'UtilsKit'
-  s.version = '2.0.8'
+  s.version = '2.1'
   s.license = {
     :type => 'Copyright',
     :text => <<-LICENSE
-      Copyright 2012 - 2019 RGMC . All rights reserved.
+      Copyright 2012 - 2021 RGMC . All rights reserved.
       LICENSE
   }
   s.homepage = "https://github.com/rgmc95/UtilsKit"
-  s.author = "Romain Gjura & Michael Coqueret & David Douard"
+  s.author = "Romain Gjura & Michael Coqueret & David Douard & Thibaud Lambert"
   s.summary = "Swift Utilities"
-  s.swift_version = '5.3'
-  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.0.8" }
+  s.swift_version = '5.4'
+  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.1.0" }
   s.default_subspec = 'Core'
 
   s.ios.deployment_target = '10.0'
