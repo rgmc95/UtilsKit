@@ -9,306 +9,327 @@
 import UIKit
 
 public protocol PagerViewDelegate: UIScrollViewDelegate {
-    func pageDidChange(_ page: Int)
+	func pageDidChange(_ page: Int)
 }
 
 open class PagerView: UIView, UIScrollViewDelegate {
-    
-    // MARK: - Scroll direction
-    public enum PagerViewScrollDirection {
-        case vertical, horizontal
-    }
-    
-    // MARK: - Variables
-    private var oldOrientation: UIDeviceOrientation = UIDevice.current.orientation
-    private var scrollView = UIScrollView()
-    private var innerViews: [UIView] = []
-    
-    /**
-     The current page of the pager.
-     */
-    public private(set) var page: Int = 0
-    
-    /**
-     The scroll direction of the pager.
-     */
-    public private(set) var scrollDirection: PagerViewScrollDirection = .horizontal
-    
-    /**
-     Pager delegate
-     */
-    public weak var delegate: PagerViewDelegate?
-    
-    // MARK: - Scroll view variables
-    public var isPagingEnabled: Bool {
-        get { scrollView.isPagingEnabled }
-        set { scrollView.isPagingEnabled = newValue }
-    }
-    
-    public var isScrollEnabled: Bool {
-        get { scrollView.isScrollEnabled }
-        set { scrollView.isScrollEnabled = newValue }
-    }
-    
-    public var bounces: Bool {
-        get { scrollView.bounces }
-        set { scrollView.bounces = newValue }
-    }
-    
-    public var showsVerticalScrollIndicator: Bool {
-        get { scrollView.showsVerticalScrollIndicator }
-        set { scrollView.showsVerticalScrollIndicator = newValue }
-    }
-    
-    public var showsHorizontalScrollIndicator: Bool {
-        get { scrollView.showsHorizontalScrollIndicator }
-        set { scrollView.showsHorizontalScrollIndicator = newValue }
-    }
-    
-    // MARK: - Init
-    public init() {
-        super.init(frame: .zero)
-        setupUI()
-    }
-    
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupUI()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
-    }
-    
-    // MARK: - Scroll View overrides
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self._scrollToPage(self.page)
-    }
-    
-    private func configureScrollView() {
-        // Scroll view
-        self.subviews.forEach { $0.removeFromSuperview() }
-        self.scrollView.delegate = self
-        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
-        self.scrollView.backgroundColor = .clear
-        self.scrollView.isPagingEnabled = true
-        self.addSubview(self.scrollView)
-        
-        NSLayoutConstraint.activate([
-            self.scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.scrollView.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.scrollView.rightAnchor.constraint(equalTo: self.rightAnchor)
-        ])
-        
-        self.layoutSubviews()
-        self.layoutIfNeeded()
-        self.configureInnerViews()
-    }
-    
-    private func configureInnerViews() {
-        // Inner views
-        var previousView: UIView = self.scrollView
-        var constraints: [NSLayoutConstraint] = []
-        
-        for (index, view) in innerViews.enumerated() {
-            
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.localize()
-            self.scrollView.addSubview(view)
-            
-            constraints.append(contentsOf: [
-                view.heightAnchor.constraint(equalTo: self.heightAnchor),
-                view.widthAnchor.constraint(equalTo: self.widthAnchor)
-            ])
-            
-            switch scrollDirection {
-            case .horizontal:
-                constraints.append(contentsOf: [
-                    view.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
-                    view.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor)
-                ])
-                if index == 0 {
-                    constraints.append(view.leftAnchor.constraint(equalTo: previousView.leftAnchor))
-                } else {
-                    constraints.append(view.leftAnchor.constraint(equalTo: previousView.rightAnchor))
-                }
-                if index == innerViews.count - 1 {
-                    constraints.append(view.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor))
-                }
-                
-            case .vertical:
-                constraints.append(contentsOf: [
-                    view.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor),
-                    view.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor)
-                ])
-                if index == 0 {
-                    constraints.append(view.topAnchor.constraint(equalTo: previousView.topAnchor))
-                } else {
-                    constraints.append(view.topAnchor.constraint(equalTo: previousView.bottomAnchor))
-                }
-                if index == innerViews.count - 1 {
-                    constraints.append(view.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor))
-                }
-            }
-            
-            NSLayoutConstraint.activate(constraints)
-            previousView = view
-        }
-    }
-    
-    // MARK: - Setup
-    private func setupUI() {
-        self.oldOrientation = UIDevice.current.orientation
-        NotificationCenter.default.addObserver(self, selector: #selector(didRotate), name: UIDevice.orientationDidChangeNotification, object: nil)
-    }
-    
-    // MARK: - Scroll view delegate
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidScroll?(scrollView)
-    }
-    
-    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidZoom?(scrollView)
-    }
-    
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewWillBeginDragging?(scrollView)
-    }
-    
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                          withVelocity velocity: CGPoint,
-                                          targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        self.delegate?.scrollViewWillEndDragging?(scrollView,
-                                                  withVelocity: velocity,
-                                                  targetContentOffset: targetContentOffset)
-    }
-    
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
-    }
-    
-    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewWillBeginDragging?(scrollView)
-    }
-    
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let oldPage = self.page
-        if self.scrollView.frame != CGRect.zero {
-            switch scrollDirection {
-            case .horizontal:
-                self.page = Int(self.scrollView.contentOffset.x / self.scrollView.frame.size.width)
-            
-            case .vertical:
-                self.page = Int(self.scrollView.contentOffset.y / self.scrollView.frame.size.height)
-            }
-        }
-        
-        if oldPage != self.page {
-            self.delegate?.pageDidChange(page)
-        }
-        self.delegate?.scrollViewDidEndDecelerating?(scrollView)
-    }
-    
-    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
-    }
-    
-    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        self.delegate?.viewForZooming?(in: scrollView)
-    }
-    
-    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        self.delegate?.scrollViewWillBeginZooming?(scrollView, with: view)
-    }
-    
-    public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        self.delegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
-    }
-    
-    public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        self.delegate?.scrollViewShouldScrollToTop?(scrollView) ?? false
-    }
-    
-    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidScrollToTop?(scrollView)
-    }
-    
-    @available(iOS 11.0, *)
-    public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
-    }
-    
-    // MARK: - Actions
-    @objc
+	
+	// MARK: - Variables
+	private var oldOrientation: UIDeviceOrientation = UIDevice.current.orientation
+	
+	private var innerViews: [UIView] = []
+	
+	private lazy var scrollView: UIScrollView = {
+		let scrollView = UIScrollView()
+		
+		// Scroll view
+		scrollView.delegate = self
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.backgroundColor = .clear
+		scrollView.isPagingEnabled = true
+		self.addSubview(scrollView)
+		
+		NSLayoutConstraint.activate([
+			scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+			scrollView.leftAnchor.constraint(equalTo: self.leftAnchor),
+			scrollView.rightAnchor.constraint(equalTo: self.rightAnchor)
+		])
+		
+		return scrollView
+	}()
+	
+	private var stackViewConstraint: NSLayoutConstraint?
+	
+	private lazy var stackView: UIStackView = {
+		let stackView = UIStackView()
+		
+		stackView.distribution = .fillEqually
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		self.scrollView.addSubview(stackView)
+		
+		NSLayoutConstraint.activate([
+			stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor),
+			stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor),
+			stackView.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor),
+			stackView.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor)
+		])
+		
+		switch self.scrollDirection {
+		case .vertical:
+			stackView.axis = .vertical
+			stackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor).isActive = true
+			self.stackViewConstraint = stackView.heightAnchor.constraint(equalToConstant: 0)
+			self.stackViewConstraint?.isActive = true
+			
+		case .horizontal:
+			stackView.axis = .horizontal
+			stackView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor).isActive = true
+			self.stackViewConstraint = stackView.widthAnchor.constraint(equalToConstant: 0)
+			self.stackViewConstraint?.isActive = true
+		}
+		
+		return stackView
+	}()
+	
+	/**
+	The current page of the pager.
+	*/
+	public var currentPage: Int {
+		guard self.scrollView.frame != CGRect.zero else { return 0 }
+		switch scrollDirection {
+		case .horizontal:
+			return Int(round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width))
+			
+		case .vertical:
+			return Int(round(self.scrollView.contentOffset.y / self.scrollView.frame.size.height))
+		}
+	}
+	
+	/**
+	The scroll direction of the pager.
+	*/
+	public private(set) var scrollDirection: ScrollDirection = .horizontal
+	
+	/**
+	Pager delegate
+	*/
+	public weak var delegate: PagerViewDelegate?
+	
+	// MARK: - Scroll view variables
+	public var isPagingEnabled: Bool {
+		get { scrollView.isPagingEnabled }
+		set { scrollView.isPagingEnabled = newValue }
+	}
+	
+	public var isScrollEnabled: Bool {
+		get { scrollView.isScrollEnabled }
+		set { scrollView.isScrollEnabled = newValue }
+	}
+	
+	public var bounces: Bool {
+		get { scrollView.bounces }
+		set { scrollView.bounces = newValue }
+	}
+	
+	public var showsVerticalScrollIndicator: Bool {
+		get { scrollView.showsVerticalScrollIndicator }
+		set { scrollView.showsVerticalScrollIndicator = newValue }
+	}
+	
+	public var showsHorizontalScrollIndicator: Bool {
+		get { scrollView.showsHorizontalScrollIndicator }
+		set { scrollView.showsHorizontalScrollIndicator = newValue }
+	}
+	
+	// MARK: - Init
+	public init() {
+		super.init(frame: .zero)
+		setupUI()
+	}
+	
+	override public init(frame: CGRect) {
+		super.init(frame: frame)
+		setupUI()
+	}
+	
+	public required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		setupUI()
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+	}
+	
+	// MARK: - Scroll View overrides
+	override open func layoutSubviews() {
+		super.layoutSubviews()
+		
+		self._scrollToPage(self.currentPage)
+	}
+	
+	private func configureScrollView() {
+		self.layoutSubviews()
+		self.layoutIfNeeded()
+		self.configureInnerViews()
+	}
+	
+	private func configureInnerViews() {
+		
+		self.stackView.arrangedSubviews.forEach {
+			self.stackView.removeArrangedSubview($0)
+			$0.removeFromSuperview()
+		}
+		
+		self.innerViews.forEach {
+			self.stackView.addArrangedSubview($0)
+		}
+		
+		switch self.scrollDirection {
+		case .vertical:
+			self.stackViewConstraint?.constant = self.scrollView.frame.width * CGFloat(self.innerViews.count)
+			
+		case .horizontal:
+			self.stackViewConstraint?.constant = self.scrollView.frame.width * CGFloat(self.innerViews.count)
+		}
+	}
+	
+	// MARK: - Setup
+	private func setupUI() {
+		self.oldOrientation = UIDevice.current.orientation
+		NotificationCenter.default.addObserver(self,
+											   selector: #selector(didRotate),
+											   name: UIDevice.orientationDidChangeNotification,
+											   object: nil)
+	}
+	
+	// MARK: - Scroll view delegate
+	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewDidScroll?(scrollView)
+	}
+	
+	public func scrollViewDidZoom(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewDidZoom?(scrollView)
+	}
+	
+	public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewWillBeginDragging?(scrollView)
+	}
+	
+	public func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+										  withVelocity velocity: CGPoint,
+										  targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		self.delegate?.scrollViewWillEndDragging?(scrollView,
+												  withVelocity: velocity,
+												  targetContentOffset: targetContentOffset)
+	}
+	
+	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		self.delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+	}
+	
+	public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewWillBeginDragging?(scrollView)
+	}
+	
+	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		self.delegate?.pageDidChange(self.currentPage)
+		
+		self.delegate?.scrollViewDidEndDecelerating?(scrollView)
+	}
+	
+	public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
+	}
+	
+	public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+		self.delegate?.viewForZooming?(in: scrollView)
+	}
+	
+	public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+		self.delegate?.scrollViewWillBeginZooming?(scrollView, with: view)
+	}
+	
+	public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+		self.delegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
+	}
+	
+	public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+		self.delegate?.scrollViewShouldScrollToTop?(scrollView) ?? false
+	}
+	
+	public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewDidScrollToTop?(scrollView)
+	}
+	
+	@available(iOS 11.0, *)
+	public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+		self.delegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
+	}
+	
+	// MARK: - Actions
+	@objc
 	private func didRotate() {
-        let orientation: UIDeviceOrientation = UIDevice.current.orientation
-        
-        defer {
-            if !orientation.isFlat {
-                self.oldOrientation = orientation
-            }
-        }
-        
-        if !orientation.isFlat && oldOrientation != orientation {
-            self._scrollToPage(self.page)
-        }
-    }
-    
-    // MARK: - Utils
-    
-    /**
-     
-     Configure the pager.
-     
-     - parameter views: the views contained in pager.
-     - parameter scrollDirection: the direction of the scroll. Default is set to `horizontal`
-     
-     */
-    public func configure(withViews views: [UIView], delegate: PagerViewDelegate? = nil, scrollDirection: PagerViewScrollDirection = .horizontal) {
-        self.innerViews = views
-        if delegate != nil {
-            self.delegate = delegate
-        }
-        self.scrollDirection = scrollDirection
-        self.configureScrollView()
-    }
-    
-    private func _scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
-        UIView.animate(withDuration: animationDuration) { [weak self] in
-            guard let self = self else { return }
-            switch self.scrollDirection {
-            case .horizontal:
-                let contentOffsetX = CGFloat(page) * self.scrollView.frame.size.width
-                self.scrollView.contentOffset.x = contentOffsetX
-                
-            case .vertical:
-                let contentOffsetY = CGFloat(page) * self.scrollView.frame.size.height
-                self.scrollView.contentOffset.y = contentOffsetY
-            }
-        }
-    }
-    
-    /**
-     
-     Scroll to the given page.
-     The scroll is performed only if `isPagingEnabled` is set to `true`.
-     
-     - parameter page: the page to scroll to.
-     - parameter animationDuration: the duration of the animation. `0` is default and not animated.
-     
-     */
-    public func scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
-        if scrollView.isPagingEnabled {
-            _scrollToPage(page, animationDuration: animationDuration)
-            scrollViewDidEndDecelerating(self.scrollView)
-        }
-    }
+		let orientation: UIDeviceOrientation = UIDevice.current.orientation
+		
+		defer {
+			if !orientation.isFlat {
+				self.oldOrientation = orientation
+			}
+		}
+		
+		if !orientation.isFlat && oldOrientation != orientation {
+			self._scrollToPage(self.currentPage)
+		}
+	}
+	
+	// MARK: - Utils
+	
+	/**
+	
+	Configure the pager.
+	
+	- parameter views: the views contained in pager.
+	- parameter scrollDirection: the direction of the scroll. Default is set to `horizontal`
+	
+	*/
+	public func configure(withViews views: [UIView],
+						  delegate: PagerViewDelegate? = nil,
+						  scrollDirection: ScrollDirection = .horizontal) {
+		self.innerViews = views
+		if delegate != nil {
+			self.delegate = delegate
+		}
+		self.scrollDirection = scrollDirection
+		self.configureScrollView()
+	}
+	
+	private func _scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
+		UIView.animate(withDuration: animationDuration) { [weak self] in
+			guard let self = self else { return }
+			switch self.scrollDirection {
+			case .horizontal:
+				let contentOffsetX = CGFloat(page) * self.scrollView.frame.size.width
+				self.scrollView.contentOffset.x = contentOffsetX
+				
+			case .vertical:
+				let contentOffsetY = CGFloat(page) * self.scrollView.frame.size.height
+				self.scrollView.contentOffset.y = contentOffsetY
+			}
+		}
+	}
+	
+	/**
+	
+	Scroll to the given page.
+	The scroll is performed only if `isPagingEnabled` is set to `true`.
+	
+	- parameter page: the page to scroll to.
+	- parameter animationDuration: the duration of the animation. `0` is default and not animated.
+	
+	*/
+	public func scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
+		if scrollView.isPagingEnabled {
+			_scrollToPage(page, animationDuration: animationDuration)
+			scrollViewDidEndDecelerating(self.scrollView)
+		}
+	}
+	
+	
+	/**
+	Scroll to next page if exist depends on `orientation` parameter
+	*/
+	@discardableResult
+	public func scrollToNextPage() -> Bool {
+		self.scrollView.scrollToNextPage(self.scrollDirection)
+	}
+	
+	/**
+	Scroll to previous page if exist depends on `orientation` parameter
+	*/
+	@discardableResult
+	public func scrollToPreviousPage() -> Bool {
+		self.scrollView.scrollToPreviousPage(self.scrollDirection)
+	}
 }
