@@ -9,7 +9,6 @@
 import UIKit
 
 extension UILabel {
-	
 	/**
 	Set `text` and highlight the `highlightedText` if contains
 	*/
@@ -23,19 +22,20 @@ extension UILabel {
 			self.text = text
 			return
 		}
-		
+		let textRange = _text.startIndex..<_text.endIndex
 		let attributedText = NSMutableAttributedString(string: _text)
 		_text
 			.lowercased()
 			.ranges(of: highlightedText.lowercased())
-			.forEach {
-				let range = NSRange($0, in: _text)
+			.compactMap { range -> NSRange? in
+				range.clamped(to: textRange) == range ? NSRange(range, in: _text) : nil
+			}
+			.forEach { range in
 				attributedText.addAttributes([
 					.backgroundColor: highlightedBackgroundColor,
 					.foregroundColor: highlightedTextColor
 				], range: range)
 			}
-		
 		self.attributedText = attributedText
 	}
 }
