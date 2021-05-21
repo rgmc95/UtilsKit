@@ -15,4 +15,3 @@ extension String {
 		self.replacingOccurrences(of: " ", with: "").isEmpty ? nil : self
 	}
 }
-
