@@ -75,6 +75,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	/**
 	The current page of the pager.
 	*/
+	public var visiblePage: Int = 0
 	public var currentPage: Int {
 		guard self.scrollView.frame != CGRect.zero else { return 0 }
 		switch scrollDirection {
@@ -146,7 +147,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	override open func layoutSubviews() {
 		super.layoutSubviews()
 		
-		self._scrollToPage(self.currentPage)
+		self._scrollToPage(self.visiblePage)
 	}
 	
 	private func configureScrollView() {
@@ -214,6 +215,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	}
 	
 	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		self.visiblePage = self.currentPage
 		self.delegate?.pageDidChange(self.currentPage)
 		
 		self.delegate?.scrollViewDidEndDecelerating?(scrollView)
@@ -286,6 +288,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	}
 	
 	private func _scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
+		self.visiblePage = page
 		UIView.animate(withDuration: animationDuration) { [weak self] in
 			guard let self = self else { return }
 			switch self.scrollDirection {
