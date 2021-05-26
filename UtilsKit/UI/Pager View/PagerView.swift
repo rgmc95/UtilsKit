@@ -59,13 +59,13 @@ open class PagerView: UIView, UIScrollViewDelegate {
 		case .vertical:
 			stackView.axis = .vertical
 			stackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor).isActive = true
-			self.stackViewConstraint = stackView.heightAnchor.constraint(equalToConstant: 0)
+			self.stackViewConstraint = stackView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor, multiplier: 1)
 			self.stackViewConstraint?.isActive = true
 			
 		case .horizontal:
 			stackView.axis = .horizontal
 			stackView.heightAnchor.constraint(equalTo: self.scrollView.heightAnchor).isActive = true
-			self.stackViewConstraint = stackView.widthAnchor.constraint(equalToConstant: 0)
+			self.stackViewConstraint = stackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, multiplier: 1)
 			self.stackViewConstraint?.isActive = true
 		}
 		
@@ -167,13 +167,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 			self.stackView.addArrangedSubview($0)
 		}
 		
-		switch self.scrollDirection {
-		case .vertical:
-			self.stackViewConstraint?.constant = self.scrollView.frame.width * CGFloat(self.innerViews.count)
-			
-		case .horizontal:
-			self.stackViewConstraint?.constant = self.scrollView.frame.width * CGFloat(self.innerViews.count)
-		}
+		self.stackViewConstraint = self.stackViewConstraint?.setMultiplier(multiplier: CGFloat(self.innerViews.count))
 	}
 	
 	// MARK: - Setup
