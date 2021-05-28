@@ -95,6 +95,59 @@ public struct AlertManager {
             currenViewController.present(alertController, animated: true)
         }
     }
+	
+	/**
+	Show an alert controller on top of the navigation stack.
+	
+	- parameter actions: list of actions.
+	- parameter title: title of the alert.
+	- parameter message: message of the alert.
+	- parameter alignment: alignment of the message.
+	- parameter preferredStyle: controller style.
+	*/
+	public func show(actions: [AlertAction],
+					 title: String? = nil,
+					 message: String? = nil,
+					 textFieldConf: @escaping (UITextField) -> Void,
+					 alignment: NSTextAlignment = .center,
+					 preferredStyle: UIAlertController.Style = .alert) {
+		
+		DispatchQueue.main.async {
+			guard let currenViewController = UIApplication.shared.topViewController else { return }
+			
+			let alertController = UIAlertController(title: title,
+													message: message,
+													preferredStyle: preferredStyle)
+			
+			for action in actions {
+				let actionButton = UIAlertAction(title: action.title, style: action.style, handler: ({ _ in
+					action.completion?()
+				}))
+				alertController.addAction(actionButton)
+			}
+			
+			let paragraphStyle = NSMutableParagraphStyle()
+			paragraphStyle.alignment = alignment
+			
+			if let message: String = message {
+				let messageText = NSMutableAttributedString(
+					string: message,
+					attributes: [
+						NSAttributedString.Key.paragraphStyle: paragraphStyle,
+						NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
+					]
+				)
+				
+				alertController.setValue(messageText, forKey: "attributedMessage")
+			}
+			
+			alertController.addTextField { textField in
+				textFieldConf(textField)
+			}
+			
+			currenViewController.present(alertController, animated: true)
+		}
+	}
     
     /**
      Show a default error alert controller on top of the navigation stack.
