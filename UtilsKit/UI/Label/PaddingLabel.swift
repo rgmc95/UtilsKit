@@ -16,14 +16,14 @@ import UIKit
     // MARK: - Inspectables
     @IBInspectable public var topInset: CGFloat = 0.0
     @IBInspectable public var bottomInset: CGFloat = 0.0
-    @IBInspectable public var startInset: CGFloat = 0.0
-    @IBInspectable public var endInset: CGFloat = 0.0
+    @IBInspectable public var leadingInset: CGFloat = 0.0
+    @IBInspectable public var traillingInset: CGFloat = 0.0
     
     // MARK: - Variables
     override open var intrinsicContentSize: CGSize {
         var intrinsicSuperViewContentSize: CGSize = super.intrinsicContentSize
         intrinsicSuperViewContentSize.height += self.topInset + self.bottomInset
-        intrinsicSuperViewContentSize.width += self.startInset + self.endInset
+        intrinsicSuperViewContentSize.width += self.leadingInset + self.traillingInset
         return intrinsicSuperViewContentSize
     }
     
@@ -36,11 +36,11 @@ import UIKit
         let rightInset: CGFloat
         
         if self.isRightToLeft {
-            leftInset = self.endInset
-            rightInset = self.startInset
+            leftInset = self.traillingInset
+            rightInset = self.leadingInset
         } else {
-            leftInset = self.startInset
-            rightInset = self.endInset
+            leftInset = self.leadingInset
+            rightInset = self.traillingInset
         }
         
         return UIEdgeInsets(top: self.topInset, left: leftInset, bottom: self.bottomInset, right: rightInset)
