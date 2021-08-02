@@ -16,8 +16,11 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	
 	// MARK: - Variables
 	private var oldOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    
+    /// Allows to know the direction of the reading of the user
+    private var isRightToLeft: Bool?
 	
-	private var innerViews: [UIView] = []
+    private var innerViews: [UIView] = []
 	
 	private lazy var scrollView: UIScrollView = {
 		let scrollView = UIScrollView()
@@ -75,8 +78,8 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	/**
 	The current page of the pager.
 	*/
-	public var visiblePage: Int = 0
-	public var currentPage: Int {
+	private var visiblePage: Int = 0
+	private var _currentPage: Int {
 		guard self.scrollView.frame != CGRect.zero else { return 0 }
 		switch scrollDirection {
 		case .horizontal:
@@ -86,6 +89,14 @@ open class PagerView: UIView, UIScrollViewDelegate {
 			return Int(round(self.scrollView.contentOffset.y / self.scrollView.frame.size.height))
 		}
 	}
+    
+    public var currentPage: Int {
+        if self.isRightToLeft ?? false {
+            return self.innerViews.count - self._currentPage - 1
+        } else {
+            return self._currentPage
+        }
+    }
 	
 	/**
 	The scroll direction of the pager.
@@ -209,7 +220,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	}
 	
 	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-		self.visiblePage = self.currentPage
+		self.visiblePage = self._currentPage
 		self.delegate?.pageDidChange(self.currentPage)
 		
 		self.delegate?.scrollViewDidEndDecelerating?(scrollView)
@@ -256,7 +267,7 @@ open class PagerView: UIView, UIScrollViewDelegate {
 		}
 		
 		if !orientation.isFlat && oldOrientation != orientation {
-			self._scrollToPage(self.currentPage)
+			self._scrollToPage(self._currentPage)
 		}
 	}
 	
@@ -272,13 +283,22 @@ open class PagerView: UIView, UIScrollViewDelegate {
 	*/
 	public func configure(withViews views: [UIView],
 						  delegate: PagerViewDelegate? = nil,
-						  scrollDirection: ScrollDirection = .horizontal) {
-		self.innerViews = views
-		if delegate != nil {
-			self.delegate = delegate
+						  scrollDirection: ScrollDirection = .horizontal,
+                          isRightToLeft: Bool? = false) {
+        self.isRightToLeft = isRightToLeft
+        
+        self.innerViews = views
+		
+		if self.isRightToLeft ?? false {
+			self.innerViews.reverse()
+			self.visiblePage = self.innerViews.count - 1
 		}
-		self.scrollDirection = scrollDirection
-		self.configureScrollView()
+		
+        if delegate != nil {
+            self.delegate = delegate
+        }
+        self.scrollDirection = scrollDirection
+        self.configureScrollView()
 	}
 	
 	private func _scrollToPage(_ page: Int, animationDuration: TimeInterval = 0) {
