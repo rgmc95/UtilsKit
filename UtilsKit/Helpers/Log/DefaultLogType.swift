@@ -13,6 +13,7 @@ import Foundation
  */
 public enum DefaultLogType: LogType {
     case data
+	case decode
     case network
     case coredata
     case file
@@ -33,6 +34,7 @@ public enum DefaultLogType: LogType {
     public var prefix: String {
         switch self {
         case .data: return "🗄"
+		case .decode: return "🔤"
         case .network: return "📶"
         case .coredata: return "💾"
         case .file: return "📃"
