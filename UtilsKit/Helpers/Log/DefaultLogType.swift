@@ -31,26 +31,26 @@ public enum DefaultLogType: LogType {
     case debug
     case custom(String)
     
-    public var prefix: String {
-        switch self {
-        case .data: return "🗄"
+	public var prefix: String {
+		switch self {
+		case .data: return "🗄"
 		case .decode: return "🔤"
-        case .network: return "📶"
-        case .coredata: return "💾"
-        case .file: return "📃"
-        case .security: return "🗝"
-        case .user: return "👤"
-        case .notification: return "🛎"
-        case .camera: return "📹"
-        case .photo: return "📷"
-        case .biometry: return "🛡"
-        case .tag: return "🏷"
-        case .refresh: return "🔄"
-        case .map: return "🗺"
-        case .spotlight: return "🔍"
-        case .navigation: return "⛳️"
-        case .debug: return "🕹"
-        case .custom(let prefix): return prefix
-        }
-    }
+		case .network: return "📶"
+		case .coredata: return "💾"
+		case .file: return "📃"
+		case .security: return "🗝"
+		case .user: return "👤"
+		case .notification: return "🛎"
+		case .camera: return "📹"
+		case .photo: return "📷"
+		case .biometry: return "🛡"
+		case .tag: return "🏷"
+		case .refresh: return "🔄"
+		case .map: return "🗺"
+		case .spotlight: return "🔍"
+		case .navigation: return "⛳️"
+		case .debug: return "🕹"
+		case .custom(let prefix): return prefix
+		}
+	}
 }
