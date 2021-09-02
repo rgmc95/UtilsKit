@@ -56,13 +56,15 @@ extension UIView {
      */
     public func xibSetup() {
         let view: UIView = loadFromNib()
-        addSubview(view)
-        stretch(view: view)
+		self.resizeView(view: view)
     }
     
     private func loadFromNib() -> UIView {
         let nibName = String(describing: type(of: self))
-        let nibs = UINib(nibName: nibName, bundle: Bundle.main).instantiate(withOwner: self, options: nil)
+        let nibs = UINib(nibName: nibName,
+						 bundle: Bundle(for: type(of: self)))
+			.instantiate(withOwner: self,
+						 options: nil)
         
         for nib in nibs {
             if let view: UIView = nib as? UIView { return view }
@@ -70,17 +72,18 @@ extension UIView {
         
         fatalError("Cannot find class in nib named \(nibName)")
     }
-    
-    internal func stretch(view: UIView) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate(
-            [
-                view.topAnchor.constraint(equalTo: topAnchor),
-                view.leftAnchor.constraint(equalTo: leftAnchor),
-                view.rightAnchor.constraint(equalTo: rightAnchor),
-                view.bottomAnchor.constraint(equalTo: bottomAnchor)
-            ]
-        )
-    }
+	
+	private func resizeView(view: UIView) {
+		self.addSubview(view)
+		view.translatesAutoresizingMaskIntoConstraints = false
+		
+		NSLayoutConstraint.activate(
+			[
+				view.topAnchor.constraint(equalTo: self.topAnchor),
+				view.leftAnchor.constraint(equalTo: self.leftAnchor),
+				view.rightAnchor.constraint(equalTo: self.rightAnchor),
+				view.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+			]
+		)
+	}
 }
