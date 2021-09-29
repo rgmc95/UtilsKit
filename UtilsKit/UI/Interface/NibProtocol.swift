@@ -56,6 +56,7 @@ extension UIView {
      */
     public func xibSetup() {
         let view: UIView = loadFromNib()
+		view.backgroundColor = .clear
 		self.resizeView(view: view)
     }
     
