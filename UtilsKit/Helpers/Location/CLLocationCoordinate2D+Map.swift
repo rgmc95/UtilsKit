@@ -20,33 +20,40 @@ extension CLLocationCoordinate2D {
      </array>
      */
 
-    public func openIntMap() {
-		let latitude: CLLocationDegrees = self.latitude
-		let longitude: CLLocationDegrees = self.longitude
-        
-		let appleURL: String = "http://maps.apple.com/?daddr=\(latitude),\(longitude)"
-        let googleURL: String = "comgooglemaps://?daddr=\(latitude),\(longitude)&directionsmode=driving"
-        let wazeURL: String = "waze://?ll=\(latitude),\(longitude)&navigate=false"
+    public func openInMap() {
 		
-		var actions: [AlertAction] = [
-			("Maps", URL(string: appleURL)),
-			("Google Map", URL(string: googleURL)),
-			("Waze", URL(string: wazeURL))
+		let appleURL = URL(string: "http://maps.apple.com/?daddr=\(self.latitude),\(self.longitude)")
+		let googleURL = URL(string: "comgooglemaps://?daddr=\(self.latitude),\(self.longitude)&directionsmode=driving")
+		let wazeURL = URL(string: "waze://?ll=\(self.latitude),\(self.longitude)&navigate=false")
+		
+		let items: [(String, URL)] = [
+			("Google Map", googleURL),
+			("Waze", wazeURL),
+			("Apple Maps", appleURL)
 		]
-		.compactMap { name, url -> AlertAction? in
-			guard let url = url, UIApplication.shared.canOpenURL(url) else { return nil }
-			
-			return AlertAction(title: name, style: .default) {
-				url.open()
+			.compactMap { item in
+				guard let url = item.1, UIApplication.shared.canOpenURL(url) else { return nil }
+				return (item.0, url)
+			}
+		
+		if items.count == 1, let url = items.first?.1 {
+			url.open()
+			return
+		}
+		
+		var actions = items.map { item in
+			return AlertAction(title: item.0, style: .default) {
+				item.1.open()
 			}
 		}
-
-        let title = NSLocalizedString("TITLE_SELECT_NAVIGATION_APP", comment: "Selection")
-        let message = NSLocalizedString("MESSAGE_SELECT_NAVIGATION_APP", comment: "Selectionner une application")
-		let cancel = NSLocalizedString("CANCEL_NAVIGATION_APP", comment: "Fermer")
 		
-		actions.append(AlertAction(title: cancel, style: .cancel))
+		actions.append(AlertAction(title: NSLocalizedString("cancel", comment: "Annuler"),
+								   style: .cancel,
+								   completion: nil))
 		
-		AlertManager.shared.show(actions: actions, title: title, message: message, preferredStyle: .actionSheet)
+		AlertManager.shared.show(actions: actions,
+								 title: NSLocalizedString("TITLE_SELECT_NAVIGATION_APP", comment: "Selection"),
+								 message: NSLocalizedString("MESSAGE_SELECT_NAVIGATION_APP", comment: "Selectionner une application"),
+								 preferredStyle: .actionSheet)
     }
 }
