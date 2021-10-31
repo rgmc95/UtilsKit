@@ -42,7 +42,7 @@ extension CLLocationCoordinate2D {
 		}
 		
 		var actions = items.map { item in
-			return AlertAction(title: item.0, style: .default) {
+			AlertAction(title: item.0, style: .default) {
 				item.1.open()
 			}
 		}
