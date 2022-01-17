@@ -13,7 +13,7 @@ extension String {
      
         - returns: a new string with the first letter capitalized.
      */
-    public var capitalizeFirstLetter: String {
+    public var capitalizedFirstLetter: String {
         prefix(1).uppercased() + dropFirst()
     }
 }

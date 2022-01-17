@@ -9,6 +9,16 @@
 import Foundation
 
 extension String {
+	
+	/**
+	 Check if self matches regex
+	 
+	 - parameter regex: the regex
+	 */
+	public func matches(regex: String) -> Bool {
+		self.range(of: regex,
+				   options: .regularExpression) != nil
+	}
     
     /**
      Search value from regex in self.

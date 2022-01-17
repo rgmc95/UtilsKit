@@ -3,7 +3,7 @@
 //  UtilsKit
 //
 //  Created by Michael Coqueret on 01/09/2021.
-//  Copyright © 2021 iD.apps. All rights reserved.
+//  Copyright © 2021 RGMC. All rights reserved.
 //
 
 import UIKit
