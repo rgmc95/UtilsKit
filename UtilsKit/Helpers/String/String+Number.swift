@@ -15,6 +15,10 @@ extension String {
 		!isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
 	}
 	
+	private var value: String {
+		self.replacingOccurrences(of: ",", with: ".")
+	}
+	
 	/// Return self as NSNumber
 	public var toNumber: NSNumber? {
 		guard let value = self.toDouble else { return nil }
@@ -23,12 +27,12 @@ extension String {
 	
 	/// Return self as Double
 	public var toDouble: Double? {
-		self.toNumber?.doubleValue
+		Double(self.value)
 	}
 	
 	/// Return self as Float
 	public var toFloat: Float? {
-		self.toNumber?.floatValue
+		Float(self.value)
 	}
 	
 	/// Return self as Int
