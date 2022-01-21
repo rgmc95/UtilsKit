@@ -16,7 +16,7 @@ public enum LocationError: Error {
 extension CLLocationCoordinate2D {
 	
 	/// Get distance to `coordinate`
-	public func getDistance(from coordinate: CLLocationCoordinate2D? = nil) throws -> CLLocationDistance {
+	public func getDistance(from coordinate: CLLocationCoordinate2D?) throws -> CLLocationDistance {
 		guard let coordinate = coordinate else { throw LocationError.notFound }
 		
 		return CLLocation(latitude: self.latitude,
@@ -27,9 +27,9 @@ extension CLLocationCoordinate2D {
 	
 	/// Get duration to `coordinate` with `allowedUnits` in `unitStyle`
 	@available(iOS 13.0.0, *)
-	public func getDuration(from coordinate: CLLocationCoordinate2D? = nil,
-					 allowedUnits: NSCalendar.Unit = [.day, .hour, .minute],
-					 unitStyle: DateComponentsFormatter.UnitsStyle = .abbreviated) async throws -> String {
+	public func getDuration(from coordinate: CLLocationCoordinate2D?,
+							allowedUnits: NSCalendar.Unit = [.day, .hour, .minute],
+							unitStyle: DateComponentsFormatter.UnitsStyle = .abbreviated) async throws -> String {
 		guard let coordinate = coordinate else { throw LocationError.notFound }
 		
 		let source = MKPlacemark(coordinate: coordinate)
