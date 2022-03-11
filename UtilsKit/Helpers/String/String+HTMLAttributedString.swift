@@ -15,23 +15,23 @@ extension String {
      
      - returns: a `NSAttributedString` representing the HTML of the string.
      */
-    public var htmlToAttributedString: NSAttributedString? {
-        guard let data = self.data(using: String.Encoding.utf16, allowLossyConversion: false) else {
-            return nil
-        }
-        
-        do {
-            let attributedString = try NSAttributedString(data: data,
-                                                          options:
-                [
-                    .documentType: NSAttributedString.DocumentType.html,
-                    .characterEncoding: String.Encoding.utf8.rawValue
-                ],
-                                                          documentAttributes: nil)
-            return attributedString
-        } catch {
-            log(.data, "String \(self) to htmlAttributedString", error: error)
-            return nil
-        }
-    }
+	public var htmlToAttributedString: NSMutableAttributedString? {
+		guard let data = self.data(using: String.Encoding.utf16, allowLossyConversion: false) else {
+			return nil
+		}
+		
+		do {
+			let attributedString = try NSMutableAttributedString(data: data,
+																 options:
+																	[
+																		.documentType: NSAttributedString.DocumentType.html,
+																		.characterEncoding: String.Encoding.utf8.rawValue
+																	],
+																 documentAttributes: nil)
+			return attributedString
+		} catch {
+			log(.data, "String \(self) to htmlAttributedString", error: error)
+			return nil
+		}
+	}
 }
