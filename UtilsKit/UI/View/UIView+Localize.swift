@@ -13,7 +13,7 @@ extension UIView {
      Localize the view
      */
     @objc
-	public func localize() {
+	open func localize() {
         self.subviews.forEach { $0.localize() }
     }
 }
@@ -22,7 +22,7 @@ extension UITextField {
     /**
      Localize the text field
      */
-    override public func localize() {
+    override open func localize() {
         if let text: String = placeholder {
             self.placeholder = text.localized
         }
@@ -42,7 +42,7 @@ extension UIButton {
     /**
      Localize the button
      */
-    override public func localize() {
+    override open func localize() {
         if let text: String = title(for: UIControl.State()) {
             self.setTitle(text.localized, for: UIControl.State())
         }
@@ -53,7 +53,7 @@ extension UITextView {
     /**
      Localize the text view
      */
-    override public func localize() {
+    override open func localize() {
         if let text: String = text {
             self.text = text.localized
         }
@@ -64,7 +64,7 @@ extension UIStackView {
     /**
      Localize the stack view
      */
-    override public func localize() {
+    override open func localize() {
         for view in self.arrangedSubviews {
             view.localize()
         }
@@ -75,7 +75,7 @@ extension UILabel {
     /**
      Localize the label
      */
-    override public func localize() {
+    override open func localize() {
         self.text = self.text?.localized
     }
 }

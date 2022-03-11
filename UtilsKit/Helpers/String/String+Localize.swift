@@ -16,16 +16,7 @@ extension String {
      - returns: a localized string.
      */
     public var localized: String {
-        if let languagePath = Bundle.main.path(forResource: NSLocale.currentLanguage, ofType: "lproj") {
-            let languageBundle = Bundle(path: languagePath)
-            if let localizedString: String = languageBundle?.localizedString(forKey: self, value: "", table: nil) {
-                return localizedString
-            } else {
-                return NSLocalizedString(self, comment: "")
-            }
-        } else {
-            return NSLocalizedString(self, comment: "")
-        }
+		NSLocalizedString(self, comment: "")
     }
     
     /**
