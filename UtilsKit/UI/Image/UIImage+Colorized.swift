@@ -27,4 +27,20 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return resultImage
     }
+	
+	/**
+	 Color any non transparent pixels of an image with color
+	 */
+	public func tint(with fillColor: UIColor) -> UIImage? {
+		let image = withRenderingMode(.alwaysTemplate)
+		UIGraphicsBeginImageContextWithOptions(size, false, scale)
+		fillColor.set()
+		image.draw(in: CGRect(origin: .zero, size: size))
+		guard let imageColored = UIGraphicsGetImageFromCurrentImageContext() else {
+			return nil
+		}
+		
+		UIGraphicsEndImageContext()
+		return imageColored
+	}
 }
