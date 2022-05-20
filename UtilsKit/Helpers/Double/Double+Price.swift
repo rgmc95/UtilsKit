@@ -33,6 +33,22 @@ extension Double {
         
         return ""
     }
+	
+	/**
+	 Self in price with currency and formatter.
+	 
+	 - parameter currencyCode : Currency code
+	 - returns: self in price with currency.
+	 */
+	public func toPrice(currencyCode: String?) -> String {
+		guard let currencyCode = currencyCode else {
+			return self.toPrice()
+		}
+		
+		let currency = NSLocale(localeIdentifier: currencyCode)
+			.displayName(forKey: .currencySymbol, value: currencyCode)
+		return self.toPrice(currency: currency ?? currencyCode)
+	}
 }
 
 extension Int {
@@ -46,4 +62,14 @@ extension Int {
     public func toPrice(currency: String? = nil) -> String {
         Double(self).toPrice(currency: currency)
     }
+	
+	/**
+	 Self in price with currency and formatter.
+	 
+	 - parameter currencyCode : Currency code
+	 - returns: self in price with currency.
+	 */
+	public func toPrice(currencyCode: String?) -> String {
+		Double(self).toPrice(currencyCode: currencyCode)
+	}
 }
