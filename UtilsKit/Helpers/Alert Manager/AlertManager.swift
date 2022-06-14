@@ -61,7 +61,8 @@ public struct AlertManager {
                      title: String? = nil,
                      message: String? = nil,
                      alignment: NSTextAlignment = .center,
-                     preferredStyle: UIAlertController.Style = .alert) {
+                     preferredStyle: UIAlertController.Style = .alert,
+					 sourceView: UIView? = nil) {
                 
         DispatchQueue.main.async {
             guard let currenViewController = UIApplication.sharedAux?.topViewController else { return }
@@ -92,6 +93,7 @@ public struct AlertManager {
                 alertController.setValue(messageText, forKey: "attributedMessage")
             }
             
+			alertController.popoverPresentationController?.sourceView = sourceView
             currenViewController.present(alertController, animated: true)
         }
     }
@@ -110,7 +112,8 @@ public struct AlertManager {
 					 message: String? = nil,
 					 textFieldConf: @escaping (UITextField) -> Void,
 					 alignment: NSTextAlignment = .center,
-					 preferredStyle: UIAlertController.Style = .alert) {
+					 preferredStyle: UIAlertController.Style = .alert,
+					 sourceView: UIView? = nil) {
 		
 		DispatchQueue.main.async {
 			guard let currenViewController = UIApplication.shared.topViewController else { return }
@@ -145,6 +148,7 @@ public struct AlertManager {
 				textFieldConf(textField)
 			}
 			
+			alertController.popoverPresentationController?.sourceView = sourceView
 			currenViewController.present(alertController, animated: true)
 		}
 	}
