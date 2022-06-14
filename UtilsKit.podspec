@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'UtilsKit'
-  s.version = '2.5.3'
+  s.version = '2.5.4'
   s.license = {
     :type => 'Copyright',
     :text => <<-LICENSE
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author = "Romain Gjura & Michael Coqueret & David Douard & Thibaud Lambert"
   s.summary = "Swift Utilities"
   s.swift_version = '5.4'
-  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.5.3" }
+  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.5.4" }
   s.default_subspec = 'Core'
 
   s.ios.deployment_target = '12.0'
