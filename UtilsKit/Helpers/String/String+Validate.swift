@@ -16,7 +16,7 @@ extension String {
      - returns: a boolean indicating if the string in a valid email format.
      */
     public var isValidEmail: Bool {
-        let regex: String = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
+        let regex: String = "^.+@.+\\..+$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return predicate.evaluate(with: self)
     }
