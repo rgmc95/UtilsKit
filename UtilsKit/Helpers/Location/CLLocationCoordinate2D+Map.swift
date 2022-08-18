@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension CLLocationCoordinate2D {
 
 /** Display an action sheet proposing to launch external Navigation application (Waze, Google Map, Map) and building itinary

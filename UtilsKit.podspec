@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'UtilsKit'
-  s.version = '2.5.5'
+  s.version = '2.6'
   s.license = {
     :type => 'Copyright',
     :text => <<-LICENSE
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author = "Romain Gjura & Michael Coqueret & David Douard & Thibaud Lambert"
   s.summary = "Swift Utilities"
   s.swift_version = '5.4'
-  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.5.5" }
+  s.source =  { :git => "https://github.com/rgmc95/UtilsKit.git", :tag => "2.6.0" }
   s.default_subspec = 'Core'
 
   s.ios.deployment_target = '12.0'
@@ -19,11 +19,5 @@ Pod::Spec.new do |s|
   s.subspec 'Core' do |core|
     core.source_files = 'UtilsKit/Helpers/**/*.{h,m,swift}',  'UtilsKit/UI/**/*.{h,m,swift}'
   end
-
-  s.subspec 'CoreExtension' do |ext|
-    ext.dependency "UtilsKit/Core"
-    ext.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'APP_EXTENSION' }
-  end
-
 end
 

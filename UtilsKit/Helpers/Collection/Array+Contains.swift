@@ -18,8 +18,8 @@ extension Array where Element: Equatable {
      - returns: a `boolean`value indicating if the array contains all elements.
      */
     public func containsAll(_ elements: [Element]) -> Bool {
-        for element in elements {
-            if !self.contains(element) { return false }
+        for element in elements where !self.contains(element) {
+            return false
         }
         return true
     }

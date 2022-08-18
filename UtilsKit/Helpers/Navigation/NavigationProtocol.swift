@@ -12,6 +12,7 @@ import UIKit
 /**
  This protocol provides a useful navigation stack management.
  */
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 public protocol NavigationProtocol {
     
     /**
@@ -30,6 +31,7 @@ public protocol NavigationProtocol {
     var previousViewController: UIViewController? { get set }
 }
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension NavigationProtocol where Self: UIViewController {
     
     /**

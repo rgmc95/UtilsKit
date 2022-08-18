@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension UIView {
     
     /// Gradient direction case
@@ -31,7 +32,7 @@ extension UIView {
 	public func addGradient(_ colors: [UIColor], direction: GradientDirection) -> CAGradientLayer {
         let gradient = CAGradientLayer()
         var frame = self.bounds
-        if self is UINavigationBar { frame.size.height += UIApplication.sharedAux?.statusBarFrame.height ?? 0 }
+        if self is UINavigationBar { frame.size.height += UIApplication.shared.statusBarFrame.height }
         gradient.frame = frame
         gradient.colors = colors.map { $0.cgColor }
         

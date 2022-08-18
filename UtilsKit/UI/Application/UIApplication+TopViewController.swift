@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension UIApplication {
     
     /**
@@ -35,7 +36,7 @@ extension UIApplication {
                   let rootVC: UIViewController = sceneDelegate.window??.rootViewController {
             currentBaseViewController = rootVC
         } else {
-            currentBaseViewController = UIApplication.sharedAux?.delegate?.window??.rootViewController
+            currentBaseViewController = UIApplication.shared.delegate?.window??.rootViewController
         }
 
             

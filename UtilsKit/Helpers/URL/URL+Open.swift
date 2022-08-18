@@ -23,7 +23,7 @@ extension URL {
             self._open()
             return
         } else {
-            guard let currentViewController = UIApplication.sharedAux?.topViewController else {
+            guard let currentViewController = UIApplication.shared.topViewController else {
                 self._open()
                 return
             }
@@ -43,9 +43,9 @@ extension URL {
     
     private func _open() {
         if #available(iOS 10.0, *) {
-            UIApplication.sharedAux?.open(self, options: [:], completionHandler: nil)
+            UIApplication.shared.open(self, options: [:], completionHandler: nil)
         } else {
-            _ = UIApplication.sharedAux?.openURL(self)
+            _ = UIApplication.shared.openURL(self)
         }
     }
 }

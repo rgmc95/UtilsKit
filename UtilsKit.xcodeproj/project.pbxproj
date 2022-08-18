@@ -58,7 +58,6 @@
 		2735524623B0F7BF0069B263 /* String+Capitalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551ED23B0F7BE0069B263 /* String+Capitalize.swift */; };
 		2735524723B0F7BF0069B263 /* String+Dictionnary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551EE23B0F7BE0069B263 /* String+Dictionnary.swift */; };
 		2735524823B0F7BF0069B263 /* UIApplication+TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551F023B0F7BE0069B263 /* UIApplication+TopViewController.swift */; };
-		2735524923B0F7BF0069B263 /* UIApplication+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551F123B0F7BE0069B263 /* UIApplication+Shared.swift */; };
 		2735524A23B0F7BF0069B263 /* Double+Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551F323B0F7BE0069B263 /* Double+Space.swift */; };
 		2735524B23B0F7BF0069B263 /* Sequence+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551F523B0F7BE0069B263 /* Sequence+Group.swift */; };
 		2735524C23B0F7BF0069B263 /* UITextField+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273551F723B0F7BE0069B263 /* UITextField+Placeholder.swift */; };
@@ -182,7 +181,6 @@
 		273551ED23B0F7BE0069B263 /* String+Capitalize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Capitalize.swift"; sourceTree = "<group>"; };
 		273551EE23B0F7BE0069B263 /* String+Dictionnary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Dictionnary.swift"; sourceTree = "<group>"; };
 		273551F023B0F7BE0069B263 /* UIApplication+TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopViewController.swift"; sourceTree = "<group>"; };
-		273551F123B0F7BE0069B263 /* UIApplication+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Shared.swift"; sourceTree = "<group>"; };
 		273551F323B0F7BE0069B263 /* Double+Space.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Space.swift"; sourceTree = "<group>"; };
 		273551F523B0F7BE0069B263 /* Sequence+Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+Group.swift"; sourceTree = "<group>"; };
 		273551F723B0F7BE0069B263 /* UITextField+Placeholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Placeholder.swift"; sourceTree = "<group>"; };
@@ -502,7 +500,6 @@
 			isa = PBXGroup;
 			children = (
 				273551F023B0F7BE0069B263 /* UIApplication+TopViewController.swift */,
-				273551F123B0F7BE0069B263 /* UIApplication+Shared.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -967,7 +964,6 @@
 				2735522723B0F7BF0069B263 /* Date+String.swift in Sources */,
 				2735523023B0F7BF0069B263 /* UINavigationController+NavigationBar.swift in Sources */,
 				271FE4662497BD1500DC2472 /* RGMCNavigationController.swift in Sources */,
-				2735524923B0F7BF0069B263 /* UIApplication+Shared.swift in Sources */,
 				277CD4D92795D66600DBA024 /* String+Number.swift in Sources */,
 				2735525423B0F7BF0069B263 /* QueueManager.swift in Sources */,
 				4C17BC3E26DFC791006223D2 /* UITextField+Connect.swift in Sources */,
@@ -1110,6 +1106,7 @@
 		273550AD23B0EBA80069B263 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -1137,6 +1134,7 @@
 		273550AE23B0EBA80069B263 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

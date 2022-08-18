@@ -20,6 +20,7 @@ import UIKit
  - modalBlur
  
  */
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 public enum Segue {
     
     /// Push on current navigation controller
@@ -57,7 +58,7 @@ public enum Segue {
         // Check controller & current controller
         guard
             var controller = controller,
-            let currentViewController = currentViewController ?? UIApplication.sharedAux?.topViewController
+            let currentViewController = currentViewController ?? UIApplication.shared.topViewController
             else { return }
         
         // If controller to show is current controller, do nothing
@@ -70,7 +71,7 @@ public enum Segue {
             return
         }
         
-        if let _ = UIApplication.sharedAux?.topAlertView {
+        if let _ = UIApplication.shared.topAlertView {
             log(.navigation, "Push \(controller)", error: NavigationError.pushOnAlertController)
             return
         }
@@ -226,6 +227,7 @@ public enum Segue {
     }
 }
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension Segue: Equatable {
     
     public static func == (lhs: Segue, rhs: Segue) -> Bool {

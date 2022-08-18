@@ -11,6 +11,7 @@ import UIKit
 /**
  Label with padding configurable from storyboard
  */
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 @IBDesignable open class PaddingLabel: UILabel {
     
     // MARK: - Inspectables

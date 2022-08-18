@@ -40,6 +40,7 @@ public struct AlertAction {
 /**
  Manage alert controllers with a single method `show`.
  */
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 public struct AlertManager {
     
     // MARK: Singleton
@@ -65,7 +66,7 @@ public struct AlertManager {
 					 sourceView: UIView? = nil) {
                 
         DispatchQueue.main.async {
-            guard let currenViewController = UIApplication.sharedAux?.topViewController else { return }
+            guard let currenViewController = UIApplication.shared.topViewController else { return }
             
             let alertController = UIAlertController(title: title,
                                                     message: message,

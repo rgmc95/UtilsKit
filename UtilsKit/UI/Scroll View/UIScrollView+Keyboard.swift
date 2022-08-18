@@ -8,6 +8,7 @@
 
 import UIKit
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension UIScrollView {
     
     /**
@@ -51,9 +52,9 @@ extension UIScrollView {
                 self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height + 30, right: 0)
             }
         } else {
-            let top: CGFloat = UIApplication.sharedAux?.topViewController?.navigationController?.isNavigationBarHidden ?? true ?
+            let top: CGFloat = UIApplication.shared.topViewController?.navigationController?.isNavigationBarHidden ?? true ?
                 0 :
-                UIApplication.sharedAux?.topViewController?.navigationController?.navigationBar.frame.size.height ?? 0
+                UIApplication.shared.topViewController?.navigationController?.navigationBar.frame.size.height ?? 0
             
             if notification.name == UIResponder.keyboardWillHideNotification {
                 self.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)

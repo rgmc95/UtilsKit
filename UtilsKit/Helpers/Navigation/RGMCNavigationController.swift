@@ -16,15 +16,15 @@ internal class RGMCNavigationController: UINavigationController {
 	}
 	
 	// MARK: - Orientation
-	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+	override internal var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		self.topViewController?.supportedInterfaceOrientations ?? .all
 	}
 	
-	override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+	override internal var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
 		self.topViewController?.preferredInterfaceOrientationForPresentation ?? .portrait
 	}
 	
-	override var shouldAutorotate: Bool {
+	override internal var shouldAutorotate: Bool {
 		self.topViewController?.shouldAutorotate ?? true
 	}
 }
