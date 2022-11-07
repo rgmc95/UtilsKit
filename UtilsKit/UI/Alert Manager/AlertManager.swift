@@ -6,6 +6,7 @@
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 /**
@@ -170,3 +171,4 @@ public struct AlertManager {
         self.show(actions: [AlertAction(title: "OK", style: .cancel)], title: infos)
     }
 }
+#endif

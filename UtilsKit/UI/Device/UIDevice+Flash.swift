@@ -6,6 +6,7 @@
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
+#if canImport(UIKit)
 import AVFoundation
 import Foundation
 import UIKit
@@ -50,3 +51,4 @@ extension UIDevice {
         }
     }
 }
+#endif

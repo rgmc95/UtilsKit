@@ -6,6 +6,8 @@
 //  Copyright © 2020 RGMC. All rights reserved.
 //
 
+import Foundation
+
 extension Double {
 	/**
 	 Considering the value is weight, format it in the most appropriate unit depening on the locale
