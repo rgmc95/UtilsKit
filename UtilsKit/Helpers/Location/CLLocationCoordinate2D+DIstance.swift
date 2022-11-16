@@ -6,6 +6,7 @@
 //  Copyright © 2022 RGMC. All rights reserved.
 //
 
+#if canImport(CoreLocation)
 import CoreLocation
 import MapKit
 
@@ -55,3 +56,4 @@ extension CLLocationCoordinate2D {
 		}
 	}
 }
+#endif
