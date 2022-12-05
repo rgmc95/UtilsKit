@@ -8,6 +8,8 @@
 
 import Foundation
 
+//swiftlint:disable discarded_notification_center_observer
+
 extension NotificationCenter {
 	
 	/**
