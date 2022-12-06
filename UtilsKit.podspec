@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.0'
 
   s.subspec 'Core' do |core|
-    core.source_files = 'UtilsKit/Helpers/**/*.{h,m,swift}',  'UtilsKit/UI/**/*.{h,m,swift}'
+    core.source_files = 'Sources/**/*.{h,m,swift}'
   end
 end
 
