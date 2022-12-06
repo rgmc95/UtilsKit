@@ -6,6 +6,8 @@
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+
 import Foundation
 
 // MARK: NSDate
@@ -97,3 +99,5 @@ extension Optional where Wrapped == Date {
         return lhs.compare(rhs) == .orderedDescending
     }
 }
+
+#endif

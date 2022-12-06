@@ -6,6 +6,8 @@
 //  Copyright © 2020 RGMC. All rights reserved.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+
 import Foundation
 
 extension Double {
@@ -55,3 +57,5 @@ extension Int {
 		Double(self).toDistance(maximumFractionDigits: maximumFractionDigits, locale: locale)
 	}
 }
+
+#endif

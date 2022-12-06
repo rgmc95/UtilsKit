@@ -84,7 +84,7 @@ public struct DocumentManager {
     public func save(data: Data, forDocumentNamed name: String) {
         if let fullURL: URL = self.getURL(forDocumentNamed: name) {
             do {
-                try data.write(to: fullURL, options: .atomicWrite)
+                try data.write(to: fullURL, options: .atomic)
             } catch {
                 log(.file, "Saving data to document named \(name)", error: error)
             }
