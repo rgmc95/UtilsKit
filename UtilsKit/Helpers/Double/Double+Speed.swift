@@ -6,6 +6,8 @@
 //  Copyright © 2021 RGMC. All rights reserved.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+
 import Foundation
 
 extension Double {
@@ -49,3 +51,5 @@ extension Int {
 		Double(self).toSpeed(maximumFractionDigits: maximumFractionDigits, locale: locale)
 	}
 }
+
+#endif

@@ -6,6 +6,8 @@
 //  Copyright © 2018 RGMC. All rights reserved.
 //
 
+#if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+
 import Foundation
 
 extension NSNumber: Comparable {
@@ -50,3 +52,5 @@ extension NSNumber: Comparable {
         lhs.doubleValue == rhs.doubleValue
     }
 }
+
+#endif
