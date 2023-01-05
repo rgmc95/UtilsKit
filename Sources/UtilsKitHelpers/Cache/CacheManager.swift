@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+#if canImport(UtilsKitCore)
 import UtilsKitCore
+#endif
 
 private let kUserDefaultsName = "UtilsKit.CacheManager"
 

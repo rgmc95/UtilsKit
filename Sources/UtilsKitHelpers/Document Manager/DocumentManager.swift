@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+#if canImport(UtilsKitCore)
 import UtilsKitCore
+#endif
 
 /**
     Manager providing methods to save and retrieve files from local directories.

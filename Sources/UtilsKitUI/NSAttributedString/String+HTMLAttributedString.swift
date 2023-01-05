@@ -7,8 +7,11 @@
 //
 
 import Foundation
-import UtilsKitCore
 import UIKit
+
+#if canImport(UtilsKitCore)
+import UtilsKitCore
+#endif
 
 extension String {
     

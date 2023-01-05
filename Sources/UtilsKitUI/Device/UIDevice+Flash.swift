@@ -10,7 +10,10 @@
 import AVFoundation
 import Foundation
 import UIKit
+
+#if canImport(UtilsKitCore)
 import UtilsKitCore
+#endif
 
 extension UIDevice {
     

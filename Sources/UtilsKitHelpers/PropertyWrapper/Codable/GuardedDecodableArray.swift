@@ -6,7 +6,9 @@
 //  Copyright © 2021 Exomind. All rights reserved.
 //
 
+#if canImport(UtilsKitCore)
 import UtilsKitCore
+#endif
 
 @propertyWrapper
 public struct GuardedDecodableArray<T: Decodable>: Decodable {

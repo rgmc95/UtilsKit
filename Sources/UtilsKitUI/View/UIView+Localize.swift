@@ -7,7 +7,10 @@
 //
 
 import UIKit
-import UtilsKitHelpers
+
+#if canImport(UtilsKitCore)
+import UtilsKitCore
+#endif
 
 extension UIView {
     /**

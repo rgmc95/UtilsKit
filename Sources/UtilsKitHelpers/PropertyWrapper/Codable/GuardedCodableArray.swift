@@ -6,7 +6,10 @@
 //  Copyright © 2021 Exomind. All rights reserved.
 //
 
+#if canImport(UtilsKitCore)
 import UtilsKitCore
+#endif
+
 
 @propertyWrapper
 public struct GuardedCodableArray<T: Codable>: Codable {

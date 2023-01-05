@@ -8,6 +8,10 @@
 
 import UIKit
 
+#if canImport(UtilsKitCore)
+import UtilsKitHelpers
+#endif
+
 extension UILabel {
 	/**
 	Set `text` and highlight the `highlightedText` if contains
