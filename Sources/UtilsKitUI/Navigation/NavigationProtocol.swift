@@ -18,7 +18,7 @@ public protocol NavigationProtocol {
     /**
      Kind of segue for the view controller animation.
      */
-    var navigationSegue: Segue { get set }
+    var navigationSegue: Segue? { get set }
     
     /**
      Instance Identifier
@@ -191,7 +191,7 @@ extension NavigationProtocol where Self: UIViewController {
      
      */
     public func close(_ completion: (() -> Void)? = nil, animated: Bool = true) {
-        self.navigationSegue.close(self, animated: animated) {
+        self.navigationSegue?.close(self, animated: animated) {
             completion?()
         }
     }
