@@ -18,6 +18,7 @@ extension URL {
      - parameter inApp: indicate if it is an in-app URL (such as deeplink). Default is true.
      - parameter safariControllerClass: indicate custom safariController class.
      */
+	@MainActor
     public func open<T: SFSafariViewController>(safariControllerClass: T.Type, inApp: Bool = true) {
         if !self.absoluteString.hasPrefix("http") || !inApp {
             self._open()
@@ -37,10 +38,12 @@ extension URL {
      
      - parameter inApp: indicate if it is an in-app URL (such as deeplink). Default is true.
      */
+	@MainActor
     public func open(inApp: Bool = true) {
         self.open(safariControllerClass: SFSafariViewController.self, inApp: inApp)
     }
     
+	@MainActor
     private func _open() {
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(self, options: [:], completionHandler: nil)

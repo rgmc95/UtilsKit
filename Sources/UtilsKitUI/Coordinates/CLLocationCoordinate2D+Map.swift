@@ -20,7 +20,7 @@ extension CLLocationCoordinate2D {
          <string>waze</string>
      </array>
      */
-
+	@MainActor
     public func openInMap() {
 		
 		let appleURL = URL(string: "http://maps.apple.com/?daddr=\(self.latitude),\(self.longitude)")

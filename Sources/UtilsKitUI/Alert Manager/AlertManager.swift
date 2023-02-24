@@ -59,46 +59,44 @@ public struct AlertManager {
      - parameter alignment: alignment of the message.
      - parameter preferredStyle: controller style.
      */
+	@MainActor
     public func show(actions: [AlertAction],
                      title: String? = nil,
                      message: String? = nil,
-                     alignment: NSTextAlignment = .center,
-                     preferredStyle: UIAlertController.Style = .alert,
+					 alignment: NSTextAlignment = .center,
+					 preferredStyle: UIAlertController.Style = .alert,
 					 sourceView: UIView? = nil) {
-                
-        DispatchQueue.main.async {
-            guard let currenViewController = UIApplication.shared.topViewController else { return }
-            
-            let alertController = UIAlertController(title: title,
-                                                    message: message,
-                                                    preferredStyle: preferredStyle)
-            
-            for action in actions {
-                let actionButton = UIAlertAction(title: action.title, style: action.style, handler: ({ _ in
-                    action.completion?()
-                }))
-                alertController.addAction(actionButton)
-            }
-            
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = alignment
-            
-            if let message: String = message {
-                let messageText = NSMutableAttributedString(
-                    string: message,
-                    attributes: [
-                        NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
-                    ]
-                )
-                
-                alertController.setValue(messageText, forKey: "attributedMessage")
-            }
-            
-			alertController.popoverPresentationController?.sourceView = sourceView
-            currenViewController.present(alertController, animated: true)
-        }
-    }
+		guard let currenViewController = UIApplication.shared.topViewController else { return }
+		
+		let alertController = UIAlertController(title: title,
+												message: message,
+												preferredStyle: preferredStyle)
+		
+		for action in actions {
+			let actionButton = UIAlertAction(title: action.title, style: action.style, handler: ({ _ in
+				action.completion?()
+			}))
+			alertController.addAction(actionButton)
+		}
+		
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = alignment
+		
+		if let message: String = message {
+			let messageText = NSMutableAttributedString(
+				string: message,
+				attributes: [
+					NSAttributedString.Key.paragraphStyle: paragraphStyle,
+					NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
+				]
+			)
+			
+			alertController.setValue(messageText, forKey: "attributedMessage")
+		}
+		
+		alertController.popoverPresentationController?.sourceView = sourceView
+		currenViewController.present(alertController, animated: true)
+	}
 	
 	/**
 	Show an alert controller on top of the navigation stack.
@@ -109,6 +107,7 @@ public struct AlertManager {
 	- parameter alignment: alignment of the message.
 	- parameter preferredStyle: controller style.
 	*/
+	@MainActor
 	public func show(actions: [AlertAction],
 					 title: String? = nil,
 					 message: String? = nil,
@@ -116,43 +115,40 @@ public struct AlertManager {
 					 alignment: NSTextAlignment = .center,
 					 preferredStyle: UIAlertController.Style = .alert,
 					 sourceView: UIView? = nil) {
+		guard let currenViewController = UIApplication.shared.topViewController else { return }
 		
-		DispatchQueue.main.async {
-			guard let currenViewController = UIApplication.shared.topViewController else { return }
-			
-			let alertController = UIAlertController(title: title,
-													message: message,
-													preferredStyle: preferredStyle)
-			
-			for action in actions {
-				let actionButton = UIAlertAction(title: action.title, style: action.style, handler: ({ _ in
-					action.completion?()
-				}))
-				alertController.addAction(actionButton)
-			}
-			
-			let paragraphStyle = NSMutableParagraphStyle()
-			paragraphStyle.alignment = alignment
-			
-			if let message: String = message {
-				let messageText = NSMutableAttributedString(
-					string: message,
-					attributes: [
-						NSAttributedString.Key.paragraphStyle: paragraphStyle,
-						NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
-					]
-				)
-				
-				alertController.setValue(messageText, forKey: "attributedMessage")
-			}
-			
-			alertController.addTextField { textField in
-				textFieldConf(textField)
-			}
-			
-			alertController.popoverPresentationController?.sourceView = sourceView
-			currenViewController.present(alertController, animated: true)
+		let alertController = UIAlertController(title: title,
+												message: message,
+												preferredStyle: preferredStyle)
+		
+		for action in actions {
+			let actionButton = UIAlertAction(title: action.title, style: action.style, handler: ({ _ in
+				action.completion?()
+			}))
+			alertController.addAction(actionButton)
 		}
+		
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = alignment
+		
+		if let message: String = message {
+			let messageText = NSMutableAttributedString(
+				string: message,
+				attributes: [
+					NSAttributedString.Key.paragraphStyle: paragraphStyle,
+					NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0)
+				]
+			)
+			
+			alertController.setValue(messageText, forKey: "attributedMessage")
+		}
+		
+		alertController.addTextField { textField in
+			textFieldConf(textField)
+		}
+		
+		alertController.popoverPresentationController?.sourceView = sourceView
+		currenViewController.present(alertController, animated: true)
 	}
     
     /**
@@ -161,6 +157,7 @@ public struct AlertManager {
      
      - parameter error: error to be printed.
      */
+	@MainActor
     public func show(_ error: Error) {
         var infos: String? = error.localizedDescription
         

@@ -13,6 +13,7 @@ import UIKit
  This protocol provides a useful navigation stack management.
  */
 @available(iOSApplicationExtension, introduced: 1.0, unavailable)
+@MainActor
 public protocol NavigationProtocol {
     
     /**
