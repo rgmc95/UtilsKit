@@ -31,25 +31,28 @@ extension String {
      - returns: all string who respect the regex
      */
     public func values(forRegex regex: String) -> [String] {
-		do {
-			let regex = try NSRegularExpression(pattern: regex, options: [])
-			let matches = regex.matches(in: self,
-										options: [],
-										range: NSRange(location: 0,
-													   length: self.utf16.count))
-			guard let match = matches.first else { return [] }
-			var array: [String] = []
-			
-			for index in 1...match.numberOfRanges - 1 {
-				let range = match.range(at: index)
-				if let swiftRange = Range(range, in: self) {
-					array.append(String(self[swiftRange]))
-				}
-			}
-			return array
-		} catch {
-			log(.data, "Regex \(regex) in \(self)", error: error)
-			return []
-		}
+        do {
+            let regex = try NSRegularExpression(pattern: regex, options: [])
+            let matches = regex.matches(in: self,
+                                        options: [],
+                                        range: NSRange(location: 0,
+                                                       length: self.count))
+            
+            return matches
+                .compactMap { match -> [String]? in
+                    guard case let lastRangeIndex = match.numberOfRanges - 1,
+                          lastRangeIndex >= 1
+                    else { return nil }
+                    
+                    return Array(1...lastRangeIndex).compactMap { index -> String? in
+                        let capturedGroupIndex = match.range(at: index)
+                        return (self as NSString).substring(with: capturedGroupIndex)
+                    }
+                }
+                .flatMap { $0 }
+        } catch {
+            log(.data, "Regex \(regex) in \(self)", error: error)
+            return []
+        }
     }
 }
