@@ -21,10 +21,12 @@ extension Double {
 	 print(value.toStorage()) // prints `1 T`
 	 ~~~
 	 */
-	public func toWeight(maximumFractionDigits: Int = 1,
+	public func toWeight(minimumFractionDigits: Int = 0,
+						 maximumFractionDigits: Int = 0,
 				  locale: Locale = .current) -> String {
         let nbFormatter = NumberFormatter()
 		nbFormatter.locale = locale
+		nbFormatter.minimumFractionDigits = minimumFractionDigits
         nbFormatter.maximumFractionDigits = maximumFractionDigits
         
         let formatter = MassFormatter()
@@ -49,9 +51,11 @@ extension Int {
 	 print(value.toStorage()) // prints `1 T`
 	 ~~~
 	 */
-	public func toWeight(maximumFractionDigits: Int = 1,
+	public func toWeight(minimumFractionDigits: Int = 0,
+						 maximumFractionDigits: Int = 0,
 						 locale: Locale = .current) -> String {
-		Double(self).toWeight(maximumFractionDigits: maximumFractionDigits,
+		Double(self).toWeight(minimumFractionDigits: minimumFractionDigits,
+							  maximumFractionDigits: maximumFractionDigits,
 							  locale: locale)
 	}
 }

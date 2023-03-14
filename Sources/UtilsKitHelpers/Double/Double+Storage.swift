@@ -25,9 +25,11 @@ extension Double {
 	~~~
 	*/
 	@available(iOS 13.0, *)
-	public func toStorage(maximumFractionDigits: Int = 2,
+	public func toStorage(minimumFractionDigits: Int = 0,
+						  maximumFractionDigits: Int = 0,
 						  locale: Locale = .current) -> String {
 		let nbFormatter = NumberFormatter()
+		nbFormatter.minimumFractionDigits = minimumFractionDigits
 		nbFormatter.maximumFractionDigits = maximumFractionDigits
 		
 		let formatter = MeasurementFormatter()
@@ -67,9 +69,12 @@ extension Int {
 	~~~
 	*/
 	@available(iOS 13.0, *)
-	public func toStorage(maximumFractionDigits: Int = 2,
+	public func toStorage(minimumFractionDigits: Int = 0,
+						  maximumFractionDigits: Int = 0,
 						  locale: Locale = .current) -> String {
-		Double(self).toStorage(maximumFractionDigits: maximumFractionDigits, locale: locale)
+		Double(self).toStorage(minimumFractionDigits: minimumFractionDigits,
+							   maximumFractionDigits: maximumFractionDigits,
+							   locale: locale)
 	}
 }
 

@@ -16,8 +16,12 @@ extension Double {
      - parameter currency : Custom currency if needed
      - returns: self in price with currency.
      */
-    public func toPrice(currency: String? = nil) -> String {
+	public func toPrice(currency: String? = nil,
+						minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 2) -> String {
         let numberFormatter = NumberFormatter()
+		numberFormatter.minimumFractionDigits = minimumFractionDigits
+		numberFormatter.maximumFractionDigits = maximumFractionDigits
         
         if let currency: String = currency {
             numberFormatter.numberStyle = NumberFormatter.Style.decimal
@@ -40,14 +44,19 @@ extension Double {
 	 - parameter currencyCode : Currency code
 	 - returns: self in price with currency.
 	 */
-	public func toPrice(currencyCode: String?) -> String {
+	public func toPrice(currencyCode: String?,
+						minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 2) -> String {
 		guard let currencyCode = currencyCode else {
-			return self.toPrice()
+			return self.toPrice(minimumFractionDigits: minimumFractionDigits,
+								maximumFractionDigits: maximumFractionDigits)
 		}
 		
 		let currency = NSLocale(localeIdentifier: currencyCode)
 			.displayName(forKey: .currencySymbol, value: currencyCode)
-		return self.toPrice(currency: currency ?? currencyCode)
+		return self.toPrice(currency: currency ?? currencyCode,
+							minimumFractionDigits: minimumFractionDigits,
+							maximumFractionDigits: maximumFractionDigits)
 	}
 }
 
@@ -59,8 +68,12 @@ extension Int {
      - parameter currency : Custom currency if needed
      - returns: self in price with currency.
      */
-    public func toPrice(currency: String? = nil) -> String {
-        Double(self).toPrice(currency: currency)
+	public func toPrice(currency: String? = nil,
+						minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 2) -> String {
+		Double(self).toPrice(currency: currency,
+							 minimumFractionDigits: minimumFractionDigits,
+							 maximumFractionDigits: maximumFractionDigits)
     }
 	
 	/**
@@ -69,7 +82,11 @@ extension Int {
 	 - parameter currencyCode : Currency code
 	 - returns: self in price with currency.
 	 */
-	public func toPrice(currencyCode: String?) -> String {
-		Double(self).toPrice(currencyCode: currencyCode)
+	public func toPrice(currencyCode: String?,
+						minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 2) -> String {
+		Double(self).toPrice(currencyCode: currencyCode,
+							 minimumFractionDigits: minimumFractionDigits,
+							 maximumFractionDigits: maximumFractionDigits)
 	}
 }

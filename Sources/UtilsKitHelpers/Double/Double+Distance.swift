@@ -21,12 +21,14 @@ extension Double {
 
 	~~~
 	let value = 1000
-	print(value.toDistance()) // prints `1 km` in France, `0,6 mile` in US
-	~~~
-	*/
-	public func toDistance(maximumFractionDigits: Int = 1,
+	 print(value.toDistance()) // prints `1 km` in France, `0,6 mile` in US
+	 ~~~
+	 */
+	public func toDistance(minimumFractionDigits: Int = 0,
+						   maximumFractionDigits: Int = 0,
 						   locale: Locale = Locale.current) -> String {
 		let nbFormatter = NumberFormatter()
+		nbFormatter.minimumFractionDigits = minimumFractionDigits
 		nbFormatter.maximumFractionDigits = maximumFractionDigits
 		
 		let formatter = MeasurementFormatter()
@@ -52,9 +54,12 @@ extension Int {
 	print(value.toDistance()) // prints `1 km` in France, `0,6 mile` in US
 	~~~
 	*/
-	public func toDistance(maximumFractionDigits: Int = 1,
+	public func toDistance(minimumFractionDigits: Int = 0,
+						   maximumFractionDigits: Int = 0,
 						   locale: Locale = Locale.current) -> String {
-		Double(self).toDistance(maximumFractionDigits: maximumFractionDigits, locale: locale)
+		Double(self).toDistance(minimumFractionDigits: minimumFractionDigits,
+								maximumFractionDigits: maximumFractionDigits,
+								locale: locale)
 	}
 }
 

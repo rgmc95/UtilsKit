@@ -20,14 +20,17 @@ extension Double {
 	
 	~~~
 	let value = 1
-	print(value.toSpeed()) // prints `1 km/h` in France, `0,6 mile/h` in US
-	~~~
-	*/
-	public func toSpeed(maximumFractionDigits: Int = 1,
+	 print(value.toSpeed()) // prints `1 km/h` in France, `0,6 mile/h` in US
+	 ~~~
+	 */
+	public func toSpeed(minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 0,
 						locale: Locale = .current) -> String {
 		let value = NSMeasurement(doubleValue: self, unit: UnitSpeed.kilometersPerHour)
 		let formatter = MeasurementFormatter()
+		formatter.numberFormatter.minimumFractionDigits = minimumFractionDigits
 		formatter.numberFormatter.maximumFractionDigits = maximumFractionDigits
+		
 		formatter.locale = locale
 		return formatter.string(from: value as Measurement<Unit>)
 	}
@@ -46,9 +49,12 @@ extension Int {
 	print(value.toSpeed()) // prints `1 km/h` in France, `0,6 mile/h` in US
 	~~~
 	*/
-	public func toSpeed(maximumFractionDigits: Int = 1,
+	public func toSpeed(minimumFractionDigits: Int = 0,
+						maximumFractionDigits: Int = 0,
 						locale: Locale = .current) -> String {
-		Double(self).toSpeed(maximumFractionDigits: maximumFractionDigits, locale: locale)
+		Double(self).toSpeed(minimumFractionDigits: minimumFractionDigits,
+							 maximumFractionDigits: maximumFractionDigits,
+							 locale: locale)
 	}
 }
 
