@@ -9,6 +9,24 @@
 import Foundation
 
 extension Double {
+	
+	private var isDecimal: Bool {
+		Double(Int(self)) != self
+	}
+	
+	/**
+	 Self in price with currency and formatter.
+	 
+	 - parameter currency : Custom currency if needed
+	 - returns: self in price with currency.
+	 */
+	public func toPrice(currency: String? = nil) -> String {
+		if self.isDecimal {
+			return self.toPrice(currency: currency, minimumFractionDigits: 2)
+		} else {
+			return self.toPrice(currency: currency, minimumFractionDigits: 0)
+		}
+	}
     
     /**
      Self in price with currency and formatter.
@@ -17,7 +35,7 @@ extension Double {
      - returns: self in price with currency.
      */
 	public func toPrice(currency: String? = nil,
-						minimumFractionDigits: Int = 0,
+						minimumFractionDigits: Int,
 						maximumFractionDigits: Int = 2) -> String {
         let numberFormatter = NumberFormatter()
 		numberFormatter.minimumFractionDigits = minimumFractionDigits
@@ -44,8 +62,22 @@ extension Double {
 	 - parameter currencyCode : Currency code
 	 - returns: self in price with currency.
 	 */
+	public func toPrice(currencyCode: String?) -> String {
+		if self.isDecimal {
+			return self.toPrice(currencyCode: currencyCode, minimumFractionDigits: 2)
+		} else {
+			return self.toPrice(currencyCode: currencyCode, minimumFractionDigits: 0)
+		}
+	}
+	
+	/**
+	 Self in price with currency and formatter.
+	 
+	 - parameter currencyCode : Currency code
+	 - returns: self in price with currency.
+	 */
 	public func toPrice(currencyCode: String?,
-						minimumFractionDigits: Int = 0,
+						minimumFractionDigits: Int,
 						maximumFractionDigits: Int = 2) -> String {
 		guard let currencyCode = currencyCode else {
 			return self.toPrice(minimumFractionDigits: minimumFractionDigits,
