@@ -53,4 +53,12 @@ public class HostingCollectionViewCell<Content: CellView>: UICollectionViewCell,
 			hostingViewController.view.layoutIfNeeded()
 		}
 	}
+	
+	public override func prepareForReuse() {
+		super.prepareForReuse()
+		
+		self.controller?.removeFromParent()
+		self.controller?.view.removeFromSuperview()
+		self.controller = nil
+	}
 }
