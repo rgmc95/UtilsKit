@@ -157,6 +157,16 @@ public enum Segue {
 		controllerToPresent.modalPresentationStyle = controller.modalPresentationStyle
 		controllerToPresent.modalTransitionStyle = controller.modalTransitionStyle
 		
+		if #available(iOS 15.0, *) {
+			if let sheet = controller.sheetPresentationController {
+				controllerToPresent.sheetPresentationController?.detents = sheet.detents
+				controllerToPresent.sheetPresentationController?.selectedDetentIdentifier = sheet.selectedDetentIdentifier
+				controllerToPresent.sheetPresentationController?.largestUndimmedDetentIdentifier = sheet.largestUndimmedDetentIdentifier
+				controllerToPresent.sheetPresentationController?.prefersScrollingExpandsWhenScrolledToEdge = sheet.prefersScrollingExpandsWhenScrolledToEdge
+				controllerToPresent.sheetPresentationController?.prefersGrabberVisible = sheet.prefersGrabberVisible
+			}
+		}
+		
 		currentViewController.present(controllerToPresent, animated: animated, completion: completion)
 	}
 	
