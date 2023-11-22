@@ -1,5 +1,5 @@
 //
-//  CLLocationCoordinate2D+DIstance.swift
+//  CLLocationCoordinate2D+Distance.swift
 //  UtilsKit
 //
 //  Created by Michael Coqueret on 17/01/2022.
@@ -10,15 +10,11 @@
 import CoreLocation
 import MapKit
 
-public enum LocationError: Error {
-	case notFound
-}
-
 extension CLLocationCoordinate2D {
 	
 	/// Get distance to `coordinate`
 	public func getDistance(from coordinate: CLLocationCoordinate2D?) throws -> CLLocationDistance {
-		guard let coordinate = coordinate else { throw LocationError.notFound }
+		guard let coordinate = coordinate else { throw UnknownCoordinate() }
 		
 		return CLLocation(latitude: self.latitude,
 						  longitude: self.longitude)
@@ -26,12 +22,11 @@ extension CLLocationCoordinate2D {
 									   longitude: coordinate.longitude))
 	}
 	
-	/// Get duration to `coordinate` with `allowedUnits` in `unitStyle`
+	/// Get distance and duration to `coordinate`
 	@available(iOS 13.0.0, *)
-	public func getDuration(from coordinate: CLLocationCoordinate2D?,
-							allowedUnits: NSCalendar.Unit = [.day, .hour, .minute],
-							unitStyle: DateComponentsFormatter.UnitsStyle = .abbreviated) async throws -> String {
-		guard let coordinate = coordinate else { throw LocationError.notFound }
+	public func getDistanceAndDuration(from coordinate: CLLocationCoordinate2D?) async throws -> (distance: Double,
+																								  duration: TimeInterval) {
+		guard let coordinate = coordinate else { throw UnknownCoordinate() }
 		
 		let source = MKPlacemark(coordinate: coordinate)
 		let destination = MKPlacemark(coordinate: self)
@@ -45,13 +40,11 @@ extension CLLocationCoordinate2D {
 		return try await withCheckedThrowingContinuation { continuation in
 			MKDirections(request: request).calculate { response, _ in
 				guard let route = response?.routes.first else {
-					continuation.resume(throwing: LocationError.notFound)
+					continuation.resume(throwing: UnknownRoute())
 					return
 				}
 				
-				let duration = route.expectedTravelTime.toDuration(allowedUnits: allowedUnits,
-																   unitStyle: unitStyle)
-				continuation.resume(returning: duration)
+				continuation.resume(returning: (route.distance, route.expectedTravelTime))
 			}
 		}
 	}

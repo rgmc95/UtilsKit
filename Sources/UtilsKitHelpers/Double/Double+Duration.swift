@@ -25,7 +25,7 @@ extension Double {
 		.minute,
 		.second
 	],
-						   unitStyle: DateComponentsFormatter.UnitsStyle = .full) -> String {
+						   unitStyle: DateComponentsFormatter.UnitsStyle = .abbreviated) -> String {
 		
 		let formatter = DateComponentsFormatter()
 		formatter.allowedUnits = allowedUnits
@@ -50,7 +50,7 @@ extension Int {
 		.minute,
 		.second
 	],
-						   unitStyle: DateComponentsFormatter.UnitsStyle = .full) -> String {
+						   unitStyle: DateComponentsFormatter.UnitsStyle = .abbreviated) -> String {
 		Double(self).toDuration(allowedUnits: allowedUnits, unitStyle: unitStyle)
 	}
 }
