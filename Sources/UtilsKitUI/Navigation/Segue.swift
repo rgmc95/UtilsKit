@@ -62,7 +62,7 @@ public enum Segue {
 		
 		// Check controller & current controller
 		guard
-			var controller = controller,
+			let controller = controller,
 			let currentViewController = currentViewController ?? UIApplication.shared.topViewController(segue: self)
 		else { return }
 		
@@ -79,7 +79,18 @@ public enum Segue {
 				return
 				
 			default:
-				if controller.isModalInPresentation {
+				if #available(iOS 13.0, *) {
+					if controller.isModalInPresentation {
+						_currentViewController.viewWillPresent(controller: controller) {
+							self._present(controller,
+										  from: currentViewController,
+										  withNavigationController: withNavigationController,
+										  animated: animated,
+										  completion: completion)
+						}
+						return
+					}
+				} else {
 					_currentViewController.viewWillPresent(controller: controller) {
 						self._present(controller,
 									  from: currentViewController,
