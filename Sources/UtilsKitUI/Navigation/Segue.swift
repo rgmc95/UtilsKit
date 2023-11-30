@@ -63,10 +63,52 @@ public enum Segue {
 		// Check controller & current controller
 		guard
 			var controller = controller,
-			let currentViewController = currentViewController ?? UIApplication.shared.topViewController
+			let currentViewController = currentViewController ?? UIApplication.shared.topViewController(segue: self)
 		else { return }
 		
+		if let _currentViewController = currentViewController as? NavigationProtocol {
+			switch self {
+			case .push:
+				_currentViewController.viewWillPresent(controller: controller) {
+					self._present(controller,
+								  from: currentViewController,
+								  withNavigationController: withNavigationController,
+								  animated: animated,
+								  completion: completion)
+				}
+				return
+				
+			default:
+				if controller.isModalInPresentation {
+					_currentViewController.viewWillPresent(controller: controller) {
+						self._present(controller,
+									  from: currentViewController,
+									  withNavigationController: withNavigationController,
+									  animated: animated,
+									  completion: completion)
+					}
+					return
+				}
+			}
+		}
+		
+		self._present(controller,
+					  from: currentViewController,
+					  withNavigationController: withNavigationController,
+					  animated: animated,
+					  completion: completion)
+	}
+	
+	@MainActor
+	private func _present<T: UIViewController & NavigationProtocol>(_ controller: T,
+																  from currentViewController: UIViewController,
+																  withNavigationController: Bool = false,
+																  animated: Bool = true,
+																  completion: (() -> Void)? = nil) {
+		
 		// If controller to show is current controller, do nothing
+		var controller = controller
+		
 		if
 			let currentViewController: T = currentViewController as? T,
 			let currentIdentifier: String = currentViewController.instanceIdentifier,

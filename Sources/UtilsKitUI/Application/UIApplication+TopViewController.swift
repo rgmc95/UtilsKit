@@ -25,7 +25,8 @@ extension UIApplication {
         topViewController as? UIAlertController
     }
     
-    private func topViewController(_ baseViewController: UIViewController? = nil) -> UIViewController? {
+	public func topViewController(_ baseViewController: UIViewController? = nil,
+								   segue: Segue? = nil) -> UIViewController? {
         
         let currentBaseViewController: UIViewController?
             
@@ -41,16 +42,31 @@ extension UIApplication {
 
             
         if let nav: UINavigationController = currentBaseViewController as? UINavigationController {
-            return topViewController(nav.visibleViewController)
+            return topViewController(nav.topViewController, segue: segue)
         }
+		
         if let tab: UITabBarController = currentBaseViewController as? UITabBarController {
             if let selected: UIViewController = tab.selectedViewController {
-                return topViewController(selected)
+                return topViewController(selected, segue: segue)
             }
         }
-        if let presented: UIViewController = currentBaseViewController?.presentedViewController {
-            return topViewController(presented)
-        }
+		
+		if let presented: UIViewController = currentBaseViewController?.presentedViewController {
+			if #available(iOS 15.0, *) {
+				// Push pour les bottom sheet
+				switch segue {
+				case .push:
+					if presented.sheetPresentationController == nil {
+						return topViewController(presented, segue: segue)
+					}
+					
+				default:
+					return topViewController(presented, segue: segue)
+				}
+			} else {
+				return topViewController(presented, segue: segue)
+			}
+		}
         
         if let searchViewController: UISearchController = currentBaseViewController as? UISearchController {
             return searchViewController.presentingViewController ?? currentBaseViewController

@@ -30,6 +30,9 @@ public protocol NavigationProtocol {
      Sender
      */
     var previousViewController: UIViewController? { get set }
+	
+	/// View will hide by another controller
+	func viewWillPresent(controller: UIViewController?, completion: @escaping () -> Void)
 }
 
 @available(iOSApplicationExtension, introduced: 1.0, unavailable)
@@ -191,7 +194,7 @@ extension NavigationProtocol where Self: UIViewController {
      - parameter completion: completion handler called upon push.
      
      */
-    public func close(_ completion: (() -> Void)? = nil, animated: Bool = true) {
+    public func close(animated: Bool = true, _ completion: (() -> Void)? = nil) {
         self.navigationSegue?.close(self, animated: animated) {
             completion?()
         }
