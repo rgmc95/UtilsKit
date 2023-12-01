@@ -40,9 +40,12 @@ extension UIApplication {
             currentBaseViewController = UIApplication.shared.delegate?.window??.rootViewController
         }
 
-            
         if let nav: UINavigationController = currentBaseViewController as? UINavigationController {
-            return topViewController(nav.topViewController, segue: segue)
+			if let controller = nav.visibleViewController, !controller.isBottomSheet {
+				return topViewController(nav.visibleViewController, segue: segue)
+			}
+			
+			return topViewController(nav.topViewController, segue: segue)
         }
 		
         if let tab: UITabBarController = currentBaseViewController as? UITabBarController {
@@ -51,27 +54,36 @@ extension UIApplication {
             }
         }
 		
+		if let searchViewController: UISearchController = currentBaseViewController as? UISearchController {
+			return searchViewController.presentingViewController ?? currentBaseViewController
+		}
+		
 		if let presented: UIViewController = currentBaseViewController?.presentedViewController {
-			if #available(iOS 15.0, *) {
-				// Push pour les bottom sheet
-				switch segue {
-				case .push:
-					if presented.sheetPresentationController == nil {
-						return topViewController(presented, segue: segue)
-					}
-					
-				default:
-					return topViewController(presented, segue: segue)
-				}
+			if case .push = segue, presented.isBottomSheet {
+				return currentBaseViewController
 			} else {
 				return topViewController(presented, segue: segue)
 			}
 		}
         
-        if let searchViewController: UISearchController = currentBaseViewController as? UISearchController {
-            return searchViewController.presentingViewController ?? currentBaseViewController
-        }
-        
         return currentBaseViewController
     }
+}
+
+private extension UIViewController {
+	
+	var isBottomSheet: Bool {
+		if #available(iOS 15.0, *) {
+			if let sheet = self.sheetPresentationController {
+				if sheet.detents.count == 1 && sheet.detents.first == .large() {
+					return false
+				}
+				return true
+			} else {
+				return false
+			}
+		} else {
+			return false
+		}
+	}
 }

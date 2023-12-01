@@ -79,18 +79,7 @@ public enum Segue {
 				return
 				
 			default:
-				if #available(iOS 13.0, *) {
-					if controller.isModalInPresentation {
-						_currentViewController.viewWillPresent(controller: controller) {
-							self._present(controller,
-										  from: currentViewController,
-										  withNavigationController: withNavigationController,
-										  animated: animated,
-										  completion: completion)
-						}
-						return
-					}
-				} else {
+				if controller.isModalFullScreen {
 					_currentViewController.viewWillPresent(controller: controller) {
 						self._present(controller,
 									  from: currentViewController,
@@ -306,6 +295,14 @@ extension Segue: Equatable {
 }
 
 private extension UIViewController {
+	
+	var isModalFullScreen: Bool {
+		if #available(iOS 13.0, *) {
+			return self.isModalInPresentation
+		} else {
+			return true
+		}
+	}
 	
 	func embedInNavigationController(_ value: Bool) -> UIViewController {
 		if !(self is UINavigationController) && value {
