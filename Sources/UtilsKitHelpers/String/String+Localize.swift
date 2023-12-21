@@ -30,17 +30,7 @@ extension String {
 	 - returns: a localized string.
 	 */
 	public var localized: String {
-		for language in Locale.currentLanguages {
-			if let bundlePath = Bundle.main.path(forResource: language, ofType: "lproj"),
-			   let bundle = Bundle(path: bundlePath) {
-				return NSLocalizedString(self,
-										 bundle: bundle,
-										 value: NSLocalizedString(self, comment: ""),
-										 comment: "")
-			}
-		}
-		
-		return NSLocalizedString(self, comment: "")
+		NSLocalizedString(self, comment: "")
 	}
 	
 	/**
