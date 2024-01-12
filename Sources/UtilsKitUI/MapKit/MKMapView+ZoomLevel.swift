@@ -5,6 +5,7 @@
 //  Created by Michael Coqueret on 30/11/2023.
 //
 
+#if canImport(MapKit)
 import Foundation
 import MapKit
 
@@ -34,3 +35,4 @@ extension MKMapView {
 							   animated: animated)
 	}
 }
+#endif

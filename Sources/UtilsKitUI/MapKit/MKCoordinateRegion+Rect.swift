@@ -5,6 +5,7 @@
 //  Created by Michael Coqueret on 30/11/2023.
 //
 
+#if canImport(MapKit)
 import Foundation
 import MapKit
 
@@ -27,3 +28,4 @@ extension MKCoordinateRegion {
 										 height: abs(a.y - b.y)))
 	}
 }
+#endif
