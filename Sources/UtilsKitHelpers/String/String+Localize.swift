@@ -29,14 +29,16 @@ extension String {
 	 
 	 - returns: a localized string.
 	 */
-	public var localized: String {
-		NSLocalizedString(self, comment: "")
+	public func localize() -> String {
+		NSLocalizedString(self, comment: self)
 	}
 	
 	/**
-	 Localize the string.
+	 Localize the string with arguments
 	 
-	 - returns: a localized string or nil.
+	 - returns: a localized string.
 	 */
-	public var localizedOrNil: String? { (localized != self ? localized : nil) }
+	public func localize(_ args: CVarArg? ...) -> String {
+		String(format: NSLocalizedString(self, comment: self), args)
+	}
 }
