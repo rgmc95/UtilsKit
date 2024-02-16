@@ -1,5 +1,5 @@
 //
-//  Array+Same.swift
+//  Sequence+Same.swift
 //  UtilsKit
 //
 //  Created by Michael Coqueret on 17/01/2022.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension Array where Element: Equatable {
+public extension Sequence where Element: Equatable {
 	
-	/// Check if two array has same elements
-	public func isSame(array: [Element]) -> Bool {
+	/// Check if two sequence has same elements
+	func isSame(array: any Sequence<Element>) -> Bool {
 		self.containsAll(array) && array.containsAll(self)
 	}
 }
