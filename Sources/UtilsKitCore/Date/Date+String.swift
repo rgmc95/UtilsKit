@@ -13,17 +13,35 @@ extension Date {
     /**
     Transform a data into a string.
     
-    - parameter format: the format to convert the date from. The default format is `dd/MM/yyyy`
+    - parameter dateStyle: the date format to convert the date from
+    - parameter timeStyle: the time format to convert the date from
     
     - returns: the date converted into a string with specified format.
     */
-    public func toString(format: String = "dd/MM/yyyy",
+    public func toString(dateStyle: DateFormatter.Style = .short,
+						 timeStyle: DateFormatter.Style = .none,
                          locale: Locale = Locale.current) -> String {
         let formatter = DateFormatter()
         formatter.locale = locale
-        formatter.dateFormat = format
+        formatter.dateStyle = dateStyle
+        formatter.timeStyle = timeStyle
         return formatter.string(from: self)
     }
+	
+	/**
+	 Transform a data into a string.
+	 
+	 - parameter format: the format to convert the date from. The default format is `dd/MM/yyyy`
+	 
+	 - returns: the date converted into a string with specified format.
+	 */
+	public func toString(format: String,
+						 locale: Locale = Locale.current) -> String {
+		let formatter = DateFormatter()
+		formatter.locale = locale
+		formatter.dateFormat = format
+		return formatter.string(from: self)
+	}
 }
 
 extension String {
