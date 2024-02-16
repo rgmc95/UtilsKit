@@ -8,7 +8,7 @@
 #if canImport(MapKit)
 import MapKit
 
-extension MKCoordinateRegion {
+public extension MKCoordinateRegion {
 	
 	/// `true` if region contains coordinate
 	func contains(coordinate: CLLocationCoordinate2D) -> Bool {
