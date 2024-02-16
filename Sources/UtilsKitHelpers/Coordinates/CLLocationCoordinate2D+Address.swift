@@ -11,6 +11,29 @@ import Contacts
 
 extension CLLocationCoordinate2D {
 	
+	/// Init Coordinate from address
+	@available(iOS 13.0.0, *)
+	public init(from address: String) async throws {
+		let location =
+		try await withCheckedThrowingContinuation { (continuation: _Concurrency.CheckedContinuation<CLLocation, Error>) in
+			CLGeocoder().geocodeAddressString(address) { placemarks, error in
+				if let error {
+					continuation.resume(throwing: error)
+					return
+				}
+				
+				guard let placemarks, let location = placemarks.first?.location else {
+					continuation.resume(throwing: UnknownAddress())
+					return
+				}
+				
+				continuation.resume(returning: location)
+			}
+		}
+		
+		self.init(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+	}
+	
 	/// Get address from coordinate
 	@available(iOS 13.0.0, *)
 	public func getAddress() async throws -> CNPostalAddress {
