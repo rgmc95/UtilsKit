@@ -38,7 +38,7 @@ extension String {
 	 
 	 - returns: a localized string.
 	 */
-	public func localize(_ args: CVarArg? ...) -> String {
+	public func localize(_ args: CVarArg ...) -> String {
 		String(format: NSLocalizedString(self, comment: self), args)
 	}
 }
