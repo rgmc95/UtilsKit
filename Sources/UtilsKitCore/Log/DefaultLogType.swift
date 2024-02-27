@@ -29,6 +29,8 @@ public enum DefaultLogType: LogType {
     case spotlight
     case navigation
     case debug
+	case `deinit`
+	case app
     case custom(String)
     
 	public var prefix: String {
@@ -50,6 +52,8 @@ public enum DefaultLogType: LogType {
 		case .spotlight: return "🔍"
 		case .navigation: return "⛳️"
 		case .debug: return "🕹"
+		case .deinit: return "💀"
+		case .app: return "📱"
 		case .custom(let prefix): return prefix
 		}
 	}
