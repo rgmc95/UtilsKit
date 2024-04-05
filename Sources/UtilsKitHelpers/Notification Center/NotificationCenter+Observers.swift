@@ -18,6 +18,15 @@ extension NotificationCenter {
 	public func addObservers(_ notifications: Notification.Name...,
 					  queue: OperationQueue = .main,
 					  completion: @escaping ((Notification) -> Void)) {
+		self.addObservers(notifications, queue: queue, completion: completion)
+	}
+	
+	/**
+	 Adds multi entries to the notification center to receive notifications that passed to the provided block.
+	 */
+	public func addObservers(_ notifications: [Notification.Name],
+							 queue: OperationQueue = .main,
+							 completion: @escaping ((Notification) -> Void)) {
 		notifications
 			.forEach {
 				_ = NotificationCenter
@@ -28,5 +37,18 @@ extension NotificationCenter {
 						completion(notification)
 					}
 			}
+	}
+	
+	/**
+	 Adds multi entries to the notification center to receive notifications that passed to the provided async block.
+	 */
+	@available(iOS 13.0, *)
+	public func addObservers(_ notifications: Notification.Name...,
+							 completion: @escaping (() async -> Void)) {
+		self.addObservers(notifications) { _ in
+			Task {
+				await completion()
+			}
+		}
 	}
 }
