@@ -7,7 +7,6 @@
 
 import Foundation
 
-@available(iOS 13.0, *)
 public extension Collection {
 	
 	/**
@@ -31,7 +30,6 @@ public extension Collection {
 	}
 }
 
-@available(iOS 13.0, *)
 public extension Collection where Element == (() async throws -> Void) {
 	
 	/**

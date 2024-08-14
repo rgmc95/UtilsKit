@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
 public class HostingView<Content: View>: UIView {
 	
 	private weak var controller: UIHostingController<Content>?

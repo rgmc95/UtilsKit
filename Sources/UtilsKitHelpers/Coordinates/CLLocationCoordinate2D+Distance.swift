@@ -23,7 +23,6 @@ extension CLLocationCoordinate2D {
 	}
 	
 	/// Get distance and duration to `coordinate`
-	@available(iOS 13.0.0, *)
 	public func getDistanceAndDuration(from coordinate: CLLocationCoordinate2D?) async throws -> (distance: Double,
 																								  duration: TimeInterval) {
 		guard let coordinate = coordinate else { throw UnknownCoordinate() }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -24,7 +25,7 @@ extension String {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             } catch {
-                log(.data, "\(self) to Dictionnary", error: error)
+				Logger.data.fault(message: "\(self) to Dictionnary", error: error)
             }
         }
         return nil
@@ -40,7 +41,7 @@ extension String {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
             } catch {
-                log(.data, "\(self) to Array Dictionnary", error: error)
+				Logger.data.fault(message: "\(self) to Array Dictionnary", error: error)
             }
         }
         return nil

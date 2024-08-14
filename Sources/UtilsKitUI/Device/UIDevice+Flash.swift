@@ -10,6 +10,7 @@
 import AVFoundation
 import Foundation
 import UIKit
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -48,10 +49,10 @@ extension UIDevice {
                 
                 device.unlockForConfiguration()
             } catch {
-                log(.custom("🔦"), error: error)
+				Logger.device.fault(message: "Torch", error: error)
             }
         } else {
-            log(.custom("🔦"), "Torch is not available")
+			Logger.device.fault("Torch is not available")
         }
     }
 }

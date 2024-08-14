@@ -8,13 +8,11 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
 public protocol CellView: View {
 	
     static var identifier: String { get }
 }
 
-@available(iOS 13, *)
 extension CellView {
 	
 	/// Cell identifier

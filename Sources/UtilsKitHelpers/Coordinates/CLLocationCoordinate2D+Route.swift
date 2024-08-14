@@ -12,7 +12,6 @@ import MapKit
 extension CLLocationCoordinate2D {
 	
 	/// Get route to coordinate
-	@available(iOS 13.0.0, *)
 	public func getRoute(from coordinate: CLLocationCoordinate2D) async throws -> MKPolyline {
 		let request = MKDirections.Request()
 		request.source = MKMapItem(placemark: MKPlacemark(coordinate: coordinate,
@@ -45,7 +44,6 @@ extension CLLocationCoordinate2D {
 extension Array where Element == CLLocationCoordinate2D {
 	
 	/// Get routes between coordinates
-	@available(iOS 13.0.0, *)
 	public func getRoutes() async -> [MKPolyline] {
 		var routes: [MKPolyline?] = []
 		

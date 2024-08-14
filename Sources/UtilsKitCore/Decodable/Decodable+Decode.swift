@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 extension Decodable {
     
@@ -21,16 +22,16 @@ extension Decodable {
 				let object: Self = try JSONDecoder().decode(Self.self, from: jsonData)
 				return object
 			} catch DecodingError.keyNotFound(let key, let context) {
-				log(.decode, "Key \"\(key.stringValue)\" not found in \(String(describing: Self.self))")
+				Logger.decode.error("Key \"\(key.stringValue)\" not found in \(String(describing: Self.self))")
 				throw DecodingError.keyNotFound(key, context)
 			} catch DecodingError.valueNotFound(let type, let context) {
-				log(.decode, "Type \"\(type)\" not found in \(String(describing: Self.self))")
+				Logger.decode.error("Type \"\(type)\" not found in \(String(describing: Self.self))")
 				throw DecodingError.valueNotFound(type, context)
 			} catch DecodingError.typeMismatch(let type, let context) {
-				log(.decode, "\"\(type)\" not match in \(String(describing: Self.self))")
+				Logger.decode.error("\"\(type)\" not match in \(String(describing: Self.self))")
 				throw DecodingError.typeMismatch(type, context)
 			} catch DecodingError.dataCorrupted(let context) {
-				log(.decode, "Data corruped in \(String(describing: Self.self))")
+				Logger.decode.error("Data corruped in \(String(describing: Self.self))")
 				throw DecodingError.dataCorrupted(context)
 			} catch let error {
 				throw error

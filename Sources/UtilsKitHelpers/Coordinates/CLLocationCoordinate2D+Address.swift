@@ -12,7 +12,6 @@ import Contacts
 extension CLLocationCoordinate2D {
 	
 	/// Init Coordinate from address
-	@available(iOS 13.0.0, *)
 	public init(from address: String) async throws {
 		let location =
 		try await withCheckedThrowingContinuation { (continuation: _Concurrency.CheckedContinuation<CLLocation, Error>) in
@@ -35,7 +34,6 @@ extension CLLocationCoordinate2D {
 	}
 	
 	/// Get address from coordinate
-	@available(iOS 13.0.0, *)
 	public func getAddress() async throws -> CNPostalAddress {
 		
 		let latitude = self.latitude

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -35,7 +36,7 @@ extension String {
 																 documentAttributes: nil)
 			return attributedString
 		} catch {
-			log(.data, "String \(self) to htmlAttributedString", error: error)
+			Logger.string.fault(message: "String \(self) to htmlAttributedString", error: error)
 			return nil
 		}
 	}

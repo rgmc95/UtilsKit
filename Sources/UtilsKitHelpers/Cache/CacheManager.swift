@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -40,7 +41,7 @@ public class CacheManager: NSObject {
             cache?.set(jsonData, forKey: key)
             cache?.synchronize()
         } catch {
-            log(.biometry, "Set \(object)", error: error)
+			Logger.biometry.fault(message: "Set \(object) - \(error.localizedDescription)")
         }
     }
     

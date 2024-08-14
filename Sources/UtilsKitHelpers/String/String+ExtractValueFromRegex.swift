@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -51,7 +52,7 @@ extension String {
                 }
                 .flatMap { $0 }
         } catch {
-            log(.data, "Regex \(regex) in \(self)", error: error)
+			Logger.data.fault(message: "Regex \(regex) in \(self)", error: error)
             return []
         }
     }

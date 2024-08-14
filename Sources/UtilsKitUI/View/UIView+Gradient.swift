@@ -31,9 +31,8 @@ extension UIView {
     @discardableResult
 	public func addGradient(_ colors: [UIColor], direction: GradientDirection) -> CAGradientLayer {
         let gradient = CAGradientLayer()
-        var frame = self.bounds
-        if self is UINavigationBar { frame.size.height += UIApplication.shared.statusBarFrame.height }
-        gradient.frame = frame
+
+		gradient.frame = self.bounds
         gradient.colors = colors.map { $0.cgColor }
         
         switch direction {

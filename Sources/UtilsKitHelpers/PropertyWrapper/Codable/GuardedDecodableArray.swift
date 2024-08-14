@@ -6,6 +6,8 @@
 //  Copyright © 2021 Exomind. All rights reserved.
 //
 
+import OSLog
+
 #if canImport(UtilsKitCore)
 import UtilsKitCore
 #endif
@@ -32,7 +34,7 @@ public struct GuardedDecodableArray<T: Decodable>: Decodable {
 				elements.append(value)
 			} catch {
 				_ = try? container.decode(AnyDecodableValue.self)
-				log(.data, "Decode", error: error)
+				Logger.decode.fault(message: String(describing: T.self), error: error)
 			}
 		}
 		

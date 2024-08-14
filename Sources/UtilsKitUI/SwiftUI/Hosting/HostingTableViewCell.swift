@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
 public class HostingTableViewCell<Content: CellView>: UITableViewCell, ViewReusable {
 	
 	// MARK: - Static

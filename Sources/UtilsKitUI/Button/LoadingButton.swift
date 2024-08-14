@@ -203,7 +203,7 @@ open class LoadingButton: UIButton {
             self.activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             
             guard let activityIndicator = self.activityIndicator else { return }
-            activityIndicator.style = .white
+			activityIndicator.style = .medium
             activityIndicator.color = self.tintColor
             activityIndicator.hidesWhenStopped = true
             activityIndicator.startAnimating()

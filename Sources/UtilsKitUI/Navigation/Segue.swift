@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -119,7 +120,7 @@ public enum Segue {
 		}
 		
 		if let _ = UIApplication.shared.topAlertView {
-			log(.navigation, "Push \(controller)", error: NavigationError.pushOnAlertController)
+			Logger.navigation.fault(message: "Push \(controller) - \(NavigationError.pushOnAlertController)")
 			return
 		}
 		
@@ -184,7 +185,7 @@ public enum Segue {
 			navigationController.pushViewController(controller, animated: animated)
 			completion?()
 		} else {
-			log(.navigation, "Push \(controller)", error: NavigationError.pushWithoutNavigationController)
+			Logger.navigation.fault(message: "Push \(controller) - \(NavigationError.pushWithoutNavigationController)")
 		}
 	}
 	

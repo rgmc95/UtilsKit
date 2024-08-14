@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -31,7 +32,7 @@ extension String {
             
             return String(characters)
         } catch {
-            log(.data, "ASCII value from \(self)", error: error)
+			Logger.string.fault(message: "ASCII value from \(self)", error: error)
             return nil
         }
     }

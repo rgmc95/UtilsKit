@@ -24,7 +24,6 @@ extension Double {
 	print(value.toStorage()) // prints `1 kB`
 	~~~
 	*/
-	@available(iOS 13.0, *)
 	public func toStorage(minimumFractionDigits: Int = 0,
 						  maximumFractionDigits: Int = 0,
 						  locale: Locale = .current) -> String {
@@ -68,7 +67,6 @@ extension Int {
 	print(value.toStorage()) // prints `1 kB`
 	~~~
 	*/
-	@available(iOS 13.0, *)
 	public func toStorage(minimumFractionDigits: Int = 0,
 						  maximumFractionDigits: Int = 0,
 						  locale: Locale = .current) -> String {

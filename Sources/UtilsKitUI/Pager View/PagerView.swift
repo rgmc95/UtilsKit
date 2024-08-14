@@ -250,7 +250,6 @@ open class PagerView: UIView, UIScrollViewDelegate {
 		self.delegate?.scrollViewDidScrollToTop?(scrollView)
 	}
 	
-	@available(iOS 11.0, *)
 	public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
 		self.delegate?.scrollViewDidChangeAdjustedContentInset?(scrollView)
 	}

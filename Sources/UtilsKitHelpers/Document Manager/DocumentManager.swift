@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OSLog
 
 #if canImport(UtilsKitCore)
 import UtilsKitCore
@@ -71,7 +72,7 @@ public struct DocumentManager {
                                                      withIntermediateDirectories: withIntermediateDirectories,
                                                      attributes: attributes)
             } catch {
-                log(.file, "Creating directory at path \(directoryPath)", error: error)
+				Logger.file.fault(message: "Creating directory at path \(directoryPath)", error: error)
             }
         }
     }
@@ -90,7 +91,7 @@ public struct DocumentManager {
             do {
                 try data.write(to: fullURL, options: .atomic)
             } catch {
-                log(.file, "Saving data to document named \(name)", error: error)
+				Logger.file.fault(message: "Saving data to document named \(name)", error: error)
             }
         }
     }
@@ -110,7 +111,7 @@ public struct DocumentManager {
         do {
             return try Data(contentsOf: url)
         } catch {
-            log(.file, "Getting content of document at url \(url)", error: error)
+			Logger.file.fault(message: "Getting content of document at url \(url)", error: error)
             return nil
         }
     }
@@ -136,7 +137,7 @@ public struct DocumentManager {
         do {
             try self.fileManager.removeItem(at: url)
         } catch {
-            log(.file, "Deleting document at url \(url)", error: error)
+			Logger.file.fault(message: "Deleting document at url \(url)", error: error)
         }
     }
     

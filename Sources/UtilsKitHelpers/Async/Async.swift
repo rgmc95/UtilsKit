@@ -8,7 +8,6 @@
 import Foundation
 
 /// Invokes the passed in closure with a checked continuation for the current task in queue
-@available(iOS 13.0, *)
 public func withCheckedContinuationAsync<T: Any>(in queue: DispatchQueue,
 												 completion: @escaping (CheckedContinuation<T, Never>) -> Void) async -> T {
 	await withCheckedContinuation { (continuation: CheckedContinuation<T, Never>) in
@@ -19,7 +18,6 @@ public func withCheckedContinuationAsync<T: Any>(in queue: DispatchQueue,
 }
 
 /// Invokes the passed in closure with a checked continuation for the current task in queue
-@available(iOS 13.0, *)
 public func withCheckedThrowingContinuationAsync<T: Any>(in queue: DispatchQueue,
 														 completion: @escaping (CheckedContinuation<T, Error>) -> Void) async throws -> T {
 	try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<T, Error>) in
@@ -30,7 +28,6 @@ public func withCheckedThrowingContinuationAsync<T: Any>(in queue: DispatchQueue
 }
 
 /// Invokes the passed in closure with a checked continuation for the current task in queue
-@available(iOS 13.0, *)
 public func withCheckedThrowingContinuationAsync<T: Any>(in queue: DispatchQueue,
 														 completion: @escaping () throws -> T) async throws -> T {
 	try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<T, Error>) in
@@ -46,7 +43,6 @@ public func withCheckedThrowingContinuationAsync<T: Any>(in queue: DispatchQueue
 }
 
 /// Invokes the passed in closure with a unsafe continuation for the current task in queue
-@available(iOS 13.0, *)
 public func withUnsafeThrowingContinuationAsync<T: Any>(in queue: DispatchQueue,
 														completion: @escaping (UnsafeContinuation<T, Error>) -> Void) async throws -> T {
 	try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<T, Error>) in
