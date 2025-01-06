@@ -52,7 +52,7 @@ extension String {
                 }
                 .flatMap { $0 }
         } catch {
-			Logger.data.fault(message: "Regex \(regex) in \(self)", error: error)
+			Logger.data.fault("Regex \(regex) in \(self) - \(error.localizedDescription)")
             return []
         }
     }

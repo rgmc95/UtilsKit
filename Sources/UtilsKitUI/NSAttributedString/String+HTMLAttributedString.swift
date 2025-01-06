@@ -36,7 +36,7 @@ extension String {
 																 documentAttributes: nil)
 			return attributedString
 		} catch {
-			Logger.string.fault(message: "String \(self) to htmlAttributedString", error: error)
+			Logger.string.fault("String \(self) to htmlAttributedString - \(error.localizedDescription)")
 			return nil
 		}
 	}

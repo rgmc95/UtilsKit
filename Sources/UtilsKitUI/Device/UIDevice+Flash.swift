@@ -49,7 +49,7 @@ extension UIDevice {
                 
                 device.unlockForConfiguration()
             } catch {
-				Logger.device.fault(message: "Torch", error: error)
+				Logger.device.fault("Torch  - \(error.localizedDescription)")
             }
         } else {
 			Logger.device.fault("Torch is not available")

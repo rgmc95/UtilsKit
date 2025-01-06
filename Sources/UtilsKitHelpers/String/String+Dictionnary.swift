@@ -25,7 +25,7 @@ extension String {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             } catch {
-				Logger.data.fault(message: "\(self) to Dictionnary", error: error)
+				Logger.data.fault("\(self) to Dictionnary - \(error.localizedDescription)")
             }
         }
         return nil
@@ -41,7 +41,7 @@ extension String {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
             } catch {
-				Logger.data.fault(message: "\(self) to Array Dictionnary", error: error)
+				Logger.data.fault("\(self) to Array Dictionnary - \(error.localizedDescription)")
             }
         }
         return nil

@@ -34,7 +34,7 @@ public struct GuardedCodableArray<T: Codable>: Codable {
 				elements.append(value)
 			} catch {
 				_ = try? container.decode(AnyDecodableValue.self)
-				Logger.decode.fault(message: error.localizedDescription)
+				Logger.decode.fault("\(error.localizedDescription)")
 			}
 		}
 		

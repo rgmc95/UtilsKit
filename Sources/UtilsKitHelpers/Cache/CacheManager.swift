@@ -41,7 +41,7 @@ public class CacheManager: NSObject {
             cache?.set(jsonData, forKey: key)
             cache?.synchronize()
         } catch {
-			Logger.biometry.fault(message: "Set \(object) - \(error.localizedDescription)")
+			Logger.biometry.fault("Set \(String(describing: object)) - \(error.localizedDescription)")
         }
     }
     

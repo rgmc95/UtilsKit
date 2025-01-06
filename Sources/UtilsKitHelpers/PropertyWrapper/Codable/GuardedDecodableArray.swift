@@ -34,7 +34,7 @@ public struct GuardedDecodableArray<T: Decodable>: Decodable {
 				elements.append(value)
 			} catch {
 				_ = try? container.decode(AnyDecodableValue.self)
-				Logger.decode.fault(message: String(describing: T.self), error: error)
+				Logger.decode.fault("\(String(describing: T.self)) - \(error.localizedDescription)")
 			}
 		}
 		

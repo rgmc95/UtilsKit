@@ -72,7 +72,7 @@ public struct DocumentManager {
                                                      withIntermediateDirectories: withIntermediateDirectories,
                                                      attributes: attributes)
             } catch {
-				Logger.file.fault(message: "Creating directory at path \(directoryPath)", error: error)
+				Logger.file.fault("Creating directory at path \(directoryPath) - \(error.localizedDescription)")
             }
         }
     }
@@ -91,7 +91,7 @@ public struct DocumentManager {
             do {
                 try data.write(to: fullURL, options: .atomic)
             } catch {
-				Logger.file.fault(message: "Saving data to document named \(name)", error: error)
+				Logger.file.fault("Saving data to document named \(name) - \(error.localizedDescription)")
             }
         }
     }
@@ -111,7 +111,7 @@ public struct DocumentManager {
         do {
             return try Data(contentsOf: url)
         } catch {
-			Logger.file.fault(message: "Getting content of document at url \(url)", error: error)
+			Logger.file.fault("Getting content of document at url \(url) - \(error.localizedDescription)")
             return nil
         }
     }
@@ -137,7 +137,7 @@ public struct DocumentManager {
         do {
             try self.fileManager.removeItem(at: url)
         } catch {
-			Logger.file.fault(message: "Deleting document at url \(url)", error: error)
+			Logger.file.fault("Deleting document at url \(url) - \(error.localizedDescription)")
         }
     }
     

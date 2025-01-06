@@ -120,7 +120,7 @@ public enum Segue {
 		}
 		
 		if let _ = UIApplication.shared.topAlertView {
-			Logger.navigation.fault(message: "Push \(controller) - \(NavigationError.pushOnAlertController)")
+			Logger.navigation.fault("Push \(controller) - \(NavigationError.pushOnAlertController.localizedDescription)")
 			return
 		}
 		
@@ -185,7 +185,7 @@ public enum Segue {
 			navigationController.pushViewController(controller, animated: animated)
 			completion?()
 		} else {
-			Logger.navigation.fault(message: "Push \(controller) - \(NavigationError.pushWithoutNavigationController)")
+			Logger.navigation.fault("Push \(controller) - \(NavigationError.pushWithoutNavigationController.localizedDescription)")
 		}
 	}
 	

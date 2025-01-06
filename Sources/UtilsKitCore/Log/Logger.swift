@@ -16,49 +16,5 @@ public extension Logger {
 	static let navigation 	= Logger(subsystem: "UtilsKit", category: "Navigation")
 	static let string 		= Logger(subsystem: "UtilsKit", category: "String")
 	static let device 		= Logger(subsystem: "UtilsKit", category: "Device")
-	
-	init(system: String, object: Any) {
-		self.init(subsystem: system, category: String(describing: object))
-	}
-	
-	func notice(message: String) {
-		self.notice("\(message)")
-	}
-	
-	func info(message: String) {
-		self.info("\(message)")
-	}
-	
-	func debug(message: String) {
-		self.debug("\(message)")
-	}
-	
-	func trace(message: String) {
-		self.trace("\(message)")
-	}
-
-	func warning(message: String) {
-		self.warning("\(message)")
-	}
-	
-	func error(message: String) {
-		self.error("\(message)")
-	}
-	
-	func fault(object: Any, error: Error? = nil) {
-		self.fault(message: "\(object)", error: error)
-	}
-	
-	func fault(message: String, error: Error? = nil) {
-		if let error {
-			self.fault("\(message) - \(error.localizedDescription)")
-		} else {
-			self.fault("\(message)")
-		}
-	}
-	
-	func critical(message: String) {
-		self.critical("\(message)")
-	}
 }
 

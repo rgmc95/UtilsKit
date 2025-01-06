@@ -32,7 +32,7 @@ extension String {
             
             return String(characters)
         } catch {
-			Logger.string.fault(message: "ASCII value from \(self)", error: error)
+			Logger.string.fault("ASCII value from \(self) - \(error.localizedDescription)")
             return nil
         }
     }
