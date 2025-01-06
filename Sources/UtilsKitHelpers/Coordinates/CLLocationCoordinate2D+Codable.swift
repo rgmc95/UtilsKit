@@ -8,7 +8,7 @@
 #if canImport(CoreLocation)
 import CoreLocation
 
-extension CLLocationCoordinate2D: Codable, Hashable {
+extension CLLocationCoordinate2D: Codable, @retroactive Hashable {
 	
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude

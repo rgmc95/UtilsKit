@@ -289,7 +289,6 @@ public enum Segue {
 @available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension Segue: Equatable {
 	
-	@MainActor
 	public static func == (lhs: Segue, rhs: Segue) -> Bool {
 		false
 	}

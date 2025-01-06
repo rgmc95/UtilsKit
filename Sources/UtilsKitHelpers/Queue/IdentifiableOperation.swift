@@ -11,7 +11,7 @@ import Foundation
 /**
  Identifiable operation
  */
-open class IdentifiableOperation: Operation {
+open class IdentifiableOperation: Operation, @unchecked Sendable {
     
     /**
      Linked `Identifiable` to the operation

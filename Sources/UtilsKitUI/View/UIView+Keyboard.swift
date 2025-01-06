@@ -10,7 +10,7 @@ import UIKit
 
 private class HideKeyboardTapGesture: UITapGestureRecognizer { }
 
-extension UIView: UIGestureRecognizerDelegate {
+extension UIView: @retroactive UIGestureRecognizerDelegate {
     
     /**
      Default implementation of the delegate method to not override gestures or actions in view when `hideKeyboardOnTap` is used.

@@ -11,7 +11,7 @@ import Foundation
 /**
  Operation wrapper inheriting from Foundation.Operation managing execution with observers
  */
-open class Operation: Foundation.Operation {
+open class Operation: Foundation.Operation, @unchecked Sendable {
     
     fileprivate var _executing: Bool = false
     /**

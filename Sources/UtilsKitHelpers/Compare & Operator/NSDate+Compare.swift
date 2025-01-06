@@ -11,7 +11,7 @@
 import Foundation
 
 // MARK: NSDate
-extension NSDate: Comparable {
+extension NSDate: @retroactive Comparable {
     
     /**
      Compare two `NSDate`

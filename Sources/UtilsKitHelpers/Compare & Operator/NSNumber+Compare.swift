@@ -10,7 +10,7 @@
 
 import Foundation
 
-extension NSNumber: Comparable {
+extension NSNumber: @retroactive Comparable {
     
     // MARK: Double Value
     /**
