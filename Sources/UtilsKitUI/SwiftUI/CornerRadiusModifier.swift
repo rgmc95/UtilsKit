@@ -12,6 +12,7 @@ private struct CornerRadiusModifier: ViewModifier {
 	
 	let radius: RectangleCornerRadii
 	let borderColor: Color
+	let borderWidth: CGFloat
 	let backgroundColor: Color
 	
 	func body(content: Content) -> some View {
@@ -22,7 +23,7 @@ private struct CornerRadiusModifier: ViewModifier {
 			}
 			.background {
 				UnevenRoundedRectangle(cornerRadii: radius)
-					.stroke(self.borderColor)
+					.stroke(self.borderColor, lineWidth: self.borderWidth)
 			}
 	}
 }
@@ -47,13 +48,14 @@ extension View {
 	/// ```
 	///
 	/// In this example, the corners of the text are rounded with a radius of 10, the border is blue, and the background is yellow.
-	public func cornerRadius(_ radius: CGFloat, borderColor: Color = .clear, backgroundColor: Color = .clear) -> some View {
+	public func cornerRadius(_ radius: CGFloat, borderColor: Color = .clear, borderWidth: CGFloat = 1, backgroundColor: Color = .clear) -> some View {
 		ModifiedContent(content: self,
 						modifier: CornerRadiusModifier(radius: RectangleCornerRadii(topLeading: radius,
 																					bottomLeading: radius,
 																					bottomTrailing: radius,
 																					topTrailing: radius),
 													   borderColor: borderColor,
+													   borderWidth: borderWidth,
 													   backgroundColor: backgroundColor))
 	}
 	
@@ -82,6 +84,7 @@ extension View {
 							 bottomLeading: CGFloat = 0,
 							 bottomTrailing: CGFloat = 0,
 							 borderColor: Color = .clear,
+							 borderWidth: CGFloat = 1,
 							 backgroundColor: Color = .clear) -> some View {
 		ModifiedContent(content: self,
 						modifier: CornerRadiusModifier(radius: RectangleCornerRadii(topLeading: topLeading,
@@ -89,9 +92,11 @@ extension View {
 																					bottomTrailing: bottomTrailing,
 																					topTrailing: topTrailing),
 													   borderColor: borderColor,
+													   borderWidth: borderWidth,
 													   backgroundColor: backgroundColor))
 	}
 }
+
 
 @available(iOS 16.0, *)
 #Preview {
@@ -106,7 +111,7 @@ extension View {
 		
 		Text("Test")
 			.padding()
-			.cornerRadius(topLeading: 12, borderColor: .red, backgroundColor: .blue)
+			.cornerRadius(topLeading: 12, borderColor: .red, borderWidth: 4, backgroundColor: .blue)
 		
 		Text("Test")
 			.padding()
