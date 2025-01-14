@@ -29,7 +29,7 @@ extension MKCoordinateRegion {
 	///
 	/// let region = MKCoordinateRegion(coordinates: coordinates)
 	/// ```
-	public init(coordinates: [CLLocationCoordinate2D]) {
+	public init(coordinates: [CLLocationCoordinate2D], multiplier: Double = 1.6) {
 		if coordinates.count == 1, let coordinate = coordinates.first {
 			self = .init(center: coordinate, span: .init(latitudeDelta: 0.005, longitudeDelta: 0.005))
 			return
@@ -48,7 +48,7 @@ extension MKCoordinateRegion {
 		
 		let center = CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2, longitude: (minLon + maxLon) / 2)
 		
-		let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.2, longitudeDelta: (maxLon - minLon) * 1.2)
+		let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * multiplier, longitudeDelta: (maxLon - minLon) * multiplier)
 		self = MKCoordinateRegion(center: center, span: span)
 	}
 }
