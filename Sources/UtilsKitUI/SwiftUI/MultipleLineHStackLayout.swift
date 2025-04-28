@@ -15,29 +15,54 @@ private struct MultipleLineHStackLayout: Layout {
 	
 	func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
 		guard let width = proposal.width else { return .zero }
-		
-		let nbRows = Double(calculateNumberOrRow(for: subviews, with: width))
-		let minHeight = subviews.map { $0.sizeThatFits(proposal).height }.reduce(0) { max($0, $1).rounded(.up) }
-		let height = nbRows * minHeight + max(nbRows - 1, 0) * verticalSpacing
-		
+		let height = self.getHeight(proposal: proposal, subviews: subviews)
 		return CGSize(width: width, height: height)
 	}
 	
 	func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-		let minHeight = subviews.map { $0.sizeThatFits(proposal).height }.reduce(0) { max($0, $1).rounded(.up) }
 		var pt = CGPoint(x: bounds.minX, y: bounds.minY)
+		var currentLineHeight: CGFloat = 0
 		
 		for subview in subviews.sorted(by: { $0.priority > $1.priority }) {
-			let width = subview.sizeThatFits(proposal).width
+			let size = subview.sizeThatFits(proposal)
 			
-			if (pt.x + width) > bounds.maxX {
+			if (pt.x + size.width) > bounds.maxX {
 				pt.x = bounds.minX
-				pt.y += minHeight + verticalSpacing
+				pt.y += currentLineHeight + verticalSpacing
+				currentLineHeight = 0
 			}
 			
 			subview.place(at: pt, anchor: .topLeading, proposal: proposal)
-			pt.x += width + horizontaleSpacing
+			pt.x += size.width + horizontaleSpacing
+			currentLineHeight = max(currentLineHeight, size.height)
 		}
+	}
+	
+	private func getHeight(proposal: ProposedViewSize, subviews: Subviews) -> CGFloat {
+		guard let width = proposal.width else { return 0 }
+		
+		var positionX: CGFloat = 0
+		var currentLineHeight: CGFloat = 0
+		
+		var height: CGFloat = 0
+		
+		for subview in subviews.sorted(by: { $0.priority > $1.priority }) {
+			let size = subview.sizeThatFits(proposal)
+			
+			if (positionX + size.width) > width {
+				height += currentLineHeight
+				height += verticalSpacing
+				currentLineHeight = 0
+				positionX = 0
+			}
+			
+			positionX += size.width + horizontaleSpacing
+			currentLineHeight = max(currentLineHeight, size.height)
+		}
+		
+		height += currentLineHeight
+		
+		return height
 	}
 	
 	
