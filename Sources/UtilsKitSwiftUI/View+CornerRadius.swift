@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS, introduced: 16.0, obsoleted: 17.0)
 private struct CornerRadiusStyle: ViewModifier {
 	
 	struct CornerRadiusShape: Shape {
@@ -32,6 +33,7 @@ private struct CornerRadiusStyle: ViewModifier {
 	}
 }
 
+@available(iOS, introduced: 16.0, obsoleted: 17.0)
 extension View {
 	
 	/// Modifier view with corner radius

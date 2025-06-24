@@ -5,6 +5,7 @@
 //  Created by Michael Coqueret on 06/01/2025.
 //
 
+#if canImport(MapKit)
 import MapKit
 
 extension MKCoordinateRegion {
@@ -52,3 +53,4 @@ extension MKCoordinateRegion {
 		self = MKCoordinateRegion(center: center, span: span)
 	}
 }
+#endif

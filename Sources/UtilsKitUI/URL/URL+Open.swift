@@ -24,7 +24,7 @@ extension URL {
             self._open()
             return
         } else {
-            guard let currentViewController = UIApplication.shared.topViewController else {
+            guard let currentViewController = UIApplication.shared.delegate?.window??.rootViewController else {
                 self._open()
                 return
             }

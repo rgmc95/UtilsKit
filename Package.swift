@@ -14,8 +14,17 @@ let package = Package(
 			name: "UtilsKitHelpers",
 			targets: ["UtilsKitHelpers"]),
 		.library(
+			name: "UtilsKitMap",
+			targets: ["UtilsKitMap"]),
+		.library(
 			name: "UtilsKitUI",
 			targets: ["UtilsKitUI"]),
+		.library(
+			name: "UtilsKitUIKit",
+			targets: ["UtilsKitUIKit"]),
+		.library(
+			name: "UtilsKitSwiftUI",
+			targets: ["UtilsKitSwiftUI"]),
 	],
 	targets: [.target(
 				name: "UtilsKitCore",
@@ -24,7 +33,16 @@ let package = Package(
 				name: "UtilsKitHelpers",
 				dependencies: ["UtilsKitCore"]),
 			  .target(
+				name: "UtilsKitMap",
+				dependencies: ["UtilsKitHelpers"]),
+			  .target(
 				name: "UtilsKitUI",
-				dependencies: ["UtilsKitHelpers"])
+				dependencies: ["UtilsKitHelpers"]),
+			  .target(
+				name: "UtilsKitUIKit",
+				dependencies: ["UtilsKitUI"]),
+			  .target(
+				name: "UtilsKitSwiftUI",
+				dependencies: ["UtilsKitUI"])
 	]
 )

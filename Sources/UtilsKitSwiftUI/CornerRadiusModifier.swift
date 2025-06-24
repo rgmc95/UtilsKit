@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 16.0, *)
+@available(iOS, introduced: 16.0, obsoleted: 17.0)
 private struct CornerRadiusModifier: ViewModifier {
 	
 	let radius: RectangleCornerRadii
@@ -28,7 +28,7 @@ private struct CornerRadiusModifier: ViewModifier {
 	}
 }
 
-@available(iOS 16.0, *)
+@available(iOS, introduced: 16.0, obsoleted: 17.0)
 extension View {
 	
 	/// Applies a corner radius with optional border and background colors to a view.
@@ -98,7 +98,7 @@ extension View {
 }
 
 
-@available(iOS 16.0, *)
+@available(iOS, introduced: 16.0, obsoleted: 17.0)
 #Preview {
 	VStack {
 		Text("Test")
