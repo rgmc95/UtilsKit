@@ -96,7 +96,7 @@ public struct MultipleLineHStack<Content: View>: View {
 	
 	let horizontaleSpacing: Double
 	let verticalSpacing: Double
-	let content: () -> Content
+	@ViewBuilder var content: () -> Content
 	
 	public var body: some View {
 		MultipleLineHStackLayout(horizontaleSpacing: horizontaleSpacing,
@@ -113,7 +113,7 @@ public struct MultipleLineHStack<Content: View>: View {
 	///   - content: A closure that defines the content of the stack.
 	public init(horizontaleSpacing: Double = 8,
 				verticalSpacing: Double = 8,
-				content: @escaping () -> Content) {
+				@ViewBuilder content: @escaping () -> Content) {
 		self.horizontaleSpacing = horizontaleSpacing
 		self.verticalSpacing = verticalSpacing
 		self.content = content
