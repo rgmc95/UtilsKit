@@ -11,38 +11,20 @@ let package = Package(
 			name: "UtilsKitCore",
 			targets: ["UtilsKitCore"]),
 		.library(
-			name: "UtilsKitHelpers",
-			targets: ["UtilsKitHelpers"]),
-		.library(
 			name: "UtilsKitMap",
 			targets: ["UtilsKitMap"]),
 		.library(
 			name: "UtilsKitUI",
 			targets: ["UtilsKitUI"]),
-		.library(
-			name: "UtilsKitUIKit",
-			targets: ["UtilsKitUIKit"]),
-		.library(
-			name: "UtilsKitSwiftUI",
-			targets: ["UtilsKitSwiftUI"]),
 	],
 	targets: [.target(
 				name: "UtilsKitCore",
 				dependencies: []),
 			  .target(
-				name: "UtilsKitHelpers",
+				name: "UtilsKitMap",
 				dependencies: ["UtilsKitCore"]),
 			  .target(
-				name: "UtilsKitMap",
-				dependencies: ["UtilsKitHelpers"]),
-			  .target(
 				name: "UtilsKitUI",
-				dependencies: ["UtilsKitHelpers"]),
-			  .target(
-				name: "UtilsKitUIKit",
-				dependencies: ["UtilsKitUI"]),
-			  .target(
-				name: "UtilsKitSwiftUI",
-				dependencies: ["UtilsKitUI"])
+				dependencies: ["UtilsKitCore"]),
 	]
 )

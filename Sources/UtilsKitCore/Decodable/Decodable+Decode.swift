@@ -10,10 +10,10 @@ import Foundation
 import OSLog
 
 extension Decodable {
-    
+	
 	/**
-	A convenience method to decode data into a object compliant with `Decodable` protocol
-	*/
+	 A convenience method to decode data into a object compliant with `Decodable` protocol
+	 */
 	public static func decode(from data: Any?) throws -> Self {
 		
 		if let data = data,

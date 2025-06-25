@@ -10,23 +10,24 @@ import Foundation
 import AudioToolbox
 import UIKit
 
+@available(iOSApplicationExtension, introduced: 1.0, unavailable)
 extension UIDevice {
-    
-    /**
-        Generate a haptic feedback
-     
-        - parameter type: type of the feedback (.success, .warning or .error)
-     */
-    public static func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType? = .error) {
-        if let type: UINotificationFeedbackGenerator.FeedbackType = type {
-            if let feedbackSupportLevel = UIDevice.current.value(forKey: "_feedbackSupportLevel") as? Int {
-                if feedbackSupportLevel == 2 {
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(type)
-                    return
-                }
-            }
-        }
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
+	
+	/**
+	 Generate a haptic feedback
+	 
+	 - parameter type: type of the feedback (.success, .warning or .error)
+	 */
+	public static func vibrate(_ type: UINotificationFeedbackGenerator.FeedbackType? = .error) {
+		if let type: UINotificationFeedbackGenerator.FeedbackType = type {
+			if let feedbackSupportLevel = UIDevice.current.value(forKey: "_feedbackSupportLevel") as? Int {
+				if feedbackSupportLevel == 2 {
+					let generator = UINotificationFeedbackGenerator()
+					generator.notificationOccurred(type)
+					return
+				}
+			}
+		}
+		AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+	}
 }

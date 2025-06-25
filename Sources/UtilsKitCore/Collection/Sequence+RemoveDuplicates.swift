@@ -7,16 +7,11 @@
 
 import Foundation
 
-public extension Sequence where Element: Equatable {
-
-    /// Return array without duplicate
+public extension Sequence where Element: Hashable {
+	
+	/// Return array without duplicate
 	func removeDuplicates() -> [Element] {
-        var result = [Element]()
-
-		for value in self where !result.contains(value) {
-			result.append(value)
-        }
-
-        return result
-    }
+		var set = Set<Element>()
+		return self.filter { set.insert($0).inserted }
+	}
 }

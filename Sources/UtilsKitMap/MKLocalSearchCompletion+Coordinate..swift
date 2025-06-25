@@ -7,7 +7,7 @@
 
 #if canImport(MapKit)
 import MapKit
-import UtilsKitHelpers
+import UtilsKitCore
 
 extension MKLocalSearchCompletion: @retroactive Identifiable {
 	

@@ -9,7 +9,7 @@
 import Foundation
 
 extension Encodable {
-
+	
 	/**
 	 Return JSON represent object
 	 */
