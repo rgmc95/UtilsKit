@@ -64,30 +64,6 @@ private struct MultipleLineHStackLayout: Layout {
 		
 		return height
 	}
-	
-	
-	private func calculateNumberOrRow(for subviews: Subviews, with width: Double) -> Int {
-		var nbRows = 0
-		var x: Double = 0
-		
-		for subview in subviews {
-			let addedX = subview.sizeThatFits(.unspecified).width + horizontaleSpacing
-			
-			let isXWillGoBeyondBounds = x + addedX > width
-			if isXWillGoBeyondBounds {
-				x = 0
-				nbRows += 1
-			}
-			
-			x += addedX
-		}
-		
-		if x > 0 {
-			nbRows += 1
-		}
-		
-		return nbRows
-	}
 }
 
 @available(iOS 16.0, *)
