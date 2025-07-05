@@ -9,7 +9,6 @@
 import SwiftUI
 import UIKit
 
-@available(iOS 15.0, *)
 extension Color {
 	
 	

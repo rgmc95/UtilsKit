@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
 	name: "UtilsKit",
-	platforms: [.iOS("14.0"), .macOS("13.0")],
+	platforms: [.iOS("15.0"), .macOS("13.0")],
 	products: [
 		.library(
 			name: "UtilsKitCore",
