@@ -5,7 +5,7 @@
 //  Created by Michael Coqueret on 05/07/2025.
 //
 
-public protocol ImageProtocol { }
+public protocol ImageProtocol: Sendable { }
 
 #if canImport(Foundation)
 import Foundation
