@@ -8,8 +8,6 @@
 
 import Foundation
 
-//swiftlint:disable discarded_notification_center_observer
-
 extension NotificationCenter {
 	
 	/**
@@ -17,7 +15,7 @@ extension NotificationCenter {
 	 */
 	public func addObservers(_ notifications: Notification.Name...,
 							 queue: OperationQueue = .main,
-							 completion: @escaping ((Notification) -> Void)) {
+							 completion: @escaping @Sendable (Notification) -> Void) {
 		self.addObservers(notifications, queue: queue, completion: completion)
 	}
 	
@@ -26,7 +24,7 @@ extension NotificationCenter {
 	 */
 	public func addObservers(_ notifications: [Notification.Name],
 							 queue: OperationQueue = .main,
-							 completion: @escaping ((Notification) -> Void)) {
+							 completion: @escaping @Sendable (Notification) -> Void) {
 		notifications
 			.forEach {
 				_ = NotificationCenter
@@ -37,17 +35,5 @@ extension NotificationCenter {
 						completion(notification)
 					}
 			}
-	}
-	
-	/**
-	 Adds multi entries to the notification center to receive notifications that passed to the provided async block.
-	 */
-	public func addObservers(_ notifications: Notification.Name...,
-							 completion: @escaping ((Notification) async -> Void)) {
-		self.addObservers(notifications) { notification in
-			Task {
-				await completion(notification)
-			}
-		}
 	}
 }

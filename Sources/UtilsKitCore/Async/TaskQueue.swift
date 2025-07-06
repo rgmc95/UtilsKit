@@ -6,7 +6,7 @@
 //
 
 public actor TaskQueue {
-		
+	
 	private var task: Task<Void, Error>?
 	
 	public init() { }

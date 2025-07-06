@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Binding {
+extension Binding where Value: Sendable {
 	
 	/// Provides a default value for a `Binding` of an optional type.
 	///

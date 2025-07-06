@@ -1,11 +1,11 @@
-// swift-tools-version:5.1
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
 	name: "UtilsKit",
-	platforms: [.iOS("15.0"), .macOS("13.0")],
+	platforms: [.iOS("16.0"), .macOS("14.0")],
 	products: [
 		.library(
 			name: "UtilsKitCore",

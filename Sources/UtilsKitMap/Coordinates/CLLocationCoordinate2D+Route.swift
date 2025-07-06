@@ -9,6 +9,8 @@
 import Foundation
 import MapKit
 
+extension MKPolyline: @unchecked Sendable { }
+
 extension CLLocationCoordinate2D {
 	
 	/// Get route to coordinate

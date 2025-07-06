@@ -6,9 +6,9 @@
 //  Copyright © 2025 Trivel. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-public class Snowflake {
+public class Snowflake: @unchecked Sendable {
 	
 	private static let shared = Snowflake()
 	
@@ -17,7 +17,17 @@ public class Snowflake {
 	}
 	
 	public static func set(epoch: Int) {
-		Self.shared.epoch = epoch
+		Self.shared.set(epoch: epoch)
+	}
+	
+	public static func getDeviceId() -> String {
+		if let value = UserDefaults(suiteName: "UtilsKit")?.string(forKey: "deviceID") {
+			return value
+		}
+		
+		let value = UUID().uuidString
+		UserDefaults(suiteName: "UtilsKit")?.set(value, forKey: "deviceID")
+		return value
 	}
 	
 	private var lastTimestamp: Int = 0
@@ -27,7 +37,7 @@ public class Snowflake {
 	private var epoch: Int = 928_329_300
 	
 	private init() {
-		self.machineId = (Int(UIDevice.current.identifierForVendor?.uuidString ?? "") ?? 0) & 0b1111111111
+		self.machineId = (Int(Self.getDeviceId()) ?? 0) & 0b1111111111
 	}
 	
 	private func generate() -> Int {
@@ -49,5 +59,9 @@ public class Snowflake {
 	
 	private func currentTimestamp() -> Int {
 		Int(Date().timeIntervalSince1970 * 1000)
+	}
+	
+	private func set(epoch: Int) {
+		self.epoch = epoch
 	}
 }

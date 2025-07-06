@@ -13,7 +13,7 @@ import OSLog
  Manager providing methods to save and retrieve files from local directories.
  This class makes the use of paths abtract and let you manage files with only names.
  */
-public struct DocumentManager {
+public struct DocumentManager: Sendable {
 	
 	// MARK: Static
 	
@@ -24,7 +24,6 @@ public struct DocumentManager {
 	public static let cache = DocumentManager(directory: .cachesDirectory, mask: .userDomainMask)
 	
 	// MARK: Variables
-	private let fileManager: FileManager = FileManager.default
 	private var documentURL: URL?
 	
 	// MARK: Init
@@ -38,7 +37,7 @@ public struct DocumentManager {
 	 - parameter mask: mask domain of the directory.
 	 */
 	public init(directory: FileManager.SearchPathDirectory, mask: FileManager.SearchPathDomainMask) {
-		if let url: URL = self.fileManager.urls(for: directory, in: mask).first {
+		if let url: URL = FileManager.default.urls(for: directory, in: mask).first {
 			self.documentURL = url
 		}
 	}
@@ -64,7 +63,7 @@ public struct DocumentManager {
 	public func create(directoryNamed name: String, withIntermediateDirectories: Bool = true, attributes: [FileAttributeKey: Any]? = nil) {
 		if let directoryPath: String = self.documentURL?.appendingPathComponent(name).path {
 			do {
-				try self.fileManager.createDirectory(atPath: directoryPath,
+				try FileManager.default.createDirectory(atPath: directoryPath,
 													 withIntermediateDirectories: withIntermediateDirectories,
 													 attributes: attributes)
 			} catch {
@@ -131,7 +130,7 @@ public struct DocumentManager {
 	public func remove(documentAtURL url: URL?) {
 		guard let url = url else { return }
 		do {
-			try self.fileManager.removeItem(at: url)
+			try FileManager.default.removeItem(at: url)
 		} catch {
 			Logger.file.fault("Deleting document at url \(url) - \(error.localizedDescription)")
 		}
@@ -159,6 +158,6 @@ public struct DocumentManager {
 	 */
 	public func exists(documentAtURL url: URL?) -> Bool {
 		guard let url: URL = url else { return false }
-		return self.fileManager.fileExists(atPath: url.path)
+		return FileManager.default.fileExists(atPath: url.path)
 	}
 }
