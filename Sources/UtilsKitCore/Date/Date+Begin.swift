@@ -35,4 +35,22 @@ public extension Date {
 		
 		return Calendar.current.date(from: component) ?? self
 	}
+	
+	/// Returns the first day of the month for the current date.
+	///
+	/// This method extracts the year and month components from the current date
+	/// and constructs a new `Date` representing midnight on the 1st of that month,
+	/// using the user's current calendar.
+	///
+	/// - Returns: A `Date` representing the start of the current month (day 1, at 00:00:00).
+	///            Falls back to `self` if the date cannot be constructed.
+	///
+	/// - Example:
+	/// ```swift
+	/// let date = Date() // e.g. April 13, 2026 at 14:35
+	/// let startOfMonth = date.getStartOfMonth() // April 1, 2026 at 00:00:00
+	/// ```
+	func getStartOfMonth() -> Date {
+		Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: self)) ?? self
+	}
 }
