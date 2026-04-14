@@ -16,11 +16,10 @@ extension Date {
 	/// - Returns: A boolean indicating whether the specified components of the two dates are the same.
 	public func isSame(date: Date, components: Set<Calendar.Component>) -> Bool {
 		let components1 = Calendar.current.dateComponents(components, from: self)
-		let date1 = Calendar.current.date(from: components1)
-		
 		let components2 = Calendar.current.dateComponents(components, from: date)
-		let date2 = Calendar.current.date(from: components2)
 		
-		return date1 == date2
+		return components.allSatisfy { component in
+			components1.value(for: component) == components2.value(for: component)
+		}
 	}
 }
