@@ -13,7 +13,7 @@
  - Note: The generic type `T` must conform to the `Encodable` protocol.
  */
 @propertyWrapper
-public struct NullEncodable<T>: Encodable where T: Encodable {
+public struct NullEncodable<T: Encodable & Sendable>: Encodable & Sendable {
 	
 	/// The wrapped value of the property.
 	public var wrappedValue: T?
@@ -35,7 +35,7 @@ public struct NullEncodable<T>: Encodable where T: Encodable {
 	 - Parameter encoder: The encoder to write data to.
 	 - Throws: An error if encoding fails.
 	 */
-	public func encode(to encoder: Encoder) throws {
+	public func encode(to encoder: any Encoder) throws {
 		var container = encoder.singleValueContainer()
 		switch wrappedValue {
 		case .some(let value): try container.encode(value)

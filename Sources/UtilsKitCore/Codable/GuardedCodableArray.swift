@@ -9,7 +9,7 @@
 import OSLog
 
 @propertyWrapper
-public struct GuardedCodableArray<T: Codable>: Codable {
+public struct GuardedCodableArray<T: Codable & Sendable>: Codable, Sendable {
 	
 	private struct AnyDecodableValue: Codable { }
 	
@@ -19,7 +19,7 @@ public struct GuardedCodableArray<T: Codable>: Codable {
 		self.wrappedValue = wrappedValue
 	}
 	
-	public init(from decoder: Decoder) throws {
+	public init(from decoder: any Decoder) throws {
 		var container = try decoder.unkeyedContainer()
 		
 		var elements: [T] = []
